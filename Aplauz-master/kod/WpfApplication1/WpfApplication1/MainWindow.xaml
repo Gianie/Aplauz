@@ -1,0 +1,82 @@
+﻿<Window x:Class="WpfApplication1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApplication1"
+        mc:Ignorable="d"
+        Title="Aplauz" Height="730.15" Width="855">
+    <Grid Margin="0,0,2,-21">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="68*"/>
+            <ColumnDefinition Width="13*"/>
+            <ColumnDefinition Width="585*"/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="mine11" Content="chujon" HorizontalAlignment="Left" Margin="285,112,0,0" VerticalAlignment="Top" Width="87" Height="118" Grid.Column="2"/>
+        <Button x:Name="mine12" Content="chujon" HorizontalAlignment="Left" Margin="400,112,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
+        <Button x:Name="mine13" Content="chujon" HorizontalAlignment="Left" Margin="520,112,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2" RenderTransformOrigin="0.528,1.963"/>
+        <Button x:Name="mine14" Content="chujon" HorizontalAlignment="Left" Margin="635,112,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
+        <Button x:Name="mine21" Content="chujon" HorizontalAlignment="Left" Margin="285,261,0,0" VerticalAlignment="Top" Width="87" Height="121" Grid.Column="2"/>
+        <Button x:Name="mine22" Content="chujon" HorizontalAlignment="Left" Margin="400,261,0,0" VerticalAlignment="Top" Width="87" Height="121" Grid.Column="2"/>
+        <Button x:Name="mine23" Content="chujon" HorizontalAlignment="Left" Margin="520,261,0,0" VerticalAlignment="Top" Width="87" Height="121" Grid.Column="2"/>
+        <Button x:Name="mine24" Content="chujon" HorizontalAlignment="Left" Margin="635,261,0,0" VerticalAlignment="Top" Width="87" Height="121" Grid.Column="2"/>
+        <Button x:Name="mine31" Content="chujon" HorizontalAlignment="Left" Margin="285,415,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
+        <Button x:Name="mine32" Content="chujon" HorizontalAlignment="Left" Margin="400,415,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
+        <Button x:Name="mine33" Content="chujon" HorizontalAlignment="Left" Margin="520,415,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
+        <Button x:Name="mine34" Content="chujon" HorizontalAlignment="Left" Margin="635,415,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
+        <Label x:Name="ary1" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="130,45,0,0" VerticalAlignment="Top" Width="87"/>
+        <Label x:Name="ary2" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="249,45,0,0" VerticalAlignment="Top" Width="87" RenderTransformOrigin="1.445,0.659"/>
+        <Label x:Name="ary3" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="366,45,0,0" VerticalAlignment="Top" Width="87"/>
+        <Label x:Name="ary4" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="483,45,0,0" VerticalAlignment="Top" Width="87"/>
+        <Button  x:Name="coinGold" Content="gold" Grid.Column="2" HorizontalAlignment="Left" Margin="178,126,0,0" VerticalAlignment="Top" Width="64" Height="54" Background="#FFE8E1A2" RenderTransformOrigin="0.5,0.5" Click="coinGold_Click" FontWeight="Bold" FontSize="18" IsEnabled="False"/>
+        <Button x:Name="coinWhite" Content="white" Grid.Column="2" HorizontalAlignment="Left" Margin="178,201,0,0" VerticalAlignment="Top" Width="64" Height="54" Background="White" Click="coinWhite_Click" FontSize="18" FontWeight="Bold"/>
+        <Button x:Name="coinBlue" Content="blue" Grid.Column="2" HorizontalAlignment="Left" Margin="178,277,0,0" VerticalAlignment="Top" Width="64" Height="54" Background="#FFBFDBF7" Click="coinBlue_Click" FontWeight="Bold" FontSize="18"/>
+        <Button x:Name="coinGreen" Content="green" Grid.Column="2" HorizontalAlignment="Left" Margin="178,357,0,0" VerticalAlignment="Top" Width="64" Height="54" Background="#FFB1E8B1" Click="coinGreen_Click" FontWeight="Bold" FontSize="18"/>
+        <Button x:Name="coinRed" Content="red" Grid.Column="2" HorizontalAlignment="Left" Margin="178,436,0,0" VerticalAlignment="Top" Width="64" Height="54" Background="#FFF9A7A7" Click="coinRed_Click" FontSize="18" FontWeight="Bold" BorderThickness="1" ClipToBounds="True" Foreground="Black"/>
+        <Button x:Name="coinBlack" Content="black" Grid.Column="2" HorizontalAlignment="Left" Margin="178,516,0,0" VerticalAlignment="Top" Width="64" Height="54" Background="#FFACACAC" Click="coinBlack_Click" FontSize="18" FontWeight="Bold"/>
+        <Label x:Name="name1" Content="Name1" HorizontalAlignment="Left" Margin="32,102,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="71"/>
+        <Label x:Name="coins1Gold" Content="0" HorizontalAlignment="Left" Margin="32,160,0,0" VerticalAlignment="Top" Background="#FFEAEE9B"/>
+        <Label x:Name="coins1White" Content="0" Margin="53,160,17,0" VerticalAlignment="Top"/>
+        <Label x:Name="coins1Blue" Content="0" HorizontalAlignment="Left" Margin="77,160,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Background="#FFCCE3FF"/>
+        <Label x:Name="coins1Green" Content="0" HorizontalAlignment="Left" Margin="0,160,0,0" VerticalAlignment="Top" RenderTransformOrigin="5.5,0.615" Grid.Column="2" Background="#FFC8FBB5"/>
+        <Label x:Name="coins1Red" Content="0" HorizontalAlignment="Left" Margin="21,160,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.438,0.769" Grid.Column="2" Background="#FFFFACAC"/>
+        <Label x:Name="coins1Black" Content="0" HorizontalAlignment="Left" Margin="42,160,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.75,0.769" Grid.Column="2" Background="#FFB8B8B8"/>
+        <Label x:Name="name2" Content="Name1" HorizontalAlignment="Left" Margin="32,252,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="71"/>
+        <Label x:Name="coins2Gold" Content="0" HorizontalAlignment="Left" Margin="32,310,0,0" VerticalAlignment="Top" Background="#FFEAEE9B"/>
+        <Label x:Name="coins2White" Content="0" Margin="53,310,17,0" VerticalAlignment="Top"/>
+        <Label x:Name="coins2Blue" Content="0" HorizontalAlignment="Left" Margin="77,310,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Background="#FFCCE3FF"/>
+        <Label x:Name="coins2Green" Content="0" HorizontalAlignment="Left" Margin="0,310,0,0" VerticalAlignment="Top" RenderTransformOrigin="5.5,0.615" Grid.Column="2" Background="#FFC8FBB5"/>
+        <Label x:Name="coins2Red" Content="0" HorizontalAlignment="Left" Margin="21,310,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.438,0.769" Grid.Column="2" Background="#FFFFACAC"/>
+        <Label x:Name="coins2Black" Content="0" HorizontalAlignment="Left" Margin="42,310,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.75,0.769" Grid.Column="2" Background="#FFB8B8B8"/>
+        <Label x:Name="name3" Content="Name1" HorizontalAlignment="Left" Margin="32,393,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="71"/>
+        <Label x:Name="coins3Gold" Content="0" HorizontalAlignment="Left" Margin="32,451,0,0" VerticalAlignment="Top" Background="#FFEAEE9B"/>
+        <Label x:Name="coins3White" Content="0" Margin="53,451,17,0" VerticalAlignment="Top"/>
+        <Label x:Name="coins3Blue" Content="0" HorizontalAlignment="Left" Margin="77,451,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Background="#FFCCE3FF"/>
+        <Label x:Name="coins3Green" Content="0" HorizontalAlignment="Left" Margin="0,451,0,0" VerticalAlignment="Top" RenderTransformOrigin="5.5,0.615" Grid.Column="2" Background="#FFC8FBB5"/>
+        <Label x:Name="coins3Red" Content="0" HorizontalAlignment="Left" Margin="21,451,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.438,0.769" Grid.Column="2" Background="#FFFFACAC"/>
+        <Label x:Name="coins3Black" Content="0" HorizontalAlignment="Left" Margin="42,451,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.75,0.769" Grid.Column="2" Background="#FFB8B8B8"/>
+        <Label x:Name="name4" Content="Name1" HorizontalAlignment="Left" Margin="32,545,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="71"/>
+        <Label x:Name="coins4Gold" Content="0" HorizontalAlignment="Left" Margin="32,603,0,0" VerticalAlignment="Top" Background="#FFEAEE9B"/>
+        <Label x:Name="coins4White" Content="0" Margin="53,603,17,0" VerticalAlignment="Top"/>
+        <Label x:Name="coins4Blue" Content="0" HorizontalAlignment="Left" Margin="77,603,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Background="#FFCCE3FF"/>
+        <Label x:Name="coins4Green" Content="0" HorizontalAlignment="Left" Margin="0,603,0,0" VerticalAlignment="Top" RenderTransformOrigin="5.5,0.615" Grid.Column="2" Background="#FFC8FBB5"/>
+        <Label x:Name="coins4Red" Content="0" HorizontalAlignment="Left" Margin="21,603,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.438,0.769" Grid.Column="2" Background="#FFFFACAC"/>
+        <Label x:Name="coins4Black" Content="0" HorizontalAlignment="Left" Margin="42,603,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.75,0.769" Grid.Column="2" Background="#FFB8B8B8"/>
+        <Border x:Name="border1" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="97" Margin="10,102,0,0" VerticalAlignment="Top" Width="170" BorderBrush="Black"/>
+        <Border x:Name="border2" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="97" Margin="10,252,0,0" VerticalAlignment="Top" Width="170"/>
+        <Border x:Name="border3" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="97" Margin="10,393,0,0" VerticalAlignment="Top" Width="170"/>
+        <Border x:Name="border4" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="97" Margin="10,545,0,0" VerticalAlignment="Top" Width="170"/>
+        <Label  Content="Kolej gracza:" HorizontalAlignment="Left" Margin="32,657,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" Width="87"/>
+        <Label x:Name="labelKolej" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="21,657,0,0" VerticalAlignment="Top" RenderTransformOrigin="2.474,-0.615"/>
+        <Button x:Name="TakeCoins" Content="Take coins" Grid.Column="2" HorizontalAlignment="Left" Margin="142,606,0,0" VerticalAlignment="Top" Width="100" IsEnabled="False" Click="TakeCoins_Click"/>
+        <Label x:Name="coinsGoldLifted" Content="0" HorizontalAlignment="Left" Margin="130,142,0,0" VerticalAlignment="Top" Background="#FFEAEE9B" Grid.Column="2" RenderTransformOrigin="0.5,0.538"/>
+        <Label x:Name="coinsWhiteLifted" Content="0"  HorizontalAlignment="Left" Margin="130,217,0,0" VerticalAlignment="Top" Grid.Column="2" Background="WhiteSmoke"/>
+        <Label x:Name="coinsBlueLifted" Content="0" HorizontalAlignment="Left" Margin="130,293,0,0" VerticalAlignment="Top" Background="#FFCCE3FF" Grid.Column="2"/>
+        <Label x:Name="coinsGreenLifted" Content="0" HorizontalAlignment="Left" Margin="130,373,0,0" VerticalAlignment="Top" RenderTransformOrigin="5.5,0.615" Grid.Column="2" Background="#FFC8FBB5"/>
+        <Label x:Name="coinsRedLifted" Content="0" HorizontalAlignment="Left" Margin="130,452,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.438,0.769" Grid.Column="2" Background="#FFFFACAC"/>
+        <Label x:Name="coinsBlackLifted" Content="0" HorizontalAlignment="Left" Margin="130,532,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.625,0.5" Grid.Column="2" Background="#FFB8B8B8"/>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" HorizontalAlignment="Left" Height="540" Margin="118,102,0,0" VerticalAlignment="Top" Width="145"/>
+
+    </Grid>
+</Window>
