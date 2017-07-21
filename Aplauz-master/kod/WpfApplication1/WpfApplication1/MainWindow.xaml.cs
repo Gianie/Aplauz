@@ -160,7 +160,7 @@ namespace WpfApplication1
         {
             for (int i =0; i<quantity; i++)
             {
-                Player p = new Player("cweluch" + (i +1));
+                Player p = new Player("temp_p" + (i +1));
                 players.Add(p);
 
                 names[i].Content = players[i].name;

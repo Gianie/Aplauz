@@ -13,18 +13,18 @@
             <ColumnDefinition Width="585*"/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="mine11" Content="chujon" HorizontalAlignment="Left" Margin="285,112,0,0" VerticalAlignment="Top" Width="87" Height="118" Grid.Column="2"/>
-        <Button x:Name="mine12" Content="chujon" HorizontalAlignment="Left" Margin="400,112,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
-        <Button x:Name="mine13" Content="chujon" HorizontalAlignment="Left" Margin="520,112,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2" RenderTransformOrigin="0.528,1.963"/>
-        <Button x:Name="mine14" Content="chujon" HorizontalAlignment="Left" Margin="635,112,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
-        <Button x:Name="mine21" Content="chujon" HorizontalAlignment="Left" Margin="285,261,0,0" VerticalAlignment="Top" Width="87" Height="121" Grid.Column="2"/>
-        <Button x:Name="mine22" Content="chujon" HorizontalAlignment="Left" Margin="400,261,0,0" VerticalAlignment="Top" Width="87" Height="121" Grid.Column="2"/>
-        <Button x:Name="mine23" Content="chujon" HorizontalAlignment="Left" Margin="520,261,0,0" VerticalAlignment="Top" Width="87" Height="121" Grid.Column="2"/>
-        <Button x:Name="mine24" Content="chujon" HorizontalAlignment="Left" Margin="635,261,0,0" VerticalAlignment="Top" Width="87" Height="121" Grid.Column="2"/>
-        <Button x:Name="mine31" Content="chujon" HorizontalAlignment="Left" Margin="285,415,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
-        <Button x:Name="mine32" Content="chujon" HorizontalAlignment="Left" Margin="400,415,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
-        <Button x:Name="mine33" Content="chujon" HorizontalAlignment="Left" Margin="520,415,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
-        <Button x:Name="mine34" Content="chujon" HorizontalAlignment="Left" Margin="635,415,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
+        <Button x:Name="mine11" Content="mine11" HorizontalAlignment="Left" Margin="285,112,0,0" VerticalAlignment="Top" Width="87" Height="118" Grid.Column="2"/>
+        <Button x:Name="mine12" Content="mine12" HorizontalAlignment="Left" Margin="400,112,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
+        <Button x:Name="mine13" Content="mine13" HorizontalAlignment="Left" Margin="520,112,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2" RenderTransformOrigin="0.528,1.963"/>
+        <Button x:Name="mine14" Content="mine14" HorizontalAlignment="Left" Margin="635,112,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
+        <Button x:Name="mine21" Content="mine21" HorizontalAlignment="Left" Margin="285,261,0,0" VerticalAlignment="Top" Width="87" Height="121" Grid.Column="2"/>
+        <Button x:Name="mine22" Content="mine22" HorizontalAlignment="Left" Margin="400,261,0,0" VerticalAlignment="Top" Width="87" Height="121" Grid.Column="2"/>
+        <Button x:Name="mine23" Content="mine23" HorizontalAlignment="Left" Margin="520,261,0,0" VerticalAlignment="Top" Width="87" Height="121" Grid.Column="2"/>
+        <Button x:Name="mine24" Content="mine24" HorizontalAlignment="Left" Margin="635,261,0,0" VerticalAlignment="Top" Width="87" Height="121" Grid.Column="2"/>
+        <Button x:Name="mine31" Content="mine31" HorizontalAlignment="Left" Margin="285,415,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
+        <Button x:Name="mine32" Content="mine32" HorizontalAlignment="Left" Margin="400,415,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
+        <Button x:Name="mine33" Content="mine33" HorizontalAlignment="Left" Margin="520,415,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
+        <Button x:Name="mine34" Content="mine34" HorizontalAlignment="Left" Margin="635,415,0,0" VerticalAlignment="Top" Width="87" Height="120" Grid.Column="2"/>
         <Label x:Name="ary1" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="130,45,0,0" VerticalAlignment="Top" Width="87"/>
         <Label x:Name="ary2" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="249,45,0,0" VerticalAlignment="Top" Width="87" RenderTransformOrigin="1.445,0.659"/>
         <Label x:Name="ary3" Content="Label" Grid.Column="2" HorizontalAlignment="Left" Margin="366,45,0,0" VerticalAlignment="Top" Width="87"/>
