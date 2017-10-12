@@ -4,3 +4,9 @@ C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\WpfApplication1\Aplauz.GameEng
 C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\WpfApplication1\Aplauz.GameEngine\bin\Debug\Aplauz.GameEngine.dll.config
 C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\WpfApplication1\Aplauz.GameEngine\bin\Debug\Aplauz.GameEngine.dll
 C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\WpfApplication1\Aplauz.GameEngine\obj\Debug\Aplauz.GameEngine.dll
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\Aplauz\Aplauz.GameEngine\bin\Debug\Aplauz.GameEngine.dll.config
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\Aplauz\Aplauz.GameEngine\bin\Debug\Aplauz.GameEngine.dll
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\Aplauz\Aplauz.GameEngine\bin\Debug\Aplauz.GameEngine.pdb
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\Aplauz\Aplauz.GameEngine\obj\Debug\Aplauz.GameEngine.csprojResolveAssemblyReference.cache
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\Aplauz\Aplauz.GameEngine\obj\Debug\Aplauz.GameEngine.dll
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\Aplauz\Aplauz.GameEngine\obj\Debug\Aplauz.GameEngine.pdb

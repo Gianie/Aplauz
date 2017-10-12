@@ -46,8 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Coin.cs" />
+    <Compile Include="Drawers\Drawer.cs" />
+    <Compile Include="Drawers\IDrawer.cs" />
+    <Compile Include="Players\Player.cs" />
     <Compile Include="Mine.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="Players\HumanPlayer.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

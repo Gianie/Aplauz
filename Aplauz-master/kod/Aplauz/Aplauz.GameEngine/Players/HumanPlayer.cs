@@ -4,19 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Aplauz.GameEngine
+namespace Aplauz.GameEngine.Players
 {
-    public class Player
+    public class HumanPlayer : Player
     {
         private List<Coin> coins = new List<Coin>();
         public string name { get; }
 
         private int prestige;
 
-        public Player(string name)
+        public HumanPlayer(string name) : base(name)
         {
-            this.name = name;
         }
+
+
+        public override string Entry()
+        {
+            string s;
+            s = Console.ReadLine();
+            return s;
+        }
+
+        //public HumanPlayer(string name)
+        //{
+        //    this.name = name;
+        //}
 
         public void AddCoin(Coin coin) //adds one coin of specific color
         {
@@ -52,5 +64,7 @@ namespace Aplauz.GameEngine
 
             return count;
         }
+
+
     }
 }
