@@ -1,0 +1,9 @@
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\WpfApplication1\Aplauz.Launcher\bin\Debug\Aplauz.Launcher.exe.config
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\WpfApplication1\Aplauz.Launcher\bin\Debug\Aplauz.Launcher.exe
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\WpfApplication1\Aplauz.Launcher\bin\Debug\Aplauz.Launcher.pdb
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\WpfApplication1\Aplauz.Launcher\bin\Debug\Aplauz.GameEngine.dll
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\WpfApplication1\Aplauz.Launcher\bin\Debug\Aplauz.GameEngine.pdb
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\WpfApplication1\Aplauz.Launcher\bin\Debug\Aplauz.GameEngine.dll.config
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\WpfApplication1\Aplauz.Launcher\obj\Debug\Aplauz.Launcher.csprojResolveAssemblyReference.cache
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\WpfApplication1\Aplauz.Launcher\obj\Debug\Aplauz.Launcher.exe
+C:\Users\janba\Documents\Aplauz\Aplauz-master\kod\WpfApplication1\Aplauz.Launcher\obj\Debug\Aplauz.Launcher.pdb
