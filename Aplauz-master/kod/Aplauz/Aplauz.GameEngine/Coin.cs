@@ -11,12 +11,19 @@ namespace Aplauz.GameEngine
 
         public Coin(string color)
         {
-            this.color = color;
+            this.Color = color;
+            if (color == "black")
+                Code = "k";
+            else
+            {
+                Code = color[0].ToString();
+            }
         }
 
-        readonly string color;
+        public string Color { get; }
 
-        public string Color => color;
+        public string Code { get; }
+
 
     }
 }

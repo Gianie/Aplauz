@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Aplauz.GameEngine.Drawers;
 using Aplauz.GameEngine.Players;
@@ -40,6 +41,41 @@ namespace Aplauz.GameEngine
             }
            // Console.WriteLine(players[0].Entry());
 
+            while (true)
+            {
+                foreach (var player in players)
+                {
+                    if (player.GetType() == typeof(HumanPlayer))
+                    {
+                        _drawer.Draw(players, coins);
+                    }
+                    string moveCode = String.Empty;
+                    bool legal = false;
+                    while (!legal)
+                    {
+                        moveCode = player.Entry();
+                        legal = IsMoveLegal(moveCode);
+                        if (!legal)
+                        {
+                            Console.WriteLine("move not legal");
+                        }
+                    }
+                    //check if move is legal
+                    if (moveCode[0].ToString() == Move.TakeCoins.Shortcut)
+                    {
+                        string coinsCodes = moveCode.Substring(1);
+                        GiveCoins(Regex.Split(coinsCodes, string.Empty), player);
+
+                    }
+                    else if (moveCode == Move.DrawBoard.Shortcut)
+                    {
+                        
+                    }
+                    
+                }
+
+            }
+
             _drawer.Draw(players,coins);
 
             Console.ReadLine();
@@ -69,6 +105,55 @@ namespace Aplauz.GameEngine
                 HumanPlayer p = new HumanPlayer(names[i]);
                 players.Add(p);
             }
+
+        }
+
+        private bool GiveCoins(string[] codes, Player player)
+        {
+            bool result=true;
+            foreach (var code in codes)
+            {
+                Coin coin = coins.FirstOrDefault(c => c.Code == code);
+                if (coins.Remove(coin) && coin != null)
+                {
+                    player.AddCoin(coin);
+                }
+                else if (coin == null)
+                {
+                    result = false;
+                }
+            }
+            return result;
+        }
+
+        public bool IsMoveLegal(string codes)
+        {
+            bool result = false;
+            if (codes.Length > 4 || codes == "" || codes.Length < 1)
+                return false;
+            
+            if (codes[0].ToString() != Move.TakeCoins.Shortcut && codes[0].ToString() != Move.TakeMine.Shortcut &&
+                codes[0].ToString() != Move.TakeTrader.Shortcut)
+                return false;
+
+            if (codes[0].ToString() == Move.TakeCoins.Shortcut)
+            {
+                codes = codes.Substring(1);
+                if (codes.Length <= 3)
+                {
+                    foreach (var code in codes)
+                    {
+                        if (code != 'b' && code != 'k' && code != 'w' && code != 'r' && code != 'g')
+                            return false;
+                    }
+                    if (codes.Length == 2 && codes[0] == codes[1])
+                        return true;
+                    if (codes.Length == 3 && codes[0] != codes[1] && codes[0] != codes[2] && codes[1] != codes[2])
+                        return true;
+
+                }
+            }
+            return result;
 
         }
 
@@ -145,11 +230,6 @@ namespace Aplauz.GameEngine
            // borders[currentPlayer].BorderBrush = System.Windows.Media.Brushes.Red;
         }
 
-        enum Actions
-        {
-            TakeCoins=1,
-            BuyMine=2,
-            DrawTable=3
-        }
+
     }
 }

@@ -13,22 +13,26 @@ namespace Aplauz.GameEngine.Players
 
         public int prestige { get; }
 
+        public virtual List<Move> PossibleMoves { get; }
+
         public Player(string name)
         {
             this.name = name;
         }
+
+       
 
         public virtual string Entry()
         {
             return "dunno what to write here";
         }
 
-        public void AddCoin(Coin coin) //adds one coin of specific color
+        public void AddCoin(Coin coin) //adds one coin of specific Color
         {
             coins.Add(coin);
         }
 
-        public int CountCoins(string color) // counts coins of specific color
+        public int CountCoins(string color) // counts coins of specific Color
         {
             int count = coins.Where(i => i.Color == color).Count();
             return count;

@@ -11,34 +11,36 @@ namespace Aplauz.GameEngine.Drawers
     {
         public void Draw(List<Player> players, List<Coin> coins)
         {
+            Console.Write("Board: ");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write(coins.Count(c=>c.Color=="blue"));
+            Console.Write(coins.Count(c=>c.Color=="blue") + " ");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(coins.Count(c => c.Color == "red"));
+            Console.Write(coins.Count(c => c.Color == "red") + " ");
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.Write(coins.Count(c => c.Color == "black"));
+            Console.Write(coins.Count(c => c.Color == "black") + " ");
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write(coins.Count(c => c.Color == "white"));
+            Console.Write(coins.Count(c => c.Color == "white") + " ");
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(coins.Count(c => c.Color == "green"));
+            Console.WriteLine(coins.Count(c => c.Color == "green") + " ");
             Console.ResetColor();
             foreach (var player in players)
             {
+                Console.WriteLine("");
                 Console.WriteLine(player.name + " P: " + player.prestige);
                 Console.ForegroundColor=ConsoleColor.Blue;
-                Console.WriteLine(player.CountCoins("blue"));
+                Console.Write(player.CountCoins("blue") + " ");
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(player.CountCoins("red"));
+                Console.Write(player.CountCoins("red") + " ");
                 Console.BackgroundColor=ConsoleColor.White;
                 Console.ForegroundColor = ConsoleColor.Black;
-                Console.WriteLine(player.CountCoins("black"));
+                Console.Write(player.CountCoins("black") + " ");
                 Console.BackgroundColor=ConsoleColor.Black;
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine(player.CountCoins("white"));
+                Console.Write(player.CountCoins("white") + " ");
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine(player.CountCoins("green"));
+                Console.WriteLine(player.CountCoins("green") + " ");
                 Console.ResetColor();
             }
 

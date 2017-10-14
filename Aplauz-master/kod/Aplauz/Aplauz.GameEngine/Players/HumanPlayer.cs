@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aplauz.GameEngine.Players
 {
@@ -15,14 +13,52 @@ namespace Aplauz.GameEngine.Players
 
         public HumanPlayer(string name) : base(name)
         {
+            this.name = name;
         }
+        
 
+        public override List<Move> PossibleMoves { get; } = new List<Move>()
+        {
+            Move.TakeCoins,
+            Move.TakeMine,
+            Move.TakeTrader,
+            Move.DrawBoard
+        };
 
         public override string Entry()
         {
-            string s;
-            s = Console.ReadLine();
-            return s;
+            Console.WriteLine("time for " +  name + " move");
+            foreach (var move in PossibleMoves)
+            {
+                Console.WriteLine(move.Shortcut + " for: " + move.Name );
+            }
+            string selectedMove;
+            selectedMove = Console.ReadLine();
+            
+            if (PossibleMoves.FirstOrDefault(m => m.Name == "Take Coins").Shortcut == selectedMove)
+            {
+                string message = selectedMove + Console.ReadLine();
+                return message;
+            }
+            else if (PossibleMoves.FirstOrDefault(m => m.Name == "Take Mine").Shortcut == selectedMove)
+            {
+                //take mine
+                return String.Empty;
+            }
+            else if (PossibleMoves.FirstOrDefault(m => m.Name == "Take Trader").Shortcut == selectedMove)
+            {
+                //take trader
+                return String.Empty;
+            }
+            else if (PossibleMoves.FirstOrDefault(m => m.Name == "Draw Board").Shortcut == selectedMove)
+            {
+                return Move.DrawBoard.Shortcut;
+            }
+            else
+            {
+                return String.Empty;
+            }
+
         }
 
         //public HumanPlayer(string name)
@@ -30,22 +66,22 @@ namespace Aplauz.GameEngine.Players
         //    this.name = name;
         //}
 
-        public void AddCoin(Coin coin) //adds one coin of specific color
+        public void AddCoin(Coin coin) //adds one coin of specific Color
         {
             coins.Add(coin);
         }
 
-        //public void AddCoin(string color, int quantity) //adds multiple coins of specific color
+        //public void AddCoin(string Color, int quantity) //adds multiple coins of specific Color
         //{
 
         //}
 
-        //public Coin RemoveCoin(string color)
+        //public Coin RemoveCoin(string Color)
         //{
 
         //}
 
-        public int CountCoins(string color) // counts coins of specific color
+        public int CountCoins(string color) // counts coins of specific Color
         {
             int count = coins.Where(i => i.Color == color).Count();
             return count;

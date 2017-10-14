@@ -48,6 +48,7 @@
     <Compile Include="Coin.cs" />
     <Compile Include="Drawers\Drawer.cs" />
     <Compile Include="Drawers\IDrawer.cs" />
+    <Compile Include="Move.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="Mine.cs" />
     <Compile Include="Players\HumanPlayer.cs" />
