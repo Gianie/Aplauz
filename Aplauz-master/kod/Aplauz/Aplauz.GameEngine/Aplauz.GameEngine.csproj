@@ -35,7 +35,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,15 +50,20 @@
     <Compile Include="Coin.cs" />
     <Compile Include="Drawers\Drawer.cs" />
     <Compile Include="Drawers\IDrawer.cs" />
+    <Compile Include="Mines\MineFactory.cs" />
     <Compile Include="Move.cs" />
+    <Compile Include="Players\PlayerFactory.cs" />
     <Compile Include="Players\Player.cs" />
-    <Compile Include="Mine.cs" />
+    <Compile Include="Mines\Mine.cs" />
     <Compile Include="Players\HumanPlayer.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\Mines.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

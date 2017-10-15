@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Aplauz.GameEngine.Drawers;
+using Aplauz.GameEngine.Mines;
 using Aplauz.GameEngine.Players;
 
 
@@ -34,6 +35,7 @@ namespace Aplauz.GameEngine
  
             PopulatePlayers(4, args);
             PopulateCoins();
+            //PopulateMines();
 
             foreach (var player in players)
             {
@@ -79,6 +81,11 @@ namespace Aplauz.GameEngine
             _drawer.Draw(players,coins);
 
             Console.ReadLine();
+        }
+
+        private void PopulateMines()
+        {
+            Mines.MineFactory Mf = new MineFactory();
         }
         private void PopulateCoins()
         {
