@@ -9,17 +9,17 @@ namespace Aplauz.GameEngine.Players
 {
     public abstract class Player
     {
-        private List<Coin> coins = new List<Coin>();
-        private List<Mine> mines = new List<Mine>();
-        public string name { get; }
+        private List<Coin> Coins = new List<Coin>();
+        private List<Mine> Mines = new List<Mine>();
+        public string Name { get; }
 
-        public int prestige { get; }
+        public int Prestige { get; }
 
         public virtual List<Move> PossibleMoves { get; }
 
         public Player(string name)
         {
-            this.name = name;
+            this.Name = name;
         }
 
        
@@ -31,17 +31,17 @@ namespace Aplauz.GameEngine.Players
 
         public void AddCoin(Coin coin) //adds one coin of specific Color
         {
-            coins.Add(coin);
+            Coins.Add(coin);
         }
 
-        public int CountCoins(string color) // counts coins of specific Color
+        public int CountCoins(string color) // counts Coins of specific Color
         {
-            var count = coins.Count(i => i.Color == color);
+            var count = Coins.Count(i => i.Color == color);
             return count;
         }
        
 
-        public int CountCoins(bool withGold) //counts all coins
+        public int CountCoins(bool withGold) //counts all Coins
         {
             int count;
             count = CountCoins("white");
@@ -57,7 +57,7 @@ namespace Aplauz.GameEngine.Players
 
         public void AddMine(Mine mine)
         {
-            mines.Add(mine);
+            Mines.Add(mine);
         }
 
         public List<Coin> RemoveCoins(Dictionary<string,int> dicCoins)
@@ -68,8 +68,8 @@ namespace Aplauz.GameEngine.Players
                 string code = dicElement.Key;
                 for (int i = 0; i < dicElement.Value; i++)
                 {
-                    Coin coin = coins.First(c => c.Code == code);
-                    coins.Remove(coin);
+                    Coin coin = Coins.First(c => c.Code == code);
+                    Coins.Remove(coin);
                     resultList.Add(coin);
                 }
             }

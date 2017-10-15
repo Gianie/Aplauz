@@ -45,9 +45,8 @@ namespace Aplauz.GameEngine
             Console.BackgroundColor = ConsoleColor.Gray;
             foreach (var player in players)
             {
-                Console.WriteLine(player.name);
+                Console.WriteLine(player.Name);
             }
-           // Console.WriteLine(players[0].Entry());
 
             while (true)
             {
@@ -68,7 +67,6 @@ namespace Aplauz.GameEngine
                             Console.WriteLine("move not legal");
                         }
                     }
-                    //check if move is legal
                     if (moveCode[0].ToString() == Move.TakeCoins.Shortcut)
                     {
                         string coinsCodes = moveCode.Substring(1);
@@ -85,7 +83,6 @@ namespace Aplauz.GameEngine
 
             }
 
-
         }
 
         private void RandomizeMissingMines()
@@ -94,7 +91,7 @@ namespace Aplauz.GameEngine
             Random rnd = new Random();
             for (int i = 0; i < missingCountLvl1; i++)
             {
-                var adequateMinesFromPack = minesPack.Where(m => m.level == 1).ToList();
+                var adequateMinesFromPack = minesPack.Where(m => m.Level == 1).ToList();
                 int randomizedNumber = rnd.Next(0, adequateMinesFromPack.Count-1);
                 Mine randomizedMine = adequateMinesFromPack[randomizedNumber];
                 minesPack.Remove(randomizedMine);
@@ -103,7 +100,7 @@ namespace Aplauz.GameEngine
             int missingCountLvl2 = 4 - minesOnBoardLvl2.Count;
             for (int i = 0; i < missingCountLvl2; i++)
             {
-                var adequateMinesFromPack = minesPack.Where(m => m.level == 2).ToList();
+                var adequateMinesFromPack = minesPack.Where(m => m.Level == 2).ToList();
                 int randomizedNumber = rnd.Next(0, adequateMinesFromPack.Count - 1);
                 Mine randomizedMine = adequateMinesFromPack[randomizedNumber];
                 minesPack.Remove(randomizedMine);
@@ -112,7 +109,7 @@ namespace Aplauz.GameEngine
             int missingCountLvl3 = 4 - minesOnBoardLvl3.Count;
             for (int i = 0; i < missingCountLvl3; i++)
             {
-                var adequateMinesFromPack = minesPack.Where(m => m.level == 3).ToList();
+                var adequateMinesFromPack = minesPack.Where(m => m.Level == 3).ToList();
                 int randomizedNumber = rnd.Next(0, adequateMinesFromPack.Count - 1);
                 Mine randomizedMine = adequateMinesFromPack[randomizedNumber];
                 minesPack.Remove(randomizedMine);
@@ -143,7 +140,6 @@ namespace Aplauz.GameEngine
             {
                 coins.Add(new Coin("gold"));
             }
-            //CountAllCoins();
         }
 
         private void PopulatePlayers(int quantity, string[] names)
@@ -245,80 +241,7 @@ namespace Aplauz.GameEngine
             return result;
 
         }
-
-        private void LiftCoin(string color)
-        {
-
-            Coin c = coins.FirstOrDefault(i => i.Color == color);
-            if (coins.Remove(c))
-                coinsLifted.Add(c);
-
-            if (coinsLifted.Count() == 3)
-            {
-                //foreach (var item in coinButtons)
-                //{
-                //    item.Value.IsEnabled = false;
-                //}
-                //TakeCoins.IsEnabled = true;
-            }
-            else if (coinsLifted.Count() == 2)
-            {
-                if (coinsLifted[0].Color == coinsLifted[1].Color)
-                {
-                    //foreach (var item in coinButtons)
-                    //{
-                    //    item.Value.IsEnabled = false;
-                    //}
-                    //TakeCoins.IsEnabled = true;
-                }
-                else
-                {
-                    //string color0 = coinsLifted[0].Color;
-                    //string color1 = coinsLifted[1].Color;
-                    //coinButtons[color0].IsEnabled = false;
-                    //coinButtons[color1].IsEnabled = false;
-                }
-            }
-        }
-
-        private void TakeLiftedCoins()
-        {
-            foreach (Coin item in coinsLifted)
-            {
-                Coin c = item;
-                //coinsLifted.Remove(c);
-                players[currentPlayer].AddCoin(c);
-            }
-            coinsLifted.Clear();
-
-            //foreach (var item in coinButtons)
-            //{
-            //    item.Value.IsEnabled = true;
-            //}
-            //TakeCoins.IsEnabled = false;
-
-            //CountAllCoins();
-            NextTurn();
-        }
-
-        private void NextTurn() // switches turn to next player
-        {
-            if (currentPlayer < players.Count - 1)
-            {
-                //borders[currentPlayer].BorderBrush = System.Windows.Media.Brushes.Black;
-                currentPlayer++;
-
-            }
-            else
-            {
-                //borders[currentPlayer].BorderBrush = System.Windows.Media.Brushes.Black;
-                currentPlayer = 0;
-                turn++;
-            }
-            //labelKolej.Content = players[currentPlayer].name;
-           // borders[currentPlayer].BorderBrush = System.Windows.Media.Brushes.Red;
-        }
-
+    
 
     }
 }

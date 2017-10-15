@@ -38,7 +38,7 @@ namespace Aplauz.GameEngine.Drawers
             foreach (var player in players)
             {
                 Console.WriteLine("");
-                Console.WriteLine(player.name + " P: " + player.prestige);
+                Console.WriteLine(player.Name + " P: " + player.Prestige);
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.Write(player.CountCoins("white") + " ");
                 Console.ForegroundColor=ConsoleColor.Blue;

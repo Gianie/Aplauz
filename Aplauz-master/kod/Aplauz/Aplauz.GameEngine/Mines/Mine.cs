@@ -8,9 +8,9 @@ namespace Aplauz.GameEngine
 {
     public class Mine // TODO Refactor
     {
-        public int level { get; }
-        public int prestige { get; }
-        public string color { get; }
+        public int Level { get; }
+        public int Prestige { get; }
+        public string Color { get; }
        
 
         public Dictionary<string, int> Prices = new Dictionary<string, int>();
@@ -20,9 +20,9 @@ namespace Aplauz.GameEngine
         /// </summary>
         public Mine(int level, string color, int prestige, string prices)
         {
-            this.level = level;
-            this.color = color;
-            this.prestige = prestige;
+            this.Level = level;
+            this.Color = color;
+            this.Prestige = prestige;
 
             Prices.Add("w", prices[0] - 48);
             Prices.Add("b", prices[1] - 48);
@@ -33,7 +33,7 @@ namespace Aplauz.GameEngine
 
         public override string ToString()
         {
-            string result = level + color + prestige + Prices["w"] + Prices["b"] + Prices["g"] +
+            string result = Level + Color + Prestige + Prices["w"] + Prices["b"] + Prices["g"] +
                             Prices["r"] + Prices["k"];
             return result;
         }

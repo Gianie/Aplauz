@@ -7,13 +7,13 @@ namespace Aplauz.GameEngine.Players
     public class HumanPlayer : Player
     {
         private List<Coin> coins = new List<Coin>();
-        public string name { get; }
+        public string Name { get; }
 
-        private int prestige;
+        private int Prestige;
 
         public HumanPlayer(string name) : base(name)
         {
-            this.name = name;
+            this.Name = name;
         }
         
 
@@ -27,7 +27,7 @@ namespace Aplauz.GameEngine.Players
 
         public override string Entry()
         {
-            Console.WriteLine("time for " +  name + " move");
+            Console.WriteLine("time for " +  Name + " move");
             foreach (var move in PossibleMoves)
             {
                 Console.WriteLine(move.Shortcut + " for: " + move.Name );
@@ -61,25 +61,12 @@ namespace Aplauz.GameEngine.Players
 
         }
 
-        //public HumanPlayer(string name)
-        //{
-        //    this.name = name;
-        //}
 
         public void AddCoin(Coin coin) //adds one coin of specific Color
         {
             coins.Add(coin);
         }
 
-        //public void AddCoin(string Color, int quantity) //adds multiple coins of specific Color
-        //{
-
-        //}
-
-        //public Coin RemoveCoin(string Color)
-        //{
-
-        //}
 
         public int CountCoins(string color) // counts coins of specific Color
         {
