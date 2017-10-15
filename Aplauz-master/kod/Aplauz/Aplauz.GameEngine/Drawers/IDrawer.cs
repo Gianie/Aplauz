@@ -9,6 +9,6 @@ namespace Aplauz.GameEngine.Drawers
 {
     interface IDrawer
     {
-        void Draw(List<Player> players, List<Coin> coins);
+        void Draw(List<Player> players, List<Coin> coins, List<List<Mine>> mines);
     }
 }

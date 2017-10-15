@@ -11,6 +11,7 @@ namespace Aplauz.Launcher
     {
         private static void Main(string[] args)
         {
+           
             var board = new Board(new[] { "adam", "basia", "cyprian", "danuta" });
         }
     }

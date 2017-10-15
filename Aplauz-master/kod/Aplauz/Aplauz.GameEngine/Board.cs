@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -16,7 +17,11 @@ namespace Aplauz.GameEngine
         List<Coin> coins = new List<Coin>();
         List<Coin> coinsLifted = new List<Coin>();
         List<Player> players = new List<Player>();
-        List<Mine> mines = new List<Mine>();
+        List<Mine> minesPack = new List<Mine>();
+        List<Mine> minesOnBoardLvl1 = new List<Mine>();
+        List<Mine> minesOnBoardLvl2 = new List<Mine>();
+        List<Mine> minesOnBoardLvl3 = new List<Mine>();
+        private List<List<Mine>> minesOnBoard=new List<List<Mine>>();
         private int currentPlayer = 0;
         private int turn = 0;
         private IDrawer _drawer;
@@ -35,8 +40,9 @@ namespace Aplauz.GameEngine
  
             PopulatePlayers(4, args);
             PopulateCoins();
-            //PopulateMines();
-
+            PopulateMines();
+            RandomizeMissingMines();
+            Console.BackgroundColor = ConsoleColor.Gray;
             foreach (var player in players)
             {
                 Console.WriteLine(player.name);
@@ -49,14 +55,14 @@ namespace Aplauz.GameEngine
                 {
                     if (player.GetType() == typeof(HumanPlayer))
                     {
-                        _drawer.Draw(players, coins);
+                        _drawer.Draw(players, coins, minesOnBoard);
                     }
                     string moveCode = String.Empty;
                     bool legal = false;
                     while (!legal)
                     {
                         moveCode = player.Entry();
-                        legal = IsMoveLegal(moveCode);
+                        legal = IsMoveLegal(moveCode,player);
                         if (!legal)
                         {
                             Console.WriteLine("move not legal");
@@ -69,23 +75,58 @@ namespace Aplauz.GameEngine
                         GiveCoins(Regex.Split(coinsCodes, string.Empty), player);
 
                     }
-                    else if (moveCode == Move.DrawBoard.Shortcut)
+                    else if (moveCode[0].ToString() == Move.TakeMine.Shortcut)
                     {
-                        
+                        string mineCode = moveCode.Substring(1);
+                        GiveMine(mineCode,player);
                     }
-                    
+                    RandomizeMissingMines();
                 }
 
             }
 
-            _drawer.Draw(players,coins);
 
-            Console.ReadLine();
+        }
+
+        private void RandomizeMissingMines()
+        {
+            int missingCountLvl1 = 4 - minesOnBoardLvl1.Count;
+            Random rnd = new Random();
+            for (int i = 0; i < missingCountLvl1; i++)
+            {
+                var adequateMinesFromPack = minesPack.Where(m => m.level == 1).ToList();
+                int randomizedNumber = rnd.Next(0, adequateMinesFromPack.Count-1);
+                Mine randomizedMine = adequateMinesFromPack[randomizedNumber];
+                minesPack.Remove(randomizedMine);
+                minesOnBoardLvl1.Add(randomizedMine);
+            }
+            int missingCountLvl2 = 4 - minesOnBoardLvl2.Count;
+            for (int i = 0; i < missingCountLvl2; i++)
+            {
+                var adequateMinesFromPack = minesPack.Where(m => m.level == 2).ToList();
+                int randomizedNumber = rnd.Next(0, adequateMinesFromPack.Count - 1);
+                Mine randomizedMine = adequateMinesFromPack[randomizedNumber];
+                minesPack.Remove(randomizedMine);
+                minesOnBoardLvl2.Add(randomizedMine);
+            }
+            int missingCountLvl3 = 4 - minesOnBoardLvl3.Count;
+            for (int i = 0; i < missingCountLvl3; i++)
+            {
+                var adequateMinesFromPack = minesPack.Where(m => m.level == 3).ToList();
+                int randomizedNumber = rnd.Next(0, adequateMinesFromPack.Count - 1);
+                Mine randomizedMine = adequateMinesFromPack[randomizedNumber];
+                minesPack.Remove(randomizedMine);
+                minesOnBoardLvl3.Add(randomizedMine);
+            }
         }
 
         private void PopulateMines()
         {
-            Mines.MineFactory Mf = new MineFactory();
+            MineFactory Mf = new MineFactory();
+            minesPack = Mf.GetAllMines();
+            minesOnBoard.Add(minesOnBoardLvl1);
+            minesOnBoard.Add(minesOnBoardLvl2);
+            minesOnBoard.Add(minesOnBoardLvl3);
         }
         private void PopulateCoins()
         {
@@ -112,7 +153,6 @@ namespace Aplauz.GameEngine
                 HumanPlayer p = new HumanPlayer(names[i]);
                 players.Add(p);
             }
-
         }
 
         private bool GiveCoins(string[] codes, Player player)
@@ -133,7 +173,28 @@ namespace Aplauz.GameEngine
             return result;
         }
 
-        public bool IsMoveLegal(string codes)
+        private void GiveMine(string code, Player player)
+        {
+            int level = Int32.Parse(code[0].ToString()) -1;
+            int number = Int32.Parse(code[1].ToString()) - 1;
+            Mine chosenMine = minesOnBoard[level][number];
+            if (chosenMine.Prices["r"] <= player.CountCoins("red") &&
+                chosenMine.Prices["w"] <= player.CountCoins("white") &&
+                chosenMine.Prices["k"] <= player.CountCoins("black") &&
+                chosenMine.Prices["b"] <= player.CountCoins("blue") &&
+                chosenMine.Prices["g"] <= player.CountCoins("green"))
+            {
+                if (minesOnBoard[level].Remove(chosenMine))
+                {
+                    player.RemoveCoins(chosenMine.Prices);
+                    player.AddMine(chosenMine);
+                }
+            }
+            
+            
+        }
+
+        public bool IsMoveLegal(string codes, Player player)
         {
             bool result = false;
             if (codes.Length > 4 || codes == "" || codes.Length < 1)
@@ -158,6 +219,27 @@ namespace Aplauz.GameEngine
                     if (codes.Length == 3 && codes[0] != codes[1] && codes[0] != codes[2] && codes[1] != codes[2])
                         return true;
 
+                }
+            }
+            if (codes[0].ToString() == Move.TakeMine.Shortcut)
+            {
+                codes = codes.Substring(1);
+                Regex regex = new Regex(@"^\d$");
+                if (codes.Length != 2)
+                    return false;
+                int level = Int32.Parse(codes[0].ToString());
+                int number = Int32.Parse(codes[1].ToString());
+                if (level >= 1 && level <= 3 && number >= 1 && number <= 4)
+                {
+                    Mine chosenMine = minesOnBoard[level - 1][number - 1];
+                    if (chosenMine.Prices["r"] <= player.CountCoins("red") &&
+                        chosenMine.Prices["w"] <= player.CountCoins("white") &&
+                        chosenMine.Prices["k"] <= player.CountCoins("black") &&
+                        chosenMine.Prices["b"] <= player.CountCoins("blue") && 
+                        chosenMine.Prices["g"] <= player.CountCoins("green"))
+                    {
+                        return true;
+                    }
                 }
             }
             return result;

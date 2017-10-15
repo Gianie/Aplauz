@@ -42,8 +42,8 @@ namespace Aplauz.GameEngine.Players
             }
             else if (PossibleMoves.FirstOrDefault(m => m.Name == "Take Mine").Shortcut == selectedMove)
             {
-                //take mine
-                return String.Empty;
+                string message = selectedMove + Console.ReadLine();
+                return message;
             }
             else if (PossibleMoves.FirstOrDefault(m => m.Name == "Take Trader").Shortcut == selectedMove)
             {
