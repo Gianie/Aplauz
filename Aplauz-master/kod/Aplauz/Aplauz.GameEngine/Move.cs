@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Aplauz.GameEngine.Players;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Aplauz.GameEngine
@@ -24,6 +26,47 @@ namespace Aplauz.GameEngine
             Shortcut = "m"
 
         };
+
+        public static bool IsMovePossible(string moveCode, Player player, List<Coin> coins)
+        {
+            bool result = false;
+            if (moveCode[0].ToString() == Move.TakeCoins.Shortcut)
+            {
+                string coinsCodes = moveCode.Substring(1);
+                result = canPlayerTakeCoins(coinsCodes, player, coins);
+            }
+            else if (moveCode[0].ToString() == Move.TakeMine.Shortcut)
+            {
+                result = true;
+            }
+                return result;
+        }
+
+        private static bool canPlayerTakeCoins(string coinsCodes, Player player, List<Coin> coins)
+        {
+            bool result = true;
+            if (coinsCodes.Length == 2) 
+            {
+                string cos = coinsCodes.Substring(1);
+                if (coins.Count(c => c.Code == coinsCodes.Substring(1)) <2)
+                {
+                    result = false;
+                }
+            }
+            if (coinsCodes.Length == 3)
+            {
+                string[] codes = coinsCodes.ToCharArray().Select(c => c.ToString()).ToArray();
+                foreach (var code in codes)
+                {
+                    if (coins.Count(c => c.Code == code) == 0)
+                    {
+                        result = false;
+                        break;
+                    }
+                }
+            }
+            return result;
+        }
 
         enum PossibleMoves
         {
