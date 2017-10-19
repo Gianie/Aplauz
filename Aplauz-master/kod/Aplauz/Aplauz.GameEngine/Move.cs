@@ -12,8 +12,6 @@ namespace Aplauz.GameEngine
         public string Shortcut { get; set; }
 
 
-
-
         public static Move TakeCoins = new Move()
         {
             Name = "Take Coins",
@@ -26,17 +24,37 @@ namespace Aplauz.GameEngine
             Shortcut = "m"
 
         };
-        public static Move TakeTrader = new Move()
-        {
-            Name = "Take Trader",
-            Shortcut = "t"
-        };
 
-        public static Move DrawBoard = new Move()
+        enum PossibleMoves
         {
-            Name = "Draw Board",
-            Shortcut = "d"
+            crr,
+            cww,
+            cbb,
+            ckk,
+            cgg,
+            cbgk,
+            cbgr,
+            cbgw,
+            cbkr,
+            cbkw,
+            cbrw,
+            cgkr,
+            cgkw,
+            cgrw,
+            ckrw,
+            m11,
+            m12,
+            m13,
+            m14,
+            m21,
+            m22,
+            m23,
+            m24,
+            m31,
+            m32,
+            m33,
+            m34,
+        }
 
-        };
     }
 }

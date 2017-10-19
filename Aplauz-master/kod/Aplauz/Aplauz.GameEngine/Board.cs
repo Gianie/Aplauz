@@ -196,8 +196,7 @@ namespace Aplauz.GameEngine
             if (codes.Length > 4 || codes == "" || codes.Length < 1)
                 return false;
             
-            if (codes[0].ToString() != Move.TakeCoins.Shortcut && codes[0].ToString() != Move.TakeMine.Shortcut &&
-                codes[0].ToString() != Move.TakeTrader.Shortcut)
+            if (codes[0].ToString() != Move.TakeCoins.Shortcut && codes[0].ToString() != Move.TakeMine.Shortcut)
                 return false;
 
             if (codes[0].ToString() == Move.TakeCoins.Shortcut)
@@ -241,38 +240,5 @@ namespace Aplauz.GameEngine
             return result;
 
         }
-
-        enum PossibleMoves
-        {
-            crr,
-            cww,
-            cbb,
-            ckk,
-            cgg,
-            cbgk,
-            cbgr,
-            cbgw,
-            cbkr,
-            cbkw,
-            cbrw,
-            cgkr,
-            cgkw,
-            cgrw,
-            ckrw,
-            m11,
-            m12,
-            m13,
-            m14,
-            m21,
-            m22,
-            m23,
-            m24,
-            m31,
-            m32,
-            m33,
-            m34,
-        }
-    
-
     }
 }
