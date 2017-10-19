@@ -61,7 +61,7 @@ namespace Aplauz.GameEngine
                     while (!legal)
                     {
                         moveCode = player.Entry();
-                        legal = IsMoveLegal(moveCode,player);
+                        legal = isStringLegal(moveCode,player);
                         if (!legal)
                         {
                             Console.WriteLine("move not legal");
@@ -190,7 +190,7 @@ namespace Aplauz.GameEngine
             
         }
 
-        public bool IsMoveLegal(string codes, Player player)
+        public bool isStringLegal(string codes, Player player)
         {
             bool result = false;
             if (codes.Length > 4 || codes == "" || codes.Length < 1)
