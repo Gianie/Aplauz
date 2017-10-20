@@ -7,22 +7,18 @@ namespace Aplauz.GameEngine.Players
     public class HumanPlayer : Player
     {
         private List<Coin> coins = new List<Coin>();
-        public string Name { get; }
 
         private int Prestige;
 
         public HumanPlayer(string name) : base(name)
         {
-            this.Name = name;
         }
         
 
         public override List<Move> PossibleMoves { get; } = new List<Move>()
         {
             Move.TakeCoins,
-            Move.TakeMine,
-            Move.TakeTrader,
-            Move.DrawBoard
+            Move.TakeMine
         };
 
         public override string Entry()
@@ -44,15 +40,6 @@ namespace Aplauz.GameEngine.Players
             {
                 string message = selectedMove + Console.ReadLine();
                 return message;
-            }
-            else if (PossibleMoves.FirstOrDefault(m => m.Name == "Take Trader").Shortcut == selectedMove)
-            {
-                //take trader
-                return String.Empty;
-            }
-            else if (PossibleMoves.FirstOrDefault(m => m.Name == "Draw Board").Shortcut == selectedMove)
-            {
-                return Move.DrawBoard.Shortcut;
             }
             else
             {

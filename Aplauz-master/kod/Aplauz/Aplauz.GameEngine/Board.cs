@@ -25,7 +25,7 @@ namespace Aplauz.GameEngine
         private int currentPlayer = 0;
         private int turn = 0;
         private IDrawer _drawer;
-
+        
 
         public Board(string[] names)
         {
@@ -57,20 +57,29 @@ namespace Aplauz.GameEngine
                         _drawer.Draw(players, coins, minesOnBoard);
                     }
                     string moveCode = String.Empty;
-                    bool legal = false;
-                    while (!legal)
+                    bool movePossible = false;
+                    while (!movePossible)
                     {
                         moveCode = player.Entry();
-                        legal = IsMoveLegal(moveCode,player);
-                        if (!legal)
+                        movePossible = isStringLegal(moveCode,player);
+                        if (!movePossible)
                         {
-                            Console.WriteLine("move not legal");
+                            Console.WriteLine("string is not legal");
+                            continue;
+
                         }
+                        movePossible = Move.IsMovePossible(moveCode, player, coins);
+                        if (!movePossible)
+                        {
+                            Console.WriteLine("Move is not possible. Sorry");
+                            continue;
+                        }
+                        movePossible = true;
                     }
                     if (moveCode[0].ToString() == Move.TakeCoins.Shortcut)
                     {
                         string coinsCodes = moveCode.Substring(1);
-                        GiveCoins(Regex.Split(coinsCodes, string.Empty), player);
+                        GiveCoins(coinsCodes.ToCharArray().Select(c => c.ToString()).ToArray(), player); //Tak trzeba Janek jezeli chcemy miec tablicę stringów jednoelementowych :D
 
                     }
                     else if (moveCode[0].ToString() == Move.TakeMine.Shortcut)
@@ -80,7 +89,7 @@ namespace Aplauz.GameEngine
                     }
                     RandomizeMissingMines();
                 }
-
+                turn++;
             }
 
         }
@@ -190,14 +199,13 @@ namespace Aplauz.GameEngine
             
         }
 
-        public bool IsMoveLegal(string codes, Player player)
+        public bool isStringLegal(string codes, Player player)
         {
             bool result = false;
             if (codes.Length > 4 || codes == "" || codes.Length < 1)
                 return false;
             
-            if (codes[0].ToString() != Move.TakeCoins.Shortcut && codes[0].ToString() != Move.TakeMine.Shortcut &&
-                codes[0].ToString() != Move.TakeTrader.Shortcut)
+            if (codes[0].ToString() != Move.TakeCoins.Shortcut && codes[0].ToString() != Move.TakeMine.Shortcut)
                 return false;
 
             if (codes[0].ToString() == Move.TakeCoins.Shortcut)
@@ -220,7 +228,7 @@ namespace Aplauz.GameEngine
             if (codes[0].ToString() == Move.TakeMine.Shortcut)
             {
                 codes = codes.Substring(1);
-                Regex regex = new Regex(@"^\d$");
+//                Regex regex = new Regex(@"^\d$");
                 if (codes.Length != 2)
                     return false;
                 int level = Int32.Parse(codes[0].ToString());
@@ -241,38 +249,5 @@ namespace Aplauz.GameEngine
             return result;
 
         }
-
-        enum PossibleMoves
-        {
-            crr,
-            cww,
-            cbb,
-            ckk,
-            cgg,
-            cbgk,
-            cbgr,
-            cbgw,
-            cbkr,
-            cbkw,
-            cbrw,
-            cgkr,
-            cgkw,
-            cgrw,
-            ckrw,
-            m11,
-            m12,
-            m13,
-            m14,
-            m21,
-            m22,
-            m23,
-            m24,
-            m31,
-            m32,
-            m33,
-            m34,
-        }
-    
-
     }
 }

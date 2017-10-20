@@ -57,6 +57,7 @@
     <Compile Include="Mines\Mine.cs" />
     <Compile Include="Players\HumanPlayer.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="Players\RandomPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
