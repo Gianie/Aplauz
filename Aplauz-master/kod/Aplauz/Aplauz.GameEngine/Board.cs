@@ -65,6 +65,7 @@ namespace Aplauz.GameEngine
                         if (!movePossible)
                         {
                             Console.WriteLine("string is not legal");
+
                             continue;
 
                         }
