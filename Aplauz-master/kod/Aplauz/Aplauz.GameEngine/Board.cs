@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,17 +16,18 @@ namespace Aplauz.GameEngine
     public class Board
     {
         List<Coin> coins = new List<Coin>();
-        List<Coin> coinsLifted = new List<Coin>();
         List<Player> players = new List<Player>();
-        List<Mine> minesPack = new List<Mine>();
-        List<Mine> minesOnBoardLvl1 = new List<Mine>();
-        List<Mine> minesOnBoardLvl2 = new List<Mine>();
-        List<Mine> minesOnBoardLvl3 = new List<Mine>();
-        private List<List<Mine>> minesOnBoard=new List<List<Mine>>();
+
         private int currentPlayer = 0;
         private int turn = 0;
         private IDrawer _drawer;
-        
+
+        public List<Mine> MinesPack { get; } = new List<Mine>();
+        public List<List<Mine>> MinesOnBoard { get; } = new List<List<Mine>>();
+        public List<Mine> MinesOnBoardLvl1 { get; } = new List<Mine>();
+        public List<Mine> MinesOnBoardLvl2 { get; } = new List<Mine>();
+        public List<Mine> MinesOnBoardLvl3 { get; } = new List<Mine>();
+
 
         public Board(string[] names)
         {
@@ -54,7 +56,7 @@ namespace Aplauz.GameEngine
                 {
                     if (player.GetType() == typeof(HumanPlayer))
                     {
-                        _drawer.Draw(players, coins, minesOnBoard);
+                        _drawer.Draw(players, coins, MinesOnBoard);
                     }
                     string moveCode = String.Empty;
                     bool movePossible = false;
@@ -68,7 +70,7 @@ namespace Aplauz.GameEngine
                             continue;
 
                         }
-                        movePossible = Move.IsMovePossible(moveCode, player, coins);
+                        movePossible = Move.IsMovePossible(moveCode, player, coins, MinesOnBoard);
                         if (!movePossible)
                         {
                             Console.WriteLine("Move is not possible. Sorry");
@@ -96,43 +98,43 @@ namespace Aplauz.GameEngine
 
         private void RandomizeMissingMines()
         {
-            int missingCountLvl1 = 4 - minesOnBoardLvl1.Count;
+            int missingCountLvl1 = 4 - MinesOnBoardLvl1.Count;
             Random rnd = new Random();
             for (int i = 0; i < missingCountLvl1; i++)
             {
-                var adequateMinesFromPack = minesPack.Where(m => m.Level == 1).ToList();
+                var adequateMinesFromPack = MinesPack.Where(m => m.Level == 1).ToList();
                 int randomizedNumber = rnd.Next(0, adequateMinesFromPack.Count-1);
                 Mine randomizedMine = adequateMinesFromPack[randomizedNumber];
-                minesPack.Remove(randomizedMine);
-                minesOnBoardLvl1.Add(randomizedMine);
+                MinesPack.Remove(randomizedMine);
+                MinesOnBoardLvl1.Add(randomizedMine);
             }
-            int missingCountLvl2 = 4 - minesOnBoardLvl2.Count;
+            int missingCountLvl2 = 4 - MinesOnBoardLvl2.Count;
             for (int i = 0; i < missingCountLvl2; i++)
             {
-                var adequateMinesFromPack = minesPack.Where(m => m.Level == 2).ToList();
+                var adequateMinesFromPack = MinesPack.Where(m => m.Level == 2).ToList();
                 int randomizedNumber = rnd.Next(0, adequateMinesFromPack.Count - 1);
                 Mine randomizedMine = adequateMinesFromPack[randomizedNumber];
-                minesPack.Remove(randomizedMine);
-                minesOnBoardLvl2.Add(randomizedMine);
+                MinesPack.Remove(randomizedMine);
+                MinesOnBoardLvl2.Add(randomizedMine);
             }
-            int missingCountLvl3 = 4 - minesOnBoardLvl3.Count;
+            int missingCountLvl3 = 4 - MinesOnBoardLvl3.Count;
             for (int i = 0; i < missingCountLvl3; i++)
             {
-                var adequateMinesFromPack = minesPack.Where(m => m.Level == 3).ToList();
+                var adequateMinesFromPack = MinesPack.Where(m => m.Level == 3).ToList();
                 int randomizedNumber = rnd.Next(0, adequateMinesFromPack.Count - 1);
                 Mine randomizedMine = adequateMinesFromPack[randomizedNumber];
-                minesPack.Remove(randomizedMine);
-                minesOnBoardLvl3.Add(randomizedMine);
+                MinesPack.Remove(randomizedMine);
+                MinesOnBoardLvl3.Add(randomizedMine);
             }
         }
 
         private void PopulateMines()
         {
             MineFactory Mf = new MineFactory();
-            minesPack = Mf.GetAllMines();
-            minesOnBoard.Add(minesOnBoardLvl1);
-            minesOnBoard.Add(minesOnBoardLvl2);
-            minesOnBoard.Add(minesOnBoardLvl3);
+            MinesPack.AddRange(Mf.GetAllMines());
+            MinesOnBoard.Add(MinesOnBoardLvl1);
+            MinesOnBoard.Add(MinesOnBoardLvl2);
+            MinesOnBoard.Add(MinesOnBoardLvl3);
         }
         private void PopulateCoins()
         {
@@ -182,14 +184,14 @@ namespace Aplauz.GameEngine
         {
             int level = Int32.Parse(code[0].ToString()) -1;
             int number = Int32.Parse(code[1].ToString()) - 1;
-            Mine chosenMine = minesOnBoard[level][number];
+            Mine chosenMine = MinesOnBoard[level][number];
             if (chosenMine.Prices["r"] <= player.CountCoins("red") &&
                 chosenMine.Prices["w"] <= player.CountCoins("white") &&
                 chosenMine.Prices["k"] <= player.CountCoins("black") &&
                 chosenMine.Prices["b"] <= player.CountCoins("blue") &&
                 chosenMine.Prices["g"] <= player.CountCoins("green"))
             {
-                if (minesOnBoard[level].Remove(chosenMine))
+                if (MinesOnBoard[level].Remove(chosenMine))
                 {
                     player.RemoveCoins(chosenMine.Prices);
                     player.AddMine(chosenMine);
@@ -235,7 +237,7 @@ namespace Aplauz.GameEngine
                 int number = Int32.Parse(codes[1].ToString());
                 if (level >= 1 && level <= 3 && number >= 1 && number <= 4)
                 {
-                    Mine chosenMine = minesOnBoard[level - 1][number - 1];
+                    Mine chosenMine = MinesOnBoard[level - 1][number - 1];
                     if (chosenMine.Prices["r"] <= player.CountCoins("red") &&
                         chosenMine.Prices["w"] <= player.CountCoins("white") &&
                         chosenMine.Prices["k"] <= player.CountCoins("black") &&

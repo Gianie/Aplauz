@@ -27,7 +27,7 @@ namespace Aplauz.GameEngine
 
         };
 
-        public static bool IsMovePossible(string moveCode, Player player, List<Coin> coins)
+        public static bool IsMovePossible(string moveCode, Player player, List<Coin> coins, List<List<Mine>> mines)
         {
             bool result = false;
             if (moveCode[0].ToString() == Move.TakeCoins.Shortcut)
@@ -37,7 +37,8 @@ namespace Aplauz.GameEngine
             }
             else if (moveCode[0].ToString() == Move.TakeMine.Shortcut)
             {
-                result = true;
+                string mineCode = moveCode.Substring(1);
+                result = canPlayerBuyMine(mineCode, player, mines);
             }
                 return result;
         }
@@ -68,7 +69,32 @@ namespace Aplauz.GameEngine
             return result;
         }
 
-        enum PossibleMoves
+        private static bool canPlayerBuyMine(string mineCode, Player player, List<List<Mine>> mines)
+        {
+
+
+            //                Regex regex = new Regex(@"^\d$");
+            if (mineCode.Length != 2)
+                return false;
+            int level = Int32.Parse(mineCode[0].ToString());
+            int number = Int32.Parse(mineCode[1].ToString());
+            if (level >= 1 && level <= 3 && number >= 1 && number <= 4)
+            {
+                Mine chosenMine = mines[level - 1][number - 1];
+                if (chosenMine.Prices["r"] <= player.CountCoins("red") &&
+                    chosenMine.Prices["w"] <= player.CountCoins("white") &&
+                    chosenMine.Prices["k"] <= player.CountCoins("black") &&
+                    chosenMine.Prices["b"] <= player.CountCoins("blue") &&
+                    chosenMine.Prices["g"] <= player.CountCoins("green"))
+                {
+                    return true;
+                }
+            }
+            return false;
+
+        }
+
+        public enum PossibleMoves
         {
             crr,
             cww,
