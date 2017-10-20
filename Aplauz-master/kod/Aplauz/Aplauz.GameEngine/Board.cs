@@ -64,7 +64,7 @@ namespace Aplauz.GameEngine
                         movePossible = isStringLegal(moveCode,player);
                         if (!movePossible)
                         {
-                            Console.WriteLine("string is not legal"); // ja tylko sprawdzam czy jestem soba
+                            Console.WriteLine("string is not legal");
                             continue;
 
                         }
