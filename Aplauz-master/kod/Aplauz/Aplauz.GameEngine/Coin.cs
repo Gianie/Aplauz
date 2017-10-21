@@ -12,12 +12,6 @@ namespace Aplauz.GameEngine
         public Coin(string color)
         {
             this.Color = color;
-            if (color == "black")
-                Code = "k";
-            else
-            {
-                Code = color[0].ToString();
-            }
         }
 
         public string Color { get; }

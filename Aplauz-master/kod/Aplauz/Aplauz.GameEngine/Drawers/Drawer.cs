@@ -14,15 +14,15 @@ namespace Aplauz.GameEngine.Drawers
             Console.BackgroundColor = ConsoleColor.Gray;
             Console.Write("Board: ");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.Write(coins.Count(c => c.Color == "white") + " ");
+            Console.Write(coins.Count(c => c.Color == "w") + " ");
             Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write(coins.Count(c => c.Color=="blue") + " ");
+            Console.Write(coins.Count(c => c.Color=="b") + " ");
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write(coins.Count(c => c.Color == "green") + " ");
+            Console.Write(coins.Count(c => c.Color == "g") + " ");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(coins.Count(c => c.Color == "red") + " ");
+            Console.Write(coins.Count(c => c.Color == "r") + " ");
             Console.ForegroundColor = ConsoleColor.Black;
-            Console.WriteLine(coins.Count(c => c.Color == "black") + " ");
+            Console.WriteLine(coins.Count(c => c.Color == "k") + " ");
  
             Console.ResetColor();
 
@@ -40,15 +40,36 @@ namespace Aplauz.GameEngine.Drawers
                 Console.WriteLine("");
                 Console.WriteLine(player.Name + " P: " + player.Prestige);
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.Write(player.CountCoins("white") + " ");
+                Console.Write(player.CountCoins("w") + " ");
                 Console.ForegroundColor=ConsoleColor.Blue;
-                Console.Write(player.CountCoins("blue") + " ");
+                Console.Write(player.CountCoins("b") + " ");
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write(player.CountCoins("green") + " ");
+                Console.Write(player.CountCoins("g") + " ");
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(player.CountCoins("red") + " ");
+                Console.Write(player.CountCoins("r") + " ");
                 Console.ForegroundColor = ConsoleColor.Black;
-                Console.WriteLine(player.CountCoins("black") + " ");
+                Console.WriteLine(player.CountCoins("k") + " ");
+
+                Console.ForegroundColor=ConsoleColor.Gray;
+
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.Write(player.CountMines("w"));
+                Console.BackgroundColor=ConsoleColor.Gray;
+                Console.Write(" ");
+                Console.BackgroundColor = ConsoleColor.Blue;
+                Console.Write(player.CountMines("b"));
+                Console.BackgroundColor = ConsoleColor.Gray;
+                Console.Write(" ");
+                Console.BackgroundColor = ConsoleColor.Green;
+                Console.Write(player.CountMines("g"));
+                Console.BackgroundColor = ConsoleColor.Gray;
+                Console.Write(" ");
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.Write(player.CountMines("r"));
+                Console.BackgroundColor = ConsoleColor.Gray;
+                Console.Write(" ");
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.WriteLine(player.CountMines("k"));
 
                 Console.ResetColor();
             }

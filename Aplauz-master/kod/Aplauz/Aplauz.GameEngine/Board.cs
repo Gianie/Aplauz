@@ -141,11 +141,11 @@ namespace Aplauz.GameEngine
             for (int i = 0; i < 7; i++)
             {
 
-                coins.Add(new Coin("blue"));
-                coins.Add(new Coin("green"));
-                coins.Add(new Coin("black"));
-                coins.Add(new Coin("red"));
-                coins.Add(new Coin("white"));
+                coins.Add(new Coin("b"));
+                coins.Add(new Coin("g"));
+                coins.Add(new Coin("k"));
+                coins.Add(new Coin("r"));
+                coins.Add(new Coin("w"));
             }
             for (int i = 0; i < 5; i++)
             {
@@ -167,7 +167,7 @@ namespace Aplauz.GameEngine
             bool result=true;
             foreach (var code in codes)
             {
-                Coin coin = coins.FirstOrDefault(c => c.Code == code);
+                Coin coin = coins.FirstOrDefault(c => c.Color == code);
                 if (coins.Remove(coin) && coin != null)
                 {
                     player.AddCoin(coin);
@@ -185,15 +185,24 @@ namespace Aplauz.GameEngine
             int level = Int32.Parse(code[0].ToString()) -1;
             int number = Int32.Parse(code[1].ToString()) - 1;
             Mine chosenMine = MinesOnBoard[level][number];
-            if (chosenMine.Prices["r"] <= player.CountCoins("red") &&
-                chosenMine.Prices["w"] <= player.CountCoins("white") &&
-                chosenMine.Prices["k"] <= player.CountCoins("black") &&
-                chosenMine.Prices["b"] <= player.CountCoins("blue") &&
-                chosenMine.Prices["g"] <= player.CountCoins("green"))
+            if (chosenMine.Prices["w"] <= player.CountResources("w") &&
+                chosenMine.Prices["b"] <= player.CountResources("b") &&
+                chosenMine.Prices["g"] <= player.CountResources("g") &&
+                chosenMine.Prices["r"] <= player.CountResources("r") &&
+                chosenMine.Prices["k"] <= player.CountResources("k"))
             {
                 if (MinesOnBoard[level].Remove(chosenMine))
                 {
-                    player.RemoveCoins(chosenMine.Prices);
+                    Dictionary<string,int> coinsToRemove = new Dictionary<string, int>();
+
+                    coinsToRemove.Add("w", chosenMine.Prices["w"] - player.CountMines("w"));
+                    coinsToRemove.Add("b", chosenMine.Prices["b"] - player.CountMines("b"));
+                    coinsToRemove.Add("g", chosenMine.Prices["g"] - player.CountMines("g"));
+                    coinsToRemove.Add("r", chosenMine.Prices["r"] - player.CountMines("r"));
+                    coinsToRemove.Add("k", chosenMine.Prices["k"] - player.CountMines("k"));
+
+                    List<Coin> removedCoins = player.RemoveCoins(coinsToRemove);
+                    coins.AddRange(removedCoins);
                     player.AddMine(chosenMine);
                 }
             }
@@ -210,46 +219,7 @@ namespace Aplauz.GameEngine
             if (codes[0].ToString() != Move.TakeCoins.Shortcut && codes[0].ToString() != Move.TakeMine.Shortcut)
                 return false;
 
-            if (codes[0].ToString() == Move.TakeCoins.Shortcut)
-            {
-                codes = codes.Substring(1);
-                if (codes.Length <= 3)
-                {
-                    foreach (var code in codes)
-                    {
-                        if (code != 'b' && code != 'k' && code != 'w' && code != 'r' && code != 'g')
-                            return false;
-                    }
-                    if (codes.Length == 2 && codes[0] == codes[1])
-                        return true;
-                    if (codes.Length == 3 && codes[0] != codes[1] && codes[0] != codes[2] && codes[1] != codes[2])
-                        return true;
-
-                }
-            }
-            if (codes[0].ToString() == Move.TakeMine.Shortcut)
-            {
-                codes = codes.Substring(1);
-//                Regex regex = new Regex(@"^\d$");
-                if (codes.Length != 2)
-                    return false;
-                int level = Int32.Parse(codes[0].ToString());
-                int number = Int32.Parse(codes[1].ToString());
-                if (level >= 1 && level <= 3 && number >= 1 && number <= 4)
-                {
-                    Mine chosenMine = MinesOnBoard[level - 1][number - 1];
-                    if (chosenMine.Prices["r"] <= player.CountCoins("red") &&
-                        chosenMine.Prices["w"] <= player.CountCoins("white") &&
-                        chosenMine.Prices["k"] <= player.CountCoins("black") &&
-                        chosenMine.Prices["b"] <= player.CountCoins("blue") && 
-                        chosenMine.Prices["g"] <= player.CountCoins("green"))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return result;
-
+            return Enum.IsDefined(typeof(Move.PossibleMoves), codes) || result;
         }
     }
 }

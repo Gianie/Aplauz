@@ -49,7 +49,7 @@ namespace Aplauz.GameEngine
             if (coinsCodes.Length == 2) 
             {
                 string cos = coinsCodes.Substring(1);
-                if (coins.Count(c => c.Code == coinsCodes.Substring(1)) <2)
+                if (coins.Count(c => c.Color == coinsCodes.Substring(1)) <2)
                 {
                     result = false;
                 }
@@ -59,7 +59,7 @@ namespace Aplauz.GameEngine
                 string[] codes = coinsCodes.ToCharArray().Select(c => c.ToString()).ToArray();
                 foreach (var code in codes)
                 {
-                    if (coins.Count(c => c.Code == code) == 0)
+                    if (coins.Count(c => c.Color == code) == 0)
                     {
                         result = false;
                         break;
@@ -81,11 +81,11 @@ namespace Aplauz.GameEngine
             if (level >= 1 && level <= 3 && number >= 1 && number <= 4)
             {
                 Mine chosenMine = mines[level - 1][number - 1];
-                if (chosenMine.Prices["r"] <= player.CountCoins("red") &&
-                    chosenMine.Prices["w"] <= player.CountCoins("white") &&
-                    chosenMine.Prices["k"] <= player.CountCoins("black") &&
-                    chosenMine.Prices["b"] <= player.CountCoins("blue") &&
-                    chosenMine.Prices["g"] <= player.CountCoins("green"))
+                if (chosenMine.Prices["r"] <= player.CountResources("r") &&
+                    chosenMine.Prices["w"] <= player.CountResources("w") &&
+                    chosenMine.Prices["k"] <= player.CountResources("k") &&
+                    chosenMine.Prices["b"] <= player.CountResources("b") &&
+                    chosenMine.Prices["g"] <= player.CountResources("g"))
                 {
                     return true;
                 }

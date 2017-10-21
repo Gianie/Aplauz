@@ -36,24 +36,33 @@ namespace Aplauz.GameEngine.Players
 
         public int CountCoins(string color) // counts Coins of specific Color
         {
-            var count = Coins.Count(i => i.Color == color);
-            return count;
+            return Coins.Count(i => i.Color == color);
         }
-       
+        public int CountMines(string color)
+        {
+            return Mines.Count(m => m.Color == color);
+        }
+
+        public int CountResources(string color)
+        {
+            return CountCoins(color) + CountMines(color);
+        }
+
 
         public int CountCoins(bool withGold) //counts all Coins
         {
             int count;
-            count = CountCoins("white");
-            count += CountCoins("blue");
-            count += CountCoins("green");
-            count += CountCoins("black");
-            count += CountCoins("red");
+            count = CountCoins("w");
+            count += CountCoins("b");
+            count += CountCoins("g");
+            count += CountCoins("k");
+            count += CountCoins("r");
             if (withGold == true)
                 count += CountCoins("gold");
 
             return count;
         }
+
 
         public void AddMine(Mine mine)
         {
@@ -68,7 +77,7 @@ namespace Aplauz.GameEngine.Players
                 string code = dicElement.Key;
                 for (int i = 0; i < dicElement.Value; i++)
                 {
-                    Coin coin = Coins.First(c => c.Code == code);
+                    Coin coin = Coins.First(c => c.Color == code);
                     Coins.Remove(coin);
                     resultList.Add(coin);
                 }
