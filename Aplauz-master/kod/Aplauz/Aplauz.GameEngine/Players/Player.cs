@@ -13,7 +13,10 @@ namespace Aplauz.GameEngine.Players
         private List<Mine> Mines = new List<Mine>();
         public string Name { get; }
 
-        public int Prestige { get; }
+        public int Prestige
+        {
+            get { return Mines.Sum(m => m.Prestige); }
+        }
 
         public virtual List<Move> PossibleMoves { get; }
 

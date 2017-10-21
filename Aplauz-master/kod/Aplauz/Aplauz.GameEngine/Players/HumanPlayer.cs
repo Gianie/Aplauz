@@ -6,10 +6,6 @@ namespace Aplauz.GameEngine.Players
 {
     public class HumanPlayer : Player
     {
-        private List<Coin> coins = new List<Coin>();
-
-        private int Prestige;
-
         public HumanPlayer(string name) : base(name)
         {
         }

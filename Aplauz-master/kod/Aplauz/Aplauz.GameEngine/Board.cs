@@ -49,7 +49,7 @@ namespace Aplauz.GameEngine
             {
                 Console.WriteLine(player.Name);
             }
-
+           
             while (true)
             {
                 foreach (var player in players)
@@ -58,7 +58,7 @@ namespace Aplauz.GameEngine
                     {
                         _drawer.Draw(players, coins, MinesOnBoard);
                     }
-                    string moveCode = String.Empty;
+                    string moveCode = string.Empty;
                     bool movePossible = false;
                     while (!movePossible)
                     {
@@ -219,6 +219,9 @@ namespace Aplauz.GameEngine
             if (codes[0].ToString() != Move.TakeCoins.Shortcut && codes[0].ToString() != Move.TakeMine.Shortcut)
                 return false;
 
+            string suffix = codes.Substring(1);
+            suffix = string.Concat(suffix.OrderBy(c => c));
+            codes = codes[0] + suffix;
             return Enum.IsDefined(typeof(Move.PossibleMoves), codes) || result;
         }
     }
