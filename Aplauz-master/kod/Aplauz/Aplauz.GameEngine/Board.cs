@@ -106,11 +106,18 @@ namespace Aplauz.GameEngine
                 turn++;
             }
             SetWinner();
+            Console.ReadKey();
         }
 
         private void SetWinner()
         {
             players.First(p => p.Prestige == players.Max(p1 => p1.Prestige)).IsWinner = true;
+
+            foreach (Player player in players)
+            {
+                if (player.IsWinner == true)
+                    Console.WriteLine("Player " + player.Name + " won and got " + player.Prestige + " points.");
+            }
         }
 
         private void RandomizeMissingMines()
