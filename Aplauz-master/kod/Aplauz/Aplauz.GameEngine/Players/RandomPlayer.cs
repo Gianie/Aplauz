@@ -14,14 +14,17 @@ namespace Aplauz.GameEngine.Players
         {
         }
 
-        public override string  Entry(List<Coin> coinsOnBoard, List<List<Mine>> minesOnBoard)
+        public override string  Entry(State state)
         {
             Console.WriteLine("time for " + Name + " move");
-            return RandomMove(coinsOnBoard, minesOnBoard);
+            return RandomMove(state);
         }
 
-        public string RandomMove(List<Coin> coinsOnBoard, List<List<Mine>> minesOnBoard)
+        public string RandomMove(State state)
         {
+            List<Coin> coinsOnBoard = state.coinsOnBoard;
+            List<List<Mine>> minesOnBoard = state.MinesOnBoard;
+
             Random random = new Random();
             List<Move> moves = new List<Move>();
             Move move = new Move();
@@ -29,7 +32,7 @@ namespace Aplauz.GameEngine.Players
             {
                 string moveCode = code.ToString();
                 move = new Move(moveCode);
-                if( Move.IsMovePossible(move, this, coinsOnBoard, minesOnBoard))
+                if (Move.IsMovePossible(move, this, coinsOnBoard, minesOnBoard))
                 {
                     moves.Add(new Move(moveCode));
                 }

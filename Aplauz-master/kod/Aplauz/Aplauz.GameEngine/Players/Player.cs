@@ -26,14 +26,7 @@ namespace Aplauz.GameEngine.Players
             this.Name = name;
         }
 
-       
-
-        public virtual string Entry()
-        {
-            return "dunno what to write here";
-        }
-
-        public virtual string Entry(List<Coin> coinsOnBoard, List<List<Mine>> minesOnBoard)
+        public virtual string Entry(State state)
         {
             return "dunno what to write here";
         }

@@ -15,8 +15,9 @@ namespace Aplauz.GameEngine
 {
     public class Board
     {
-        List<Coin> coinsOnBoard = new List<Coin>();
-        List<Player> players = new List<Player>();
+        List<Coin> coinsOnBoard { get; } = new List<Coin>();
+        List<Player> players { get; } = new List<Player>();
+        State state = new State();
 
         private int currentPlayer = 0;
         private int turn = 0;
@@ -56,6 +57,8 @@ namespace Aplauz.GameEngine
             {
                 foreach (var player in players)
                 {
+                    state.Update(coinsOnBoard, players, MinesPack, MinesOnBoard);
+
                     if (player.GetType() == typeof(HumanPlayer))
                     {
                         _drawer.Draw(players, coinsOnBoard, MinesOnBoard);
@@ -64,7 +67,7 @@ namespace Aplauz.GameEngine
                     bool movePossible = false;
                     while (!movePossible)
                     {
-                        string moveCode = player.Entry(coinsOnBoard, MinesOnBoard);
+                        string moveCode = player.Entry(state);
                         movePossible = isStringLegal(moveCode);
 
                         if (!movePossible)
