@@ -12,32 +12,47 @@ namespace Aplauz.GameEngine
     {
         public string Name { get; set; }
         public string Shortcut { get; set; }
+        public string moveCode { get; set; }
 
+        public Move(string moveCode)
+        {
+            this.moveCode = moveCode;
+            Shortcut = moveCode[0].ToString();
+            if (Shortcut == Move.TakeCoins.Shortcut)
+                Name = "Take Coins";
+            else if (Shortcut == Move.TakeMine.Shortcut)
+                Name = "Take Mine";
+        }
+        public Move()
+        {
+
+        }
 
         public static Move TakeCoins = new Move()
         {
             Name = "Take Coins",
-            Shortcut = "c"
+            Shortcut = "c",
+            moveCode = String.Empty
 
         };
         public static Move TakeMine = new Move()
         {
             Name = "Take Mine",
-            Shortcut = "m"
-
+            Shortcut = "m",
+            moveCode = String.Empty
         };
 
-        public static bool IsMovePossible(string moveCode, Player player, List<Coin> coins, List<List<Mine>> mines)
+        public static bool IsMovePossible(Move move, Player player, List<Coin> coins, List<List<Mine>> mines)
         {
             bool result = false;
-            if (moveCode[0].ToString() == Move.TakeCoins.Shortcut)
+            if (move.Shortcut == Move.TakeCoins.Shortcut)
             {
-                string coinsCodes = moveCode.Substring(1);
+                string coinsCodes = move.moveCode.Substring(1);
                 result = canPlayerTakeCoins(coinsCodes, player, coins);
             }
-            else if (moveCode[0].ToString() == Move.TakeMine.Shortcut)
+            else if (move.Shortcut == Move.TakeMine.Shortcut)
             {
-                string mineCode = moveCode.Substring(1);
+                string mineCode = move.moveCode.Substring(1);
                 result = canPlayerBuyMine(mineCode, player, mines);
             }
                 return result;
