@@ -59,6 +59,8 @@
     <Compile Include="Board.cs" />
     <Compile Include="Players\RandomPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StateExporters\IStateExporter.cs" />
+    <Compile Include="StateExporters\StateExporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

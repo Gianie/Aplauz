@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Aplauz.GameEngine.StateExporters;
 
 namespace Aplauz.GameEngine.Players
 {
@@ -17,7 +18,7 @@ namespace Aplauz.GameEngine.Players
             Move.TakeMine
         };
 
-        public override string Entry()
+        public override string Entry(State state)
         {
             Console.WriteLine("time for " +  Name + " move");
             foreach (var move in PossibleMoves)

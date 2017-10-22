@@ -1,9 +1,7 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Diagnostics.PerformanceData;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Aplauz.GameEngine.StateExporters;
 
 namespace Aplauz.GameEngine.Players
 {
@@ -27,7 +25,7 @@ namespace Aplauz.GameEngine.Players
 
        
 
-        public virtual string Entry()
+        public virtual string Entry(State state)
         {
             return "dunno what to write here";
         }
