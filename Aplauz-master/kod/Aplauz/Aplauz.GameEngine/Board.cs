@@ -49,7 +49,7 @@ namespace Aplauz.GameEngine
             {
                 Console.WriteLine(player.Name);
             }
-           
+            Move move = new Move();
             while (true)
             {
                 foreach (var player in players)
@@ -58,19 +58,21 @@ namespace Aplauz.GameEngine
                     {
                         _drawer.Draw(players, coins, MinesOnBoard);
                     }
-                    string moveCode = string.Empty;
+
                     bool movePossible = false;
                     while (!movePossible)
                     {
-                        moveCode = player.Entry();
-                        movePossible = isStringLegal(moveCode,player);
+                        string moveCode = player.Entry();
+                        movePossible = isStringLegal(moveCode);
+
                         if (!movePossible)
                         {
                             Console.WriteLine("string is not legal");
                             continue;
 
                         }
-                        movePossible = Move.IsMovePossible(moveCode, player, coins, MinesOnBoard);
+                        move = new Move(moveCode);
+                        movePossible = Move.IsMovePossible(move, player, coins, MinesOnBoard);
                         if (!movePossible)
                         {
                             Console.WriteLine("Move is not possible. Sorry");
@@ -78,15 +80,15 @@ namespace Aplauz.GameEngine
                         }
                         movePossible = true;
                     }
-                    if (moveCode[0].ToString() == Move.TakeCoins.Shortcut)
+                    if (move.Shortcut == Move.TakeCoins.Shortcut)
                     {
-                        string coinsCodes = moveCode.Substring(1);
+                        string coinsCodes = move.moveCode.Substring(1);
                         GiveCoins(coinsCodes.ToCharArray().Select(c => c.ToString()).ToArray(), player); //Tak trzeba Janek jezeli chcemy miec tablicę stringów jednoelementowych :D
 
                     }
-                    else if (moveCode[0].ToString() == Move.TakeMine.Shortcut)
+                    else if (move.Shortcut == Move.TakeMine.Shortcut)
                     {
-                        string mineCode = moveCode.Substring(1);
+                        string mineCode = move.moveCode.Substring(1);
                         GiveMine(mineCode,player);
                     }
                     RandomizeMissingMines();
@@ -210,7 +212,7 @@ namespace Aplauz.GameEngine
             
         }
 
-        public bool isStringLegal(string codes, Player player)
+        public bool isStringLegal(string codes)
         {
             bool result = false;
             if (codes.Length > 4 || codes == "" || codes.Length < 1)

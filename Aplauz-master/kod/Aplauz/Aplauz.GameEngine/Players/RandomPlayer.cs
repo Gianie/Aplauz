@@ -10,8 +10,6 @@ namespace Aplauz.GameEngine.Players
     {
         private List<Coin> coins = new List<Coin>();
 
-        private int Prestige;
-
         public RandomPlayer(string name) : base(name)
         {
         }
@@ -23,12 +21,13 @@ namespace Aplauz.GameEngine.Players
             {
                 Console.WriteLine(move.Shortcut + " for: " + move.Name);
             }
-            string selectedMove;
-            selectedMove = RandomMove();
-            return selectedMove;
-            }
+            return RandomMove();
+        }
+
         public string RandomMove()
         {
+            List<Move> moves = new List<Move>();
+
             return String.Empty;
         }
     }
