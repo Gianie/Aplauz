@@ -33,6 +33,11 @@ namespace Aplauz.GameEngine.Players
             return "dunno what to write here";
         }
 
+        public virtual string Entry(List<Coin> coinsOnBoard, List<List<Mine>> minesOnBoard)
+        {
+            return "dunno what to write here";
+        }
+
         public void AddCoin(Coin coin) //adds one coin of specific Color
         {
             Coins.Add(coin);
