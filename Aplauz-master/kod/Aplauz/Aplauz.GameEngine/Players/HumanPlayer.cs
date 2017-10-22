@@ -44,6 +44,33 @@ namespace Aplauz.GameEngine.Players
 
         }
 
+        public override string Entry(List<Coin> coinsOnBoard, List<List<Mine>> minesOnBoard)
+        {
+            Console.WriteLine("time for " + Name + " move");
+            foreach (var move in PossibleMoves)
+            {
+                Console.WriteLine(move.Shortcut + " for: " + move.Name);
+            }
+            string selectedMove;
+            selectedMove = Console.ReadLine();
+
+            if (PossibleMoves.FirstOrDefault(m => m.Name == "Take Coins").Shortcut == selectedMove)
+            {
+                string message = selectedMove + Console.ReadLine();
+                return message;
+            }
+            else if (PossibleMoves.FirstOrDefault(m => m.Name == "Take Mine").Shortcut == selectedMove)
+            {
+                string message = selectedMove + Console.ReadLine();
+                return message;
+            }
+            else
+            {
+                return String.Empty;
+            }
+
+        }
+
 
     }
 }

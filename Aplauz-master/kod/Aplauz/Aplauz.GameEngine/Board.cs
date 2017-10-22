@@ -15,7 +15,7 @@ namespace Aplauz.GameEngine
 {
     public class Board
     {
-        List<Coin> coins = new List<Coin>();
+        List<Coin> coinsOnBoard = new List<Coin>();
         List<Player> players = new List<Player>();
 
         private int currentPlayer = 0;
@@ -39,8 +39,10 @@ namespace Aplauz.GameEngine
 
         private void StartNewGame(string[] args)
         {
- 
-            PopulatePlayers(4, args);
+
+            // PopulatePlayers(4, args);
+         //   PopulateThreePlusOne(4, args);
+            PopulateRandomPlayers(4, args);
             PopulateCoins();
             PopulateMines();
             RandomizeMissingMines();
@@ -56,13 +58,13 @@ namespace Aplauz.GameEngine
                 {
                     if (player.GetType() == typeof(HumanPlayer))
                     {
-                        _drawer.Draw(players, coins, MinesOnBoard);
+                        _drawer.Draw(players, coinsOnBoard, MinesOnBoard);
                     }
 
                     bool movePossible = false;
                     while (!movePossible)
                     {
-                        string moveCode = player.Entry();
+                        string moveCode = player.Entry(coinsOnBoard, MinesOnBoard);
                         movePossible = isStringLegal(moveCode);
 
                         if (!movePossible)
@@ -72,7 +74,7 @@ namespace Aplauz.GameEngine
 
                         }
                         move = new Move(moveCode);
-                        movePossible = Move.IsMovePossible(move, player, coins, MinesOnBoard);
+                        movePossible = Move.IsMovePossible(move, player, coinsOnBoard, MinesOnBoard);
                         if (!movePossible)
                         {
                             Console.WriteLine("Move is not possible. Sorry");
@@ -82,17 +84,22 @@ namespace Aplauz.GameEngine
                     }
                     if (move.Shortcut == Move.TakeCoins.Shortcut)
                     {
-                        string coinsCodes = move.moveCode.Substring(1);
+                        string coinsCodes = move.MoveCode.Substring(1);
                         GiveCoins(coinsCodes.ToCharArray().Select(c => c.ToString()).ToArray(), player); //Tak trzeba Janek jezeli chcemy miec tablicę stringów jednoelementowych :D
 
                     }
                     else if (move.Shortcut == Move.TakeMine.Shortcut)
                     {
-                        string mineCode = move.moveCode.Substring(1);
+                        string mineCode = move.MoveCode.Substring(1);
                         GiveMine(mineCode,player);
                     }
+
+                    else if (move.Shortcut == Move.None.Shortcut)
+                    {
+                        Console.WriteLine("Ten chujek nic nie robi. Sorry");
+                    }
                     RandomizeMissingMines();
-                }
+                }               
                 turn++;
             }
 
@@ -143,15 +150,15 @@ namespace Aplauz.GameEngine
             for (int i = 0; i < 7; i++)
             {
 
-                coins.Add(new Coin("b"));
-                coins.Add(new Coin("g"));
-                coins.Add(new Coin("k"));
-                coins.Add(new Coin("r"));
-                coins.Add(new Coin("w"));
+                coinsOnBoard.Add(new Coin("b"));
+                coinsOnBoard.Add(new Coin("g"));
+                coinsOnBoard.Add(new Coin("k"));
+                coinsOnBoard.Add(new Coin("r"));
+                coinsOnBoard.Add(new Coin("w"));
             }
             for (int i = 0; i < 5; i++)
             {
-                coins.Add(new Coin("gold"));
+                coinsOnBoard.Add(new Coin("gold"));
             }
         }
 
@@ -164,13 +171,33 @@ namespace Aplauz.GameEngine
             }
         }
 
+        private void PopulateThreePlusOne(int quantity, string[] names)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                RandomPlayer randomPlayer = new RandomPlayer(names[i]);
+                players.Add(randomPlayer);
+            }
+            HumanPlayer humanPlayer = new HumanPlayer(names[3]);
+            players.Add(humanPlayer);
+        }
+
+        private void PopulateRandomPlayers(int quantity, string[] names)
+        {
+            for (int i = 0; i < quantity; i++)
+            {
+                RandomPlayer p = new RandomPlayer(names[i]);
+                players.Add(p);
+            }
+        }
+
         private bool GiveCoins(string[] codes, Player player)
         {
             bool result=true;
             foreach (var code in codes)
             {
-                Coin coin = coins.FirstOrDefault(c => c.Color == code);
-                if (coins.Remove(coin) && coin != null)
+                Coin coin = coinsOnBoard.FirstOrDefault(c => c.Color == code);
+                if (coinsOnBoard.Remove(coin) && coin != null)
                 {
                     player.AddCoin(coin);
                 }
@@ -204,7 +231,7 @@ namespace Aplauz.GameEngine
                     coinsToRemove.Add("k", chosenMine.Prices["k"] - player.CountMines("k"));
 
                     List<Coin> removedCoins = player.RemoveCoins(coinsToRemove);
-                    coins.AddRange(removedCoins);
+                    coinsOnBoard.AddRange(removedCoins);
                     player.AddMine(chosenMine);
                 }
             }
@@ -218,7 +245,7 @@ namespace Aplauz.GameEngine
             if (codes.Length > 4 || codes == "" || codes.Length < 1)
                 return false;
             
-            if (codes[0].ToString() != Move.TakeCoins.Shortcut && codes[0].ToString() != Move.TakeMine.Shortcut)
+            if (codes[0].ToString() != Move.TakeCoins.Shortcut && codes[0].ToString() != Move.TakeMine.Shortcut && codes[0].ToString() != Move.None.Shortcut)
                 return false;
 
             string suffix = codes.Substring(1);
