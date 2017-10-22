@@ -50,7 +50,7 @@ namespace Aplauz.GameEngine
                 Console.WriteLine(player.Name);
             }
             Move move = new Move();
-            while (true)
+            while (players.All(p=>p.Prestige<15))
             {
                 foreach (var player in players)
                 {
@@ -95,7 +95,12 @@ namespace Aplauz.GameEngine
                 }
                 turn++;
             }
+            SetWinner();
+        }
 
+        private void SetWinner()
+        {
+            players.First(p => p.Prestige == players.Max(p1 => p1.Prestige)).IsWinner = true;
         }
 
         private void RandomizeMissingMines()

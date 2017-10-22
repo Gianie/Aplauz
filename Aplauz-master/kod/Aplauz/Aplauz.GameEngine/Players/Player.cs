@@ -11,6 +11,7 @@ namespace Aplauz.GameEngine.Players
     {
         private List<Coin> Coins = new List<Coin>();
         private List<Mine> Mines = new List<Mine>();
+        public bool IsWinner { get; set; }
         public string Name { get; }
 
         public int Prestige
