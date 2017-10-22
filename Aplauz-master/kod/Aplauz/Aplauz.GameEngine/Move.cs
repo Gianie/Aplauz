@@ -107,7 +107,9 @@ namespace Aplauz.GameEngine
             int number = Int32.Parse(mineCode[1].ToString());
             if (level >= 1 && level <= 3 && number >= 1 && number <= 4)
             {
-                Mine chosenMine = mines[level - 1][number - 1];
+                Mine chosenMine = mines[level - 1].ElementAtOrDefault(number - 1);
+                if (chosenMine == null)
+                    return false;
                 if (chosenMine.Prices["r"] <= player.CountResources("r") &&
                     chosenMine.Prices["w"] <= player.CountResources("w") &&
                     chosenMine.Prices["k"] <= player.CountResources("k") &&

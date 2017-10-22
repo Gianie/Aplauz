@@ -120,7 +120,8 @@ namespace Aplauz.GameEngine
             for (int i = 0; i < missingCountLvl1; i++)
             {
                 var adequateMinesFromPack = MinesPack.Where(m => m.Level == 1).ToList();
-                int randomizedNumber = rnd.Next(0, adequateMinesFromPack.Count-1);
+                if (adequateMinesFromPack.Count <= 0) continue;
+                int randomizedNumber = rnd.Next(0, adequateMinesFromPack.Count - 1);
                 Mine randomizedMine = adequateMinesFromPack[randomizedNumber];
                 MinesPack.Remove(randomizedMine);
                 MinesOnBoardLvl1.Add(randomizedMine);
@@ -129,6 +130,7 @@ namespace Aplauz.GameEngine
             for (int i = 0; i < missingCountLvl2; i++)
             {
                 var adequateMinesFromPack = MinesPack.Where(m => m.Level == 2).ToList();
+                if (adequateMinesFromPack.Count <= 0) continue;
                 int randomizedNumber = rnd.Next(0, adequateMinesFromPack.Count - 1);
                 Mine randomizedMine = adequateMinesFromPack[randomizedNumber];
                 MinesPack.Remove(randomizedMine);
@@ -138,6 +140,7 @@ namespace Aplauz.GameEngine
             for (int i = 0; i < missingCountLvl3; i++)
             {
                 var adequateMinesFromPack = MinesPack.Where(m => m.Level == 3).ToList();
+                if (adequateMinesFromPack.Count <= 0) continue;
                 int randomizedNumber = rnd.Next(0, adequateMinesFromPack.Count - 1);
                 Mine randomizedMine = adequateMinesFromPack[randomizedNumber];
                 MinesPack.Remove(randomizedMine);
