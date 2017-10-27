@@ -8,8 +8,9 @@ namespace Aplauz.GameEngine.Players
     {
         public HumanPlayer(string name) : base(name)
         {
+            type = "Human";
         }
-        
+
 
         public override List<Move> PossibleMoves { get; } = new List<Move>()
         {
@@ -19,7 +20,7 @@ namespace Aplauz.GameEngine.Players
 
         public override string Entry(State state)
         {
-            List<Coin> coinsOnBoard = state.coinsOnBoard;
+            List<Coin> coinsOnBoard = state.CoinsOnBoard;
             List<List<Mine>> minesOnBoard = state.MinesOnBoard;
             
             Console.WriteLine("time for " + Name + " move");

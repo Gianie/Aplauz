@@ -14,6 +14,13 @@ namespace Aplauz.GameEngine
             this.Color = color;
         }
 
+        public Coin(Coin coin)
+        {
+            this.Color = coin.Color;
+
+            this.Code = coin.Code;
+        }
+
         public string Color { get; }
 
         public string Code { get; }

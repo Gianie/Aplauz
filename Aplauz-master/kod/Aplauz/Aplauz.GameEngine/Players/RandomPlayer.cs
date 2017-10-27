@@ -8,7 +8,6 @@ namespace Aplauz.GameEngine.Players
 {
     class RandomPlayer : Player
     {
-        private List<Coin> coins = new List<Coin>();
 
         public RandomPlayer(string name) : base(name)
         {
@@ -22,7 +21,7 @@ namespace Aplauz.GameEngine.Players
 
         public string RandomMove(State state)
         {
-            List<Coin> coinsOnBoard = state.coinsOnBoard;
+            List<Coin> coinsOnBoard = state.CoinsOnBoard;
             List<List<Mine>> minesOnBoard = state.MinesOnBoard;
 
             Random random = new Random();

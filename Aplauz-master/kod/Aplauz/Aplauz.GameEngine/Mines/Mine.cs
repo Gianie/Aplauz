@@ -31,6 +31,13 @@ namespace Aplauz.GameEngine
             Prices.Add("k", prices[4] - 48);
         }
 
+        public Mine(Mine mine)
+        {
+            this.Level = mine.Level;
+            this.Prestige = mine.Prestige;
+            this.Color = mine.Color;
+        }
+
         public override string ToString()
         {
             string result = Level + Color + Prestige + Prices["w"] + Prices["b"] + Prices["g"] +
