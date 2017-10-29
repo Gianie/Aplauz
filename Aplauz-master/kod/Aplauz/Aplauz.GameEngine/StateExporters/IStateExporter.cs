@@ -8,5 +8,6 @@ namespace Aplauz.GameEngine.StateExporters
 {
     interface IStateExporter
     {
+        void ExportEndedGame(State finalState);
     }
 }

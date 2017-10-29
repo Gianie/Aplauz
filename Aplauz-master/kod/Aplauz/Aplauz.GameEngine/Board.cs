@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Aplauz.GameEngine.Drawers;
 using Aplauz.GameEngine.Mines;
 using Aplauz.GameEngine.Players;
+using Aplauz.GameEngine.StateExporters;
 
 
 namespace Aplauz.GameEngine
@@ -22,8 +23,11 @@ namespace Aplauz.GameEngine
         protected int currentPlayer = 0;
         protected int turn = 0;
         private IDrawer _drawer;
+        private IStateExporter _stateExporter;
 
         protected State state = new State();
+
+
 
         public List<Coin> CoinsOnBoard { get; } = new List<Coin>();
         public List<Player> players { get; } = new List<Player>();
@@ -38,6 +42,7 @@ namespace Aplauz.GameEngine
         {
 
             _drawer = new Drawer();
+            _stateExporter = new StateExporter();
             StartNewGame(names);
             
         }
@@ -138,6 +143,7 @@ namespace Aplauz.GameEngine
                 turn++;
             }
             SetWinner();
+            _stateExporter.ExportEndedGame(state);
             Console.ReadKey();
         }
 

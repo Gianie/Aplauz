@@ -18,9 +18,9 @@ namespace Aplauz.GameEngine
 
         public void Update(List<Coin> coinsOnBoard, List<Player> players, List<Mine> MinesPack, List<List<Mine>> MinesOnBoard)
         {
-            this.CoinsOnBoard = coinsOnBoard;
-            this.Players = players;
             HistoryStates.Add(this);
+            this.CoinsOnBoard = coinsOnBoard;
+            this.Players = players;       
             this.MinesPack = MinesPack;
             this.MinesOnBoard = MinesOnBoard;
         }
