@@ -13,6 +13,10 @@ namespace Aplauz.GameEngine.Players
         {
         }
 
+        public RandomPlayer(Player player) : base(player)
+        {
+        }
+
         public override string  Entry(State state)
         {
             Console.WriteLine("time for " + Name + " move");

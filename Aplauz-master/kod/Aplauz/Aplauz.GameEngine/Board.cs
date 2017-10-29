@@ -54,12 +54,14 @@ namespace Aplauz.GameEngine
             _drawer = board._drawer;
 
             CoinsOnBoard = board.CoinsOnBoard.ConvertAll(coin => new Coin(coin));
-           // players = board.players.ConvertAll(player => new Player(player));
+            players = board.players.ConvertAll(player => new Player(player));
             MinesPack = board.MinesPack.ConvertAll(mine =>new Mine(mine));
-            MinesOnBoard = board.MinesOnBoard.ConvertAll(mine => new List<Mine>(mine));
             MinesOnBoardLvl1 = board.MinesOnBoardLvl1.ConvertAll(mine => new Mine(mine));
             MinesOnBoardLvl2 = board.MinesOnBoardLvl2.ConvertAll(mine => new Mine(mine));
             MinesOnBoardLvl3 = board.MinesOnBoardLvl3.ConvertAll(mine => new Mine(mine));
+            MinesOnBoard.Add(MinesOnBoardLvl1);
+            MinesOnBoard.Add(MinesOnBoardLvl2);
+            MinesOnBoard.Add(MinesOnBoardLvl3);
         }
 
         
@@ -71,8 +73,8 @@ namespace Aplauz.GameEngine
 
             // PopulatePlayers(4, args);
             //   PopulateThreePlusOne(4, args);
-              PopulateRandomPlayers(4, args);
-           // PopulateWithMonteCarlo(4, args);
+            //  PopulateRandomPlayers(4, args);
+            PopulateWithMonteCarlo(4, args);
             PopulateCoins();
             PopulateMines();
             RandomizeMissingMines();
@@ -155,6 +157,8 @@ namespace Aplauz.GameEngine
             {
                 if (player.IsWinner == true)
                     Console.WriteLine("Player " + player.Name + " won and got " + player.Prestige + " points.");
+                else
+                    Console.WriteLine("Player " + player.Name + " got " + player.Prestige + " points.");
             }
         }
 
@@ -249,15 +253,16 @@ namespace Aplauz.GameEngine
 
         protected void PopulateWithMonteCarlo(int quantity, string[] names)
         {
-            for (int i = 0; i < 3; i++)
+            MonteCarloPlayer monteCarloPlayer = new MonteCarloPlayer(names[0]);
+            monteCarloPlayer.id = 0;
+            players.Add(monteCarloPlayer);
+
+            for (int i = 1; i < 4; i++)
             {
                 RandomPlayer randomPlayer = new RandomPlayer(names[i]);
                 randomPlayer.id = i;
                 players.Add(randomPlayer);
             }
-            MonteCarloPlayer monteCarloPlayer = new MonteCarloPlayer(names[3]);
-            monteCarloPlayer.id = 3;
-            players.Add(monteCarloPlayer);
         }
 
         protected bool GiveCoins(string[] codes, Player player)

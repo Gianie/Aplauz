@@ -1,4 +1,5 @@
 ﻿using Aplauz.GameEngine.Algorithms.MonteCarlo;
+using Aplauz.GameEngine.Players.MonteCarlo;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,19 +13,12 @@ namespace Aplauz.GameEngine.Players
 
     class MonteCarloPlayer : Player
     {
+        string time;
         public MonteCarloPlayer(string name) : base(name)
         {
             type = "MonteCarlo";
+            time = System.DateTime.Now.ToString("ddMMyyyyHHmmss");
         }
-
-        //public override string Entry(State state)
-        //{
-        //    int numberOfSimulations = 100;
-        //    string result = StartSimulations(state, numberOfSimulations);
-        //    Console.WriteLine("time for " + Name + " move");
-
-        //    return result;
-        //}
 
         public override string Entry(Board board)
         {
@@ -34,8 +28,6 @@ namespace Aplauz.GameEngine.Players
 
             return result;
         }
-
-
 
         public string StartSimulations(Board board, int numberOfSimulations)
         {
@@ -55,13 +47,11 @@ namespace Aplauz.GameEngine.Players
             }
 
 
-            for ( int i=0; i < numberOfSimulations; i++)
+            for ( int i=0; i < numberOfSimulations/2; i++)
             {
-
-                //  Board boardForSimulation = new Board(board); // tutaj trzeba zrobic konstruktor kopiujacy
+                MonteCarloBoard boardForSimulation = new MonteCarloBoard(board);
                 string rand = moves[random.Next(moves.Count)].MoveCode;
-                int score = 0;
-                //score = MonteCarlo.MonteCarloBoard(board);
+                int score = boardForSimulation.StartNewGame(this.Name, rand);
                 foreach (MonteCarloMove findMoveCode in moves)
                 {
                     if (findMoveCode.MoveCode == rand)
@@ -72,8 +62,48 @@ namespace Aplauz.GameEngine.Players
                 }
             }
 
-            moves.Sort((s2, s1) => s1.wins.CompareTo(s2.wins));
 
+            moves.Sort((s2, s1) => s1.result.CompareTo(s2.result));
+
+            int bestOf = 3;
+            if (moves.Count < 3)
+                bestOf = moves.Count;
+
+            for (int i = 0; i < numberOfSimulations / 2; i++)
+            {
+                MonteCarloBoard boardForSimulation = new MonteCarloBoard(board);
+                string rand = moves[random.Next(bestOf)].MoveCode;
+                int score = boardForSimulation.StartNewGame(this.Name, rand);
+                foreach (MonteCarloMove findMoveCode in moves)
+                {
+                    if (findMoveCode.MoveCode == rand)
+                    {
+                        findMoveCode.wins += score;
+                        findMoveCode.trys++;
+                    }
+                }
+            }
+            for (int i = 0; i < moves.Count; i++)
+            {
+                moves[i].result = (double)moves[i].wins / (double)moves[i].trys;
+            }  
+            for (int i = 3; i < moves.Count; i++)
+            {
+                moves[i].result = 0;
+            }
+            string path = System.IO.Directory.GetCurrentDirectory() + "\\MonteCarloTests";
+            System.IO.Directory.CreateDirectory(path);
+            
+            for (int i = 0; i < bestOf; i++)
+            {
+                File.AppendAllText(path+ "\\3Best" + time + ".txt", "Ruch: " + moves[i].MoveCode + " Liczba prob: " + moves[i].trys + " liczba wygranych: " + moves[i].wins + " Szansa na wygrana " + moves[i].result + Environment.NewLine);
+
+            }
+            File.AppendAllText(path + "\\3Best" + time + ".txt", Environment.NewLine);
+            File.AppendAllText(path + "\\ChosenMove" + time + ".txt", "Ruch: " + moves[0].MoveCode + " Liczba prob: " + moves[0].trys + " liczba wygranych: " + moves[0].wins + " Szansa na wygrana " + moves[0].result + Environment.NewLine);
+
+            moves.Sort((s2, s1) => s1.result.CompareTo(s2.result));
+            Console.WriteLine("Ruch: " + moves[0].MoveCode +" Liczba prob: " + moves[0].trys + " liczba wygranych: " + moves[0].wins + " Szansa na wygrana " + moves[0].result);
             return moves[0].MoveCode;
         }
     }
