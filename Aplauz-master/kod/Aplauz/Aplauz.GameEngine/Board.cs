@@ -13,16 +13,20 @@ using Aplauz.GameEngine.Players;
 
 namespace Aplauz.GameEngine
 {
+
     public class Board
     {
-        List<Coin> coinsOnBoard { get; } = new List<Coin>();
-        List<Player> players { get; } = new List<Player>();
-        State state = new State();
 
-        private int currentPlayer = 0;
-        private int turn = 0;
+
+
+        protected int currentPlayer = 0;
+        protected int turn = 0;
         private IDrawer _drawer;
 
+        protected State state = new State();
+
+        public List<Coin> CoinsOnBoard { get; } = new List<Coin>();
+        public List<Player> players { get; } = new List<Player>();
         public List<Mine> MinesPack { get; } = new List<Mine>();
         public List<List<Mine>> MinesOnBoard { get; } = new List<List<Mine>>();
         public List<Mine> MinesOnBoardLvl1 { get; } = new List<Mine>();
@@ -38,12 +42,32 @@ namespace Aplauz.GameEngine
             
         }
 
+        public Board(Board board)
+        {
+            currentPlayer = board.currentPlayer;
+            turn = board.turn;
+            _drawer = board._drawer;
+
+            CoinsOnBoard = board.CoinsOnBoard.ConvertAll(coin => new Coin(coin));
+           // players = board.players.ConvertAll(player => new Player(player));
+            MinesPack = board.MinesPack.ConvertAll(mine =>new Mine(mine));
+            MinesOnBoard = board.MinesOnBoard.ConvertAll(mine => new List<Mine>(mine));
+            MinesOnBoardLvl1 = board.MinesOnBoardLvl1.ConvertAll(mine => new Mine(mine));
+            MinesOnBoardLvl2 = board.MinesOnBoardLvl2.ConvertAll(mine => new Mine(mine));
+            MinesOnBoardLvl3 = board.MinesOnBoardLvl3.ConvertAll(mine => new Mine(mine));
+        }
+
+        
+
+
+
         private void StartNewGame(string[] args)
         {
 
             // PopulatePlayers(4, args);
-         //   PopulateThreePlusOne(4, args);
-            PopulateRandomPlayers(4, args);
+            //   PopulateThreePlusOne(4, args);
+              PopulateRandomPlayers(4, args);
+           // PopulateWithMonteCarlo(4, args);
             PopulateCoins();
             PopulateMines();
             RandomizeMissingMines();
@@ -57,17 +81,25 @@ namespace Aplauz.GameEngine
             {
                 foreach (var player in players)
                 {
-                    state.Update(coinsOnBoard, players, MinesPack, MinesOnBoard);
+                    state.Update(CoinsOnBoard, players, MinesPack, MinesOnBoard);
 
                     if (player.GetType() == typeof(HumanPlayer))
                     {
-                        _drawer.Draw(players, coinsOnBoard, MinesOnBoard);
+                        _drawer.Draw(players, CoinsOnBoard, MinesOnBoard);
                     }
 
                     bool movePossible = false;
                     while (!movePossible)
                     {
-                        string moveCode = player.Entry(state);
+                        string moveCode;
+                        if (player.type == "MonteCarlo")
+                        {
+                            moveCode = player.Entry(this);
+                        }
+                        else
+                        {
+                            moveCode = player.Entry(state);
+                        }
                         movePossible = isStringLegal(moveCode);
 
                         if (!movePossible)
@@ -77,7 +109,7 @@ namespace Aplauz.GameEngine
 
                         }
                         move = new Move(moveCode);
-                        movePossible = Move.IsMovePossible(move, player, coinsOnBoard, MinesOnBoard);
+                        movePossible = Move.IsMovePossible(move, player, CoinsOnBoard, MinesOnBoard);
                         if (!movePossible)
                         {
                             Console.WriteLine("Move is not possible. Sorry");
@@ -109,7 +141,7 @@ namespace Aplauz.GameEngine
             Console.ReadKey();
         }
 
-        private void SetWinner()
+        protected void SetWinner()
         {
             players.First(p => p.Prestige == players.Max(p1 => p1.Prestige)).IsWinner = true;
 
@@ -120,7 +152,7 @@ namespace Aplauz.GameEngine
             }
         }
 
-        private void RandomizeMissingMines()
+        protected void RandomizeMissingMines()
         {
             int missingCountLvl1 = 4 - MinesOnBoardLvl1.Count;
             Random rnd = new Random();
@@ -155,7 +187,7 @@ namespace Aplauz.GameEngine
             }
         }
 
-        private void PopulateMines()
+        protected void PopulateMines()
         {
             MineFactory Mf = new MineFactory();
             MinesPack.AddRange(Mf.GetAllMines());
@@ -163,24 +195,24 @@ namespace Aplauz.GameEngine
             MinesOnBoard.Add(MinesOnBoardLvl2);
             MinesOnBoard.Add(MinesOnBoardLvl3);
         }
-        private void PopulateCoins()
+        protected void PopulateCoins()
         {
             for (int i = 0; i < 7; i++)
             {
 
-                coinsOnBoard.Add(new Coin("b"));
-                coinsOnBoard.Add(new Coin("g"));
-                coinsOnBoard.Add(new Coin("k"));
-                coinsOnBoard.Add(new Coin("r"));
-                coinsOnBoard.Add(new Coin("w"));
+                CoinsOnBoard.Add(new Coin("b"));
+                CoinsOnBoard.Add(new Coin("g"));
+                CoinsOnBoard.Add(new Coin("k"));
+                CoinsOnBoard.Add(new Coin("r"));
+                CoinsOnBoard.Add(new Coin("w"));
             }
             for (int i = 0; i < 5; i++)
             {
-                coinsOnBoard.Add(new Coin("gold"));
+                CoinsOnBoard.Add(new Coin("gold"));
             }
         }
 
-        private void PopulatePlayers(int quantity, string[] names)
+        protected void PopulatePlayers(int quantity, string[] names)
         {
             for (int i = 0; i < quantity; i++)
             {
@@ -189,7 +221,7 @@ namespace Aplauz.GameEngine
             }
         }
 
-        private void PopulateThreePlusOne(int quantity, string[] names)
+        protected void PopulateThreePlusOne(int quantity, string[] names)
         {
             for (int i = 0; i < 3; i++)
             {
@@ -200,7 +232,7 @@ namespace Aplauz.GameEngine
             players.Add(humanPlayer);
         }
 
-        private void PopulateRandomPlayers(int quantity, string[] names)
+        protected void PopulateRandomPlayers(int quantity, string[] names)
         {
             for (int i = 0; i < quantity; i++)
             {
@@ -209,13 +241,26 @@ namespace Aplauz.GameEngine
             }
         }
 
-        private bool GiveCoins(string[] codes, Player player)
+        protected void PopulateWithMonteCarlo(int quantity, string[] names)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                RandomPlayer randomPlayer = new RandomPlayer(names[i]);
+                randomPlayer.id = i;
+                players.Add(randomPlayer);
+            }
+            MonteCarloPlayer monteCarloPlayer = new MonteCarloPlayer(names[3]);
+            monteCarloPlayer.id = 3;
+            players.Add(monteCarloPlayer);
+        }
+
+        protected bool GiveCoins(string[] codes, Player player)
         {
             bool result=true;
             foreach (var code in codes)
             {
-                Coin coin = coinsOnBoard.FirstOrDefault(c => c.Color == code);
-                if (coinsOnBoard.Remove(coin) && coin != null)
+                Coin coin = CoinsOnBoard.FirstOrDefault(c => c.Color == code);
+                if (CoinsOnBoard.Remove(coin) && coin != null)
                 {
                     player.AddCoin(coin);
                 }
@@ -227,7 +272,7 @@ namespace Aplauz.GameEngine
             return result;
         }
 
-        private void GiveMine(string code, Player player)
+        protected void GiveMine(string code, Player player)
         {
             int level = Int32.Parse(code[0].ToString()) -1;
             int number = Int32.Parse(code[1].ToString()) - 1;
@@ -249,7 +294,7 @@ namespace Aplauz.GameEngine
                     coinsToRemove.Add("k", chosenMine.Prices["k"] - player.CountMines("k"));
 
                     List<Coin> removedCoins = player.RemoveCoins(coinsToRemove);
-                    coinsOnBoard.AddRange(removedCoins);
+                    CoinsOnBoard.AddRange(removedCoins);
                     player.AddMine(chosenMine);
                 }
             }

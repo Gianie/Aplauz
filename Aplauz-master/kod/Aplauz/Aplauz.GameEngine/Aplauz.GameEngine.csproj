@@ -47,11 +47,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\MonteCarlo\MonteCarloMove.cs" />
     <Compile Include="Coin.cs" />
     <Compile Include="Drawers\Drawer.cs" />
     <Compile Include="Drawers\IDrawer.cs" />
     <Compile Include="Mines\MineFactory.cs" />
     <Compile Include="Move.cs" />
+    <Compile Include="Algorithms\MonteCarlo\MonteCarloBoard.cs" />
+    <Compile Include="Algorithms\MonteCarlo\MonteCarloPlayer.cs" />
     <Compile Include="Players\PlayerFactory.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="Mines\Mine.cs" />
