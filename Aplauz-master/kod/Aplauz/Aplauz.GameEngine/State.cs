@@ -14,10 +14,13 @@ namespace Aplauz.GameEngine
         public List<Mine> MinesPack { get; set; } = new List<Mine>();
         public List<List<Mine>> MinesOnBoard { get; set; } = new List<List<Mine>>();
 
+        public List<State> HistoryStates { get; set; } = new List<State>();
+
         public void Update(List<Coin> coinsOnBoard, List<Player> players, List<Mine> MinesPack, List<List<Mine>> MinesOnBoard)
         {
             this.CoinsOnBoard = coinsOnBoard;
             this.Players = players;
+            HistoryStates.Add(this);
             this.MinesPack = MinesPack;
             this.MinesOnBoard = MinesOnBoard;
         }
