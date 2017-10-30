@@ -22,34 +22,24 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
             int turn = 0;
             Move move = new Move();
             int simulationTurn = 0;
+            int wasAlready = 0; // zmienna mowiaca czy racz ld aktoreog robimy symulacje wykonal juz ruch
             while (players.All(p => p.Prestige < 15))
             {
+                if (simulationTurn >= 1000)
+                    return 0;
                 simulationTurn++;
                 foreach (var player in players)
                 {
                     state.Update(CoinsOnBoard, players, MinesPack, MinesOnBoard);
-
-                    bool movePossible = false;
-                    while (!movePossible)
-                    {
-                        if (simulationTurn > 1)
+                    if (simulationTurn == 1 && wasAlready == 0)
+                         continue;
+                    if (simulationTurn > 1)
                         {
-                            moveCode = player.RandomMove(state);
+                        moveCode = player.RandomMove(this);
                         }
-                        movePossible = isStringLegal(moveCode);
 
-                        if (!movePossible)
-                        {
-                            continue;
-                        }
                         move = new Move(moveCode);
-                        movePossible = Move.IsMovePossible(move, player, CoinsOnBoard, MinesOnBoard);
-                        if (!movePossible)
-                        {
-                            continue;
-                        }
-                        movePossible = true;
-                    }
+                        wasAlready = 1;
                     if (move.Shortcut == Move.TakeCoins.Shortcut)
                     {
                         string coinsCodes = move.MoveCode.Substring(1);
@@ -83,6 +73,12 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
                 }
             }
             return 0;
+        }
+
+        protected new void SetWinner()
+        {
+            players.First(p => p.Prestige == players.Max(p1 => p1.Prestige)).IsWinner = true;
+
         }
     }
 }

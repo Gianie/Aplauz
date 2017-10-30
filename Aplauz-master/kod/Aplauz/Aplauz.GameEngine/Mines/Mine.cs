@@ -40,7 +40,7 @@ namespace Aplauz.GameEngine
             this.Level = mine.Level;
             this.Prestige = mine.Prestige;
             this.Color = mine.Color;
-            this.Prices = mine.Prices;
+            this.Prices = new Dictionary<string, int>(mine.Prices);
         }
 
         public override string ToString()

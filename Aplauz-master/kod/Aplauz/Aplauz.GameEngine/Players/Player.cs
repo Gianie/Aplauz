@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Aplauz.GameEngine.Players
 {
-    public abstract class Player
+    public class Player
     {
         private List<Coin> Coins = new List<Coin>();
         private List<Mine> Mines = new List<Mine>();
@@ -19,9 +19,7 @@ namespace Aplauz.GameEngine.Players
         public int Prestige
         {         
             get { return Mines.Sum(m => m.Prestige);}
-            
-
-            //sprawdzic czy ten set dziala
+            set {; }
         }
 
         public virtual List<Move> PossibleMoves { get; }
@@ -45,7 +43,6 @@ namespace Aplauz.GameEngine.Players
             this.id = player.id;
             this.type = player.type;
             //this.Prestige = player.Prestige;
-
         }
 
         public virtual string Entry(Board board)
@@ -114,10 +111,10 @@ namespace Aplauz.GameEngine.Players
             return resultList;
         }
 
-        public string RandomMove(State state)
+        public string RandomMove(Board board)
         {
-            List<Coin> coinsOnBoard = state.CoinsOnBoard;
-            List<List<Mine>> minesOnBoard = state.MinesOnBoard;
+            List<Coin> coinsOnBoard = board.CoinsOnBoard;
+            List<List<Mine>> minesOnBoard = board.MinesOnBoard;
 
             Random random = new Random();
             List<Move> moves = new List<Move>();

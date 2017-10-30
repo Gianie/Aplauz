@@ -10,6 +10,7 @@ namespace Aplauz.GameEngine.Algorithms.MonteCarlo
     {
         public int wins;
         public int trys;
+        public double result;
 
         public MonteCarloMove(string moveCode)
         {
@@ -24,6 +25,7 @@ namespace Aplauz.GameEngine.Algorithms.MonteCarlo
 
             wins = 0;
             trys = 0;
+            result = 0;
         }
 
         public MonteCarloMove()
