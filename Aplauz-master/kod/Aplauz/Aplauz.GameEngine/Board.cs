@@ -72,7 +72,7 @@ namespace Aplauz.GameEngine
         {
 
             // PopulatePlayers(4, args);
-            //   PopulateThreePlusOne(4, args);
+           //    PopulateThreePlusOne(4, args);
             //  PopulateRandomPlayers(4, args);
             PopulateWithMonteCarlo(4, args);
             PopulateCoins();
@@ -98,15 +98,8 @@ namespace Aplauz.GameEngine
                     bool movePossible = false;
                     while (!movePossible)
                     {
-                        string moveCode;
-                        if (player.type == "MonteCarlo")
-                        {
-                            moveCode = player.Entry(this);
-                        }
-                        else
-                        {
-                            moveCode = player.Entry(state);
-                        }
+                        string moveCode = player.Entry(this);
+        
                         movePossible = isStringLegal(moveCode);
 
                         if (!movePossible)
@@ -207,7 +200,7 @@ namespace Aplauz.GameEngine
         }
         protected void PopulateCoins()
         {
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 8; i++) //Poki zlote nie dzialaja zmienilem z 7 na 8  (bo tak to za czesto dochodzi do sytuacji, ze nikt nic nei moze zrobic xd)
             {
 
                 CoinsOnBoard.Add(new Coin("b"));

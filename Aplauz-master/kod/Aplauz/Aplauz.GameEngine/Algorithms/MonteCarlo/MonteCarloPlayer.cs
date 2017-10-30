@@ -22,9 +22,10 @@ namespace Aplauz.GameEngine.Players
 
         public override string Entry(Board board)
         {
+            Console.WriteLine("time for " + Name + " move");
             int numberOfSimulations = 100;
             string result = StartSimulations(board, numberOfSimulations);
-            Console.WriteLine("time for " + Name + " move");
+
 
             return result;
         }

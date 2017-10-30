@@ -17,16 +17,16 @@ namespace Aplauz.GameEngine.Players
         {
         }
 
-        public override string  Entry(State state)
+        public override string  Entry(Board board)
         {
             Console.WriteLine("time for " + Name + " move");
-            return RandomMove(state);
+            return RandomMove(board);
         }
 
-        public string RandomMove(State state)
+        public string RandomMove(Board board)
         {
-            List<Coin> coinsOnBoard = state.CoinsOnBoard;
-            List<List<Mine>> minesOnBoard = state.MinesOnBoard;
+            List<Coin> coinsOnBoard = board.CoinsOnBoard;
+            List<List<Mine>> minesOnBoard = board.MinesOnBoard;
 
             Random random = new Random();
             List<Move> moves = new List<Move>();

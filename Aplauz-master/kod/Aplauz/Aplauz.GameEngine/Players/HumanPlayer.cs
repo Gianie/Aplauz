@@ -18,10 +18,10 @@ namespace Aplauz.GameEngine.Players
             Move.TakeMine
         };
 
-        public override string Entry(State state)
+        public override string Entry(Board board)
         {
-            List<Coin> coinsOnBoard = state.CoinsOnBoard;
-            List<List<Mine>> minesOnBoard = state.MinesOnBoard;
+            List<Coin> coinsOnBoard = board.CoinsOnBoard;
+            List<List<Mine>> minesOnBoard = board.MinesOnBoard;
             
             Console.WriteLine("time for " + Name + " move");
             foreach (var move in PossibleMoves)
