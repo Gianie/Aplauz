@@ -35,7 +35,7 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
                          continue;
                     if (simulationTurn > 1)
                         {
-                        moveCode = player.RandomMove(state);
+                        moveCode = player.RandomMove(this);
                         }
 
                         move = new Move(moveCode);
