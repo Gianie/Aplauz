@@ -17,9 +17,6 @@ namespace Aplauz.GameEngine.Players
 
         }
 
-        public RandomPlayer(Player player) : base(player)
-        {
-        }
 
         public override string  Entry(Board board)
         {
