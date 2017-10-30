@@ -8,7 +8,10 @@ namespace Aplauz.GameEngine
 {
     public class Coin
     {
-
+        public Coin()
+        {
+            
+        }
         public Coin(string color)
         {
             this.Color = color;

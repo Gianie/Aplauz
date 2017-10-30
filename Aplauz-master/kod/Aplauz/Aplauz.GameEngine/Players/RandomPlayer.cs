@@ -12,6 +12,10 @@ namespace Aplauz.GameEngine.Players
         public RandomPlayer(string name) : base(name)
         {
         }
+        public RandomPlayer(Player player) : base(player)
+        {
+
+        }
 
         public override string  Entry(State state)
         {

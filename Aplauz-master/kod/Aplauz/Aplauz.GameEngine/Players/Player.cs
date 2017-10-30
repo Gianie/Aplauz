@@ -19,10 +19,17 @@ namespace Aplauz.GameEngine.Players
         public int Prestige
         {         
             get { return Mines.Sum(m => m.Prestige);}
-            set { Prestige = value; }                   //sprawdzic czy ten set dziala
+            
+
+            //sprawdzic czy ten set dziala
         }
 
         public virtual List<Move> PossibleMoves { get; }
+
+        public Player()
+        {
+            
+        }
 
         public Player(string name)
         {
@@ -37,7 +44,7 @@ namespace Aplauz.GameEngine.Players
             this.IsWinner = player.IsWinner;
             this.id = player.id;
             this.type = player.type;
-            this.Prestige = player.Prestige;
+            //this.Prestige = player.Prestige;
 
         }
 
@@ -126,6 +133,24 @@ namespace Aplauz.GameEngine.Players
             }
             string rand = moves[random.Next(moves.Count)].MoveCode;
             return rand;
+        }
+
+        public int[] ToIntArray()
+        {
+            int[] result = new int[11];
+            result[0] = Prestige;
+            result[1] = CountCoins("w");
+            result[2] = CountCoins("b");
+            result[3] = CountCoins("g");
+            result[4] = CountCoins("r");
+            result[5] = CountCoins("k");
+            result[6] = CountMines("w");
+            result[7] = CountMines("b");
+            result[8] = CountMines("g");
+            result[9] = CountMines("r");
+            result[10] = CountMines("k");
+
+            return result;
         }
 
     }

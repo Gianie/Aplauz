@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Aplauz.GameEngine.Players;
 
 namespace Aplauz.GameEngine.StateExporters
 {
@@ -22,15 +23,22 @@ namespace Aplauz.GameEngine.StateExporters
                     {
                         csv.WriteRecord(coinNumber);
                     }
+                    foreach (var mineList in state.MinesOnBoard)
+                    {
+                        var records = MapMines(mineList,4);
+                        foreach (var record in records)
+                        {
+                            csv.WriteRecord(record);
+                        }
+                    }
+                    foreach (var playerRecord in MapPlayers(state.Players))
+                    {
+                        csv.WriteRecord(playerRecord);
+                    }
 
                     csv.NextRecord();
                 }
-                //csv.WriteRecord(MapCoins(finalState.CoinsOnBoard)[1]);
-                
-                //foreach (var state in finalState.HistoryStates)
-                //{
-                //    csv.NextRecord(state.CoinsOnBoard);
-                //}
+
                 writer.Flush();
             }
         }
@@ -44,6 +52,41 @@ namespace Aplauz.GameEngine.StateExporters
             counts[3]=(_coins.Count(c => c.Color == "r"));
             counts[4]=(_coins.Count(c => c.Color == "k"));
             return counts;
+        }
+
+        private int[] MapMines(List<Mine> _mines, int numberOfMines)
+        {
+            List<int> result = new List<int>();
+
+            foreach (var mine in _mines)
+            {
+                result.AddRange(mine.ToIntArray());
+            }
+            int numberOfChars = numberOfMines * 8;
+            if (result.Count < numberOfChars)
+            {
+                int missingChars = numberOfChars - result.Count;
+                List<int> ToAdd = new List<int>();
+                for (int i = 0; i < missingChars; i++)
+                {
+                    ToAdd.Add(0);
+                }
+                result.AddRange(ToAdd);
+            }
+            return result.ToArray();
+
+        }
+
+        private int[] MapPlayers(List<Player> _players)
+        {
+            List<int> result = new List<int>();
+
+            foreach (var player in _players)
+            {
+                result.AddRange(player.ToIntArray());
+            }
+            return result.ToArray();
+
         }
     }
 }

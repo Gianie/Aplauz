@@ -11,6 +11,11 @@ namespace Aplauz.GameEngine.Players
             type = "Human";
         }
 
+        public HumanPlayer(Player player) : base(player)
+        {
+            
+        }
+
 
         public override List<Move> PossibleMoves { get; } = new List<Move>()
         {

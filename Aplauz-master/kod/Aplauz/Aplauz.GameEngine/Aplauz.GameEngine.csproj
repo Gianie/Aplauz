@@ -39,6 +39,9 @@
       <HintPath>..\packages\CsvHelper.4.0.3\lib\net45\CsvHelper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -68,6 +71,7 @@
     <Compile Include="State.cs" />
     <Compile Include="StateExporters\IStateExporter.cs" />
     <Compile Include="StateExporters\StateExporter.cs" />
+    <Compile Include="Utils\DeepCopy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
