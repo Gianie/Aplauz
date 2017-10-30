@@ -13,17 +13,26 @@ namespace Aplauz.GameEngine.Players
 
     class MonteCarloPlayer : Player
     {
+
+        public static int numberOfSimulations = 100;//Do testow//Do testow
+        public static int numberOfDoneSimulations = 0;//Do testow//Do testow
         string time;
         public MonteCarloPlayer(string name) : base(name)
         {
             type = "MonteCarlo";
             time = System.DateTime.Now.ToString("ddMMyyyyHHmmss");
+            if (numberOfDoneSimulations >= 10)//Do testow//Do testow
+            {//Do testow//Do testow
+                numberOfSimulations += 100;//Do testow//Do testow
+                numberOfDoneSimulations = 0;//Do testow//Do testow
+            }//Do testow//Do testow
+            numberOfDoneSimulations++;
         }
 
         public override string Entry(Board board)
         {
             Console.WriteLine("time for " + Name + " move");
-            int numberOfSimulations = 100;
+            
             string result = StartSimulations(board, numberOfSimulations);
 
 
@@ -94,18 +103,36 @@ namespace Aplauz.GameEngine.Players
             }
             string path = System.IO.Directory.GetCurrentDirectory() + "\\MonteCarloTests";
             System.IO.Directory.CreateDirectory(path);
-            
-            for (int i = 0; i < bestOf; i++)
-            {
-                File.AppendAllText(path+ "\\3Best" + time + ".txt", "Ruch: " + moves[i].MoveCode + " Liczba prob: " + moves[i].trys + " liczba wygranych: " + moves[i].wins + " Szansa na wygrana " + moves[i].result + Environment.NewLine);
-
-            }
-            File.AppendAllText(path + "\\3Best" + time + ".txt", Environment.NewLine);
-            File.AppendAllText(path + "\\ChosenMove" + time + ".txt", "Ruch: " + moves[0].MoveCode + " Liczba prob: " + moves[0].trys + " liczba wygranych: " + moves[0].wins + " Szansa na wygrana " + moves[0].result + Environment.NewLine);
+            System.IO.Directory.CreateDirectory(path+"\\3Best");
+            System.IO.Directory.CreateDirectory(path+"\\ChosenMove");
+            System.IO.Directory.CreateDirectory(path);
 
             moves.Sort((s2, s1) => s1.result.CompareTo(s2.result));
-            Console.WriteLine("Ruch: " + moves[0].MoveCode +" Liczba prob: " + moves[0].trys + " liczba wygranych: " + moves[0].wins + " Szansa na wygrana " + moves[0].result);
+            for (int i = 0; i < bestOf; i++)
+            {
+                File.AppendAllText(path + "\\3Best\\" + time + ".xls",numberOfSimulations +"\t"+ moves[i].MoveCode + "\t" + moves[i].trys + "\t" + moves[i].wins + "\t" + moves[i].result + Environment.NewLine);
+
+            }
+
+
+            File.AppendAllText(path + "\\3Best\\" + time + ".xls", Environment.NewLine);
+            File.AppendAllText(path + "\\ChosenMove\\" + time + ".xls", numberOfSimulations + "\t" + moves[0].MoveCode + "\t" + moves[0].trys + "\t" + moves[0].wins + "\t" + moves[0].result + Environment.NewLine);
+
+
+            Console.WriteLine("Ruch: " + moves[0].MoveCode + " Liczba prob: " + moves[0].trys + " liczba wygranych: " + moves[0].wins + " Szansa na wygrana " + moves[0].result);
             return moves[0].MoveCode;
+
+            //for (int i = 0; i < bestOf; i++)
+            //{
+            //    File.AppendAllText(path+ "\\3Best" + time + ".txt", "Ruch: " + moves[i].MoveCode + " Liczba prob: " + moves[i].trys + " liczba wygranych: " + moves[i].wins + " Szansa na wygrana " + moves[i].result + Environment.NewLine);
+
+            //}
+            //File.AppendAllText(path + "\\3Best" + time + ".txt", Environment.NewLine);
+            //File.AppendAllText(path + "\\ChosenMove" + time + ".txt", "Ruch: " + moves[0].MoveCode + " Liczba prob: " + moves[0].trys + " liczba wygranych: " + moves[0].wins + " Szansa na wygrana " + moves[0].result + Environment.NewLine);
+
+            //moves.Sort((s2, s1) => s1.result.CompareTo(s2.result));
+            //Console.WriteLine("Ruch: " + moves[0].MoveCode +" Liczba prob: " + moves[0].trys + " liczba wygranych: " + moves[0].wins + " Szansa na wygrana " + moves[0].result);
+            //return moves[0].MoveCode;
         }
     }
 }

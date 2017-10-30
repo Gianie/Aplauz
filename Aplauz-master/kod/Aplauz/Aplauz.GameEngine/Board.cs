@@ -10,7 +10,7 @@ using Aplauz.GameEngine.Drawers;
 using Aplauz.GameEngine.Mines;
 using Aplauz.GameEngine.Players;
 using Aplauz.GameEngine.StateExporters;
-
+using System.IO;
 
 namespace Aplauz.GameEngine
 {
@@ -72,7 +72,7 @@ namespace Aplauz.GameEngine
         {
 
             // PopulatePlayers(4, args);
-           //    PopulateThreePlusOne(4, args);
+            //   PopulateThreePlusOne(4, args);
             //  PopulateRandomPlayers(4, args);
             PopulateWithMonteCarlo(4, args);
             PopulateCoins();
@@ -136,23 +136,33 @@ namespace Aplauz.GameEngine
                     RandomizeMissingMines();
                 }               
                 turn++;
+
+                if(turn > 1000)
+                {
+                    break;
+                }
             }
             SetWinner();
             _stateExporter.ExportEndedGame(state);
-            Console.ReadKey();
+  //          Console.ReadKey();
         }
 
         protected void SetWinner()
         {
             players.First(p => p.Prestige == players.Max(p1 => p1.Prestige)).IsWinner = true;
-
+            string path = System.IO.Directory.GetCurrentDirectory() + "\\MonteCarloTests"; // Do testow
             foreach (Player player in players)
             {
                 if (player.IsWinner == true)
+                {
                     Console.WriteLine("Player " + player.Name + " won and got " + player.Prestige + " points.");
+                    File.AppendAllText(path + "\\AllResult.xls", MonteCarloPlayer.numberOfSimulations + "\t"+ player.Name + Environment.NewLine); //Do testów
+                }
                 else
                     Console.WriteLine("Player " + player.Name + " got " + player.Prestige + " points.");
             }
+            
+            
         }
 
         protected void RandomizeMissingMines()
