@@ -11,7 +11,7 @@ namespace Aplauz.GameEngine.StateExporters
 {
     class StateExporter:IStateExporter
     {
-        public void ExportEndedGame(State finalState)
+        public void ExportEndedGame(State finalState, int[] finalResults)
         {
             using (TextWriter writer = new StreamWriter("..\\..\\Exports\\state.csv"))
             {
@@ -35,6 +35,8 @@ namespace Aplauz.GameEngine.StateExporters
                     {
                         csv.WriteRecord(playerRecord);
                     }
+                    csv.WriteRecord(state.LastMove);
+                    csv.WriteRecord(finalResults[state.LastMovedPlayerIndex]);
 
                     csv.NextRecord();
                 }

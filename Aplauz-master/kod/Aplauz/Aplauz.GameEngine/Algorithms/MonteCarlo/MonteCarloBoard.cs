@@ -23,14 +23,14 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
             Move move = new Move();
             int simulationTurn = 0;
             int wasAlready = 0; // zmienna mowiaca czy racz ld aktoreog robimy symulacje wykonal juz ruch
-            while (players.All(p => p.Prestige < 15))
+            while (Players.All(p => p.Prestige < 15))
             {
                 if (simulationTurn >= 1000)
                     return 0;
                 simulationTurn++;
-                foreach (var player in players)
+                foreach (var player in Players)
                 {
-                    state.Update(CoinsOnBoard, players, MinesPack, MinesOnBoard);
+                    state.Update(CoinsOnBoard, Players, MinesPack, MinesOnBoard, (int)Enum.Parse(typeof(Move.PossibleMoves), move.MoveCode),currentPlayer);
                     if (simulationTurn == 1 && wasAlready == 0)
                          continue;
                     if (simulationTurn > 1)
@@ -62,7 +62,7 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
             }
             SetWinner();
 
-            foreach (Player player in players)
+            foreach (Player player in Players)
             {
                 if (player.Name == simulationPlayer)
                 {
@@ -77,7 +77,7 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
 
         protected new void SetWinner()
         {
-            players.First(p => p.Prestige == players.Max(p1 => p1.Prestige)).IsWinner = true;
+            Players.First(p => p.Prestige == Players.Max(p1 => p1.Prestige)).IsWinner = true;
 
         }
     }

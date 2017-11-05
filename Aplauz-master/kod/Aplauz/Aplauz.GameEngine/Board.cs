@@ -30,7 +30,7 @@ namespace Aplauz.GameEngine
 
 
         public List<Coin> CoinsOnBoard { get; } = new List<Coin>();
-        public List<Player> players { get; } = new List<Player>();
+        public List<Player> Players { get; } = new List<Player>();
         public List<Mine> MinesPack { get; } = new List<Mine>();
         public List<List<Mine>> MinesOnBoard { get; } = new List<List<Mine>>();
         public List<Mine> MinesOnBoardLvl1 { get; } = new List<Mine>();
@@ -54,7 +54,7 @@ namespace Aplauz.GameEngine
             _drawer = board._drawer;
 
             CoinsOnBoard = board.CoinsOnBoard.ConvertAll(coin => new Coin(coin));
-            players = board.players.ConvertAll(player => new Player(player));
+            Players = board.Players.ConvertAll(player => new Player(player));
             MinesPack = board.MinesPack.ConvertAll(mine =>new Mine(mine));
             MinesOnBoardLvl1 = board.MinesOnBoardLvl1.ConvertAll(mine => new Mine(mine));
             MinesOnBoardLvl2 = board.MinesOnBoardLvl2.ConvertAll(mine => new Mine(mine));
@@ -72,33 +72,37 @@ namespace Aplauz.GameEngine
         {
 
             // PopulatePlayers(4, args);
-           //    PopulateThreePlusOne(4, args);
-            //  PopulateRandomPlayers(4, args);
-            PopulateWithMonteCarlo(4, args);
+              // PopulateThreePlusOne(4, args);
+             PopulateRandomPlayers(4, args);
+           // PopulateWithMonteCarlo(4, args);
             PopulateCoins();
             PopulateMines();
             RandomizeMissingMines();
+            state.Update(CoinsOnBoard, Players, MinesPack, MinesOnBoard,420, currentPlayer);
             Console.BackgroundColor = ConsoleColor.Gray;
-            foreach (var player in players)
+            foreach (var player in Players)
             {
                 Console.WriteLine(player.Name);
             }
             Move move = new Move();
-            while (players.All(p=>p.Prestige<15))
+           
+            while (Players.All(p=>p.Prestige<15))
             {
-                foreach (var player in players)
+                currentPlayer = 0;
+                foreach (var player in Players)
                 {
-                    state.Update(CoinsOnBoard, players, MinesPack, MinesOnBoard);
 
+                  
                     if (player.GetType() == typeof(HumanPlayer))
                     {
-                        _drawer.Draw(players, CoinsOnBoard, MinesOnBoard);
+                        _drawer.Draw(Players, CoinsOnBoard, MinesOnBoard);
                     }
 
                     bool movePossible = false;
                     while (!movePossible)
                     {
                         string moveCode = player.Entry(this);
+
         
                         movePossible = isStringLegal(moveCode);
 
@@ -109,6 +113,9 @@ namespace Aplauz.GameEngine
 
                         }
                         move = new Move(moveCode);
+                        state.Update(CoinsOnBoard, Players, MinesPack, MinesOnBoard, (int)Enum.Parse(typeof(Move.PossibleMoves), move.MoveCode),currentPlayer);
+
+                        Console.WriteLine((int)Enum.Parse(typeof(Move.PossibleMoves), move.MoveCode));
                         movePossible = Move.IsMovePossible(move, player, CoinsOnBoard, MinesOnBoard);
                         if (!movePossible)
                         {
@@ -134,19 +141,26 @@ namespace Aplauz.GameEngine
                         Console.WriteLine("Ten chujek nic nie robi. Sorry");
                     }
                     RandomizeMissingMines();
+                    currentPlayer++;
                 }               
                 turn++;
             }
+
             SetWinner();
-            _stateExporter.ExportEndedGame(state);
+            int[] finalResults = new int[4];
+            finalResults[0] = Players[0].Prestige;
+            finalResults[1] = Players[1].Prestige;
+            finalResults[2] = Players[2].Prestige;
+            finalResults[3] = Players[3].Prestige;
+            _stateExporter.ExportEndedGame(state, finalResults);
             Console.ReadKey();
         }
 
         protected void SetWinner()
         {
-            players.First(p => p.Prestige == players.Max(p1 => p1.Prestige)).IsWinner = true;
+            Players.First(p => p.Prestige == Players.Max(p1 => p1.Prestige)).IsWinner = true;
 
-            foreach (Player player in players)
+            foreach (Player player in Players)
             {
                 if (player.IsWinner == true)
                     Console.WriteLine("Player " + player.Name + " won and got " + player.Prestige + " points.");
@@ -220,7 +234,7 @@ namespace Aplauz.GameEngine
             for (int i = 0; i < quantity; i++)
             {
                 HumanPlayer p = new HumanPlayer(names[i]);
-                players.Add(p);
+                Players.Add(p);
             }
         }
 
@@ -229,10 +243,10 @@ namespace Aplauz.GameEngine
             for (int i = 0; i < 3; i++)
             {
                 RandomPlayer randomPlayer = new RandomPlayer(names[i]);
-                players.Add(randomPlayer);
+                Players.Add(randomPlayer);
             }
             HumanPlayer humanPlayer = new HumanPlayer(names[3]);
-            players.Add(humanPlayer);
+            Players.Add(humanPlayer);
         }
 
         protected void PopulateRandomPlayers(int quantity, string[] names)
@@ -240,7 +254,7 @@ namespace Aplauz.GameEngine
             for (int i = 0; i < quantity; i++)
             {
                 RandomPlayer p = new RandomPlayer(names[i]);
-                players.Add(p);
+                Players.Add(p);
             }
         }
 
@@ -248,13 +262,13 @@ namespace Aplauz.GameEngine
         {
             MonteCarloPlayer monteCarloPlayer = new MonteCarloPlayer(names[0]);
             monteCarloPlayer.id = 0;
-            players.Add(monteCarloPlayer);
+            Players.Add(monteCarloPlayer);
 
             for (int i = 1; i < 4; i++)
             {
                 RandomPlayer randomPlayer = new RandomPlayer(names[i]);
                 randomPlayer.id = i;
-                players.Add(randomPlayer);
+                Players.Add(randomPlayer);
             }
         }
 

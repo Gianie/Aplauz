@@ -16,7 +16,16 @@ namespace Aplauz.GameEngine
 
         public Move(string moveCode)
         {
-            this.MoveCode = moveCode;
+            if (moveCode[0] == 'c')
+            {
+                string suffix = moveCode.Substring(1);
+                suffix = String.Concat(suffix.OrderBy(c => c));
+                this.MoveCode = moveCode[0] + suffix;
+            }
+            else
+            {
+                this.MoveCode = moveCode;
+            }         
             Shortcut = moveCode[0].ToString();
             if (Shortcut == Move.TakeCoins.Shortcut)
                 Name = "Take Coins";
@@ -27,7 +36,7 @@ namespace Aplauz.GameEngine
         }
         public Move()
         {
-
+            this.MoveCode = "420";
         }
 
         public static Move TakeCoins = new Move()

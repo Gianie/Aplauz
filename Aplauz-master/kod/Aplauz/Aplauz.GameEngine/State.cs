@@ -15,13 +15,24 @@ namespace Aplauz.GameEngine
         public List<Player> Players { get; set; } = new List<Player>();
         public List<Mine> MinesPack { get; set; } = new List<Mine>();
         public List<List<Mine>> MinesOnBoard { get; set; } = new List<List<Mine>>();
+        public int LastMove { get; set; }
+        public int LastMovedPlayerIndex { get; set; }
+        
 
         public List<State> HistoryStates { get; set; } = new List<State>();
 
-        public void Update(List<Coin> coinsOnBoard, List<Player> players, List<Mine> MinesPack, List<List<Mine>> MinesOnBoard)
+        public void Update(List<Coin> coinsOnBoard, List<Player> players, List<Mine> MinesPack, List<List<Mine>> MinesOnBoard, int lastMove, int lastMovedPlayerIndex)
         {
-            State copy = new State(this);
-            HistoryStates.Add(copy);
+            if(Players.Count!=0)
+            { 
+                State copy = new State(this);
+                HistoryStates.Add(copy);
+            }
+            if(HistoryStates.Count>0)
+            { 
+                this.HistoryStates[HistoryStates.Count - 1].LastMove = lastMove;
+                this.HistoryStates[HistoryStates.Count - 1].LastMovedPlayerIndex = lastMovedPlayerIndex;
+            }
             this.CoinsOnBoard = coinsOnBoard;
             this.Players = players;       
             this.MinesPack = MinesPack;
@@ -50,6 +61,8 @@ namespace Aplauz.GameEngine
             {
                 this.Players.Add(pf.ClonePlayer(player));
             }
+            this.LastMove = state.LastMove;
+            this.LastMovedPlayerIndex = state.LastMovedPlayerIndex;
 
         }
     }
