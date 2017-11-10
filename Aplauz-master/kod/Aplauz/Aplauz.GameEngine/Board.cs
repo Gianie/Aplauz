@@ -73,8 +73,8 @@ namespace Aplauz.GameEngine
 
             // PopulatePlayers(4, args);
               // PopulateThreePlusOne(4, args);
-             PopulateRandomPlayers(4, args);
-           // PopulateWithMonteCarlo(4, args);
+           //  PopulateRandomPlayers(4, args);
+            PopulateWithMonteCarlo(4, args);
             PopulateCoins();
             PopulateMines();
             RandomizeMissingMines();
@@ -152,7 +152,7 @@ namespace Aplauz.GameEngine
             finalResults[1] = Players[1].Prestige;
             finalResults[2] = Players[2].Prestige;
             finalResults[3] = Players[3].Prestige;
-            _stateExporter.ExportEndedGame(state, finalResults);
+       //     _stateExporter.ExportEndedGame(state, finalResults);
             Console.ReadKey();
         }
 

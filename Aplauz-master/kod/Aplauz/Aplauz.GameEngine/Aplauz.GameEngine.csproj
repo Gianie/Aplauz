@@ -53,6 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\MonteCarloUpgrade\MonteCarloUpgradeBoard.cs" />
+    <Compile Include="Algorithms\MonteCarloUpgrade\MonteCarloUpgradeMove.cs" />
+    <Compile Include="Algorithms\MonteCarloUpgrade\MonteCarloUpgradePlayer.cs" />
     <Compile Include="Algorithms\MonteCarlo\MonteCarloMove.cs" />
     <Compile Include="Coin.cs" />
     <Compile Include="Drawers\Drawer.cs" />

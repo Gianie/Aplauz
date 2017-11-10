@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 namespace Aplauz.GameEngine.Players
 {
 
-    class MonteCarloPlayer : Player
+    class MonteCarloUpgradePlayer : Player
     {
         string time;
-        public MonteCarloPlayer(string name) : base(name)
+        public MonteCarloUpgradePlayer(string name) : base(name)
         {
             type = "MonteCarlo";
             time = System.DateTime.Now.ToString("ddMMyyyyHHmmss");
@@ -30,29 +30,29 @@ namespace Aplauz.GameEngine.Players
             return result;
         }
 
-        public void AddMoves (List<MonteCarloMove> moves, Board board)
+        public void AddMoves(List<MonteCarloUpgradeMove> moves, Board board)
         {
-            foreach (MonteCarloMove.PossibleMoves code in Enum.GetValues(typeof(MonteCarloMove.PossibleMoves)))
+            foreach (MonteCarloUpgradeMove.PossibleMoves code in Enum.GetValues(typeof(MonteCarloUpgradeMove.PossibleMoves)))
             {
-                MonteCarloMove move = new MonteCarloMove();
+                MonteCarloUpgradeMove move = new MonteCarloUpgradeMove();
                 string moveCode = code.ToString();
-                move = new MonteCarloMove(moveCode);
+                move = new MonteCarloUpgradeMove(moveCode);
                 if (Move.IsMovePossible(move, this, board.CoinsOnBoard, board.MinesOnBoard))
                 {
-                    moves.Add(new MonteCarloMove(moveCode));
+                    moves.Add(new MonteCarloUpgradeMove(moveCode));
                 }
             }
         }
 
-        public void TestMoves(int numberOfSimulations, Board board, List<MonteCarloMove> moves, int amountOfTestedMoves)
+        public void TestMoves(int numberOfSimulations, Board board, List<MonteCarloUpgradeMove> moves, int amountOfTestedMoves)
         {
             Random random = new Random();
             for (int i = 0; i < numberOfSimulations / 2; i++)
             {
-                MonteCarloBoard boardForSimulation = new MonteCarloBoard(board);
+                MonteCarloUpgradeBoard boardForSimulation = new MonteCarloUpgradeBoard(board);
                 string rand = moves[random.Next(amountOfTestedMoves)].MoveCode;
                 int score = boardForSimulation.StartNewGame(this.Name, rand);
-                foreach (MonteCarloMove findMoveCode in moves)
+                foreach (MonteCarloUpgradeMove findMoveCode in moves)
                 {
                     if (findMoveCode.MoveCode == rand)
                     {
@@ -63,7 +63,7 @@ namespace Aplauz.GameEngine.Players
             }
         }
 
-        public void writeToFile(int bestOf, List<MonteCarloMove> moves)
+        public void writeToFile(int bestOf, List<MonteCarloUpgradeMove> moves)
         {
             string path = System.IO.Directory.GetCurrentDirectory() + "\\MonteCarloTests";
             System.IO.Directory.CreateDirectory(path);
@@ -81,7 +81,7 @@ namespace Aplauz.GameEngine.Players
 
         }
 
-        public void setResult(List<MonteCarloMove> moves)
+        public void setResult(List<MonteCarloUpgradeMove> moves)
         {
             for (int i = 0; i < moves.Count; i++)
             {
@@ -95,11 +95,11 @@ namespace Aplauz.GameEngine.Players
 
         public string StartSimulations(Board board, int numberOfSimulations)
         {
-           
+
 
             Random random = new Random();
-            List<MonteCarloMove> moves = new List<MonteCarloMove>();
-            MonteCarloMove move = new MonteCarloMove();
+            List<MonteCarloUpgradeMove> moves = new List<MonteCarloUpgradeMove>();
+            MonteCarloUpgradeMove move = new MonteCarloUpgradeMove();
             AddMoves(moves, board);
             int amountOfTestedMoves = moves.Count;
             TestMoves(numberOfSimulations, board, moves, amountOfTestedMoves);
