@@ -11,9 +11,11 @@ namespace Aplauz.GameEngine.StateExporters
 {
     class StateExporter:IStateExporter
     {
+
         public void ExportEndedGame(State finalState, int[] finalResults)
         {
-            using (TextWriter writer = new StreamWriter("..\\..\\Exports\\state.csv"))
+            var time = System.DateTime.Now.ToString("ddMMyyyyHHmmss");
+            using (TextWriter writer = new StreamWriter("..\\..\\Exports\\"+ time + ".csv"))
             {
 
                 var csv = new CsvWriter(writer);
