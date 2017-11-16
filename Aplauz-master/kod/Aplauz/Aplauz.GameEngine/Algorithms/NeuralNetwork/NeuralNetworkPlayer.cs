@@ -43,29 +43,37 @@ namespace Aplauz.GameEngine.Players
 
         public string NeuralNetworkMove(Board board)
         {
-//            List<Coin> coinsOnBoard = board.CoinsOnBoard;
-//            List<List<Mine>> minesOnBoard = board.MinesOnBoard;
-//
-//            Random random = new Random();
-//            List<Move> moves = new List<Move>();
-//            Move move = new Move();
-//            foreach (Move.PossibleMoves code in Enum.GetValues(typeof(Move.PossibleMoves)))
-//            {
-//                string moveCode = code.ToString();
-//                move = new Move(moveCode);
-//                if (Move.IsMovePossible(move, this, coinsOnBoard, minesOnBoard))
-//                {
-//                    moves.Add(new Move(moveCode));
-//                }
-//            }
-//
-//            DeleteNone(moves);
-//            string rand = moves[random.Next(moves.Count)].MoveCode;
-//            return rand;
-                //TODO dodac lsite possiblemoves i stangry 
-            int move = run_cmd("C:/Program Files/Python36/python.exe", "C:/Users/Ewa/PycharmProjects/SiecNeuronowaInzynierka/Network-in-runtime.py 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26 8,8,8,8,8,1,2,0,2,1,0,0,0,1,2,0,1,3,1,0,0,1,3,0,2,1,1,0,1,1,1,0,0,1,3,1,0,2,0,2,0,0,1,4,2,2,0,2,0,0,0,5,0,2,2,2,0,5,3,0,0,2,1,2,5,3,0,0,0,3,3,4,0,3,6,3,0,3,1,4,6,3,0,0,3,3,4,5,0,0,0,7,3,3,0,3,0,3,3,5,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0");
+            List<Coin> coinsOnBoard = board.CoinsOnBoard;
+            List<List<Mine>> minesOnBoard = board.MinesOnBoard;
+
+            //Random random = new Random();
+            string possibleMovesStr = "";
+            List<Move> moves = new List<Move>();
+            Move move = new Move();
+            foreach (Move.PossibleMoves code in Enum.GetValues(typeof(Move.PossibleMoves)))
+            {
+                string moveCode = code.ToString();
+                move = new Move(moveCode);
+                if (Move.IsMovePossible(move, this, coinsOnBoard, minesOnBoard))
+                {
+                    Move newMove=new Move(moveCode);
+                    moves.Add(newMove);
+                    possibleMovesStr += (int)Enum.Parse(typeof(Move.PossibleMoves), moveCode);
+                    possibleMovesStr += ", ";
+                }
+            }
+
+            DeleteNone(moves);
+
+
+            int[] stateOfGame = { 8, 8, 8, 8, 8, 1, 2, 0, 2, 1, 0, 0, 0, 1, 2, 0, 1, 3, 1, 0, 0, 1, 3, 0, 2, 1, 1, 0, 1, 1, 1, 0, 0, 1, 3, 1, 0, 2, 0, 2, 0, 0, 1, 4, 2, 2, 0, 2, 0, 0, 0, 5, 0, 2, 2, 2, 0, 5, 3, 0, 0, 2, 1, 2, 5, 3, 0, 0, 0, 3, 3, 4, 0, 3, 6, 3, 0, 3, 1, 4, 6, 3, 0, 0, 3, 3, 4, 5, 0, 0, 0, 7, 3, 3, 0, 3, 0, 3, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            string stateOfGameStr=String.Join(", ", new List<int>(stateOfGame).ConvertAll(i => i.ToString()).ToArray());
+
+
+            //TODO dodac lsite possiblemoves i stangry 
+            int moveInt = run_cmd("C:/Program Files/Python36/python.exe", "C:/Users/Ewa/PycharmProjects/SiecNeuronowaInzynierka/Network-in-runtime.py "+possibleMovesStr+" "+stateOfGameStr);
            // string a = (Move.PossibleMoves) move;
-            return Enum.GetName(typeof(Move.PossibleMoves), move);
+            return Enum.GetName(typeof(Move.PossibleMoves), moveInt);
         }
 
         private int run_cmd(string cmd, string args)
