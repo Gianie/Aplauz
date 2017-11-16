@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,11 @@ namespace Aplauz.GameEngine.StateExporters
 {
     class StateExporter:IStateExporter
     {
+        private int bestResult;
 
         public void ExportEndedGame(State finalState, int[] finalResults)
         {
+            bestResult = GetMaxResult(finalResults);
             var time = System.DateTime.Now.ToString("ddMMyyyyHHmmss");
             using (TextWriter writer = new StreamWriter("..\\..\\Exports\\"+ time + ".csv"))
             {
@@ -38,13 +41,38 @@ namespace Aplauz.GameEngine.StateExporters
                         csv.WriteRecord(playerRecord);
                     }
                     csv.WriteRecord(state.LastMove);
-                    csv.WriteRecord(finalResults[state.LastMovedPlayerIndex]);
+
+                    string mark = GetMark(bestResult, finalResults[state.LastMovedPlayerIndex]).ToString();
+
+                    string dot = ".";
+                    string comma = ",";
+                    if (mark.Contains(comma))
+                    {
+                        mark = mark.Replace(comma, dot);
+                    }
+                    csv.WriteField(mark);
 
                     csv.NextRecord();
                 }
 
                 writer.Flush();
             }
+        }
+
+        private int GetMaxResult(int[] finalResults)
+        {
+            int bestResult=0;
+            foreach (var result in finalResults)
+            {
+                if (result > bestResult)
+                    bestResult = result;
+            }
+            return bestResult;
+        }
+
+        private float GetMark(int bestResult, int result)
+        {
+            return (float) result / bestResult;
         }
 
         private int[] MapCoins(List<Coin> _coins)
