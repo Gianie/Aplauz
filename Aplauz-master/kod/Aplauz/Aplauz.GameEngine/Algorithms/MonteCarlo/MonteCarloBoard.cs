@@ -8,6 +8,7 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
 {
     class MonteCarloBoard : Board
     {
+        public List<RandomPlayer> Players { get; } = new List<RandomPlayer>();
         public MonteCarloBoard(string[] names) : base ( names)
         {
 
@@ -16,6 +17,7 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
 
         public MonteCarloBoard(Board board) : base(board)
         {
+            Players = board.Players.ConvertAll(player => new RandomPlayer(player));
         }
         public int StartNewGame(string simulationPlayer, string moveCode)
         {
@@ -25,21 +27,17 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
             int wasAlready = 0; // zmienna mowiaca czy racz ld aktoreog robimy symulacje wykonal juz ruch
             while (Players.All(p => p.Prestige < 15))
             {
-                if (simulationTurn >= 1000)
-                    return 0;
-                simulationTurn++;
                 foreach (var player in Players)
                 {
-                    state.Update(CoinsOnBoard, Players, MinesPack, MinesOnBoard, (int)Enum.Parse(typeof(Move.PossibleMoves), move.MoveCode),currentPlayer);
-                    if (simulationTurn == 1 && wasAlready == 0)
-                         continue;
-                    if (simulationTurn > 1)
-                        {
+                    if (simulationTurn == 0 && wasAlready == 0 && player.Name != simulationPlayer)
+                        continue;
+                    if ((simulationTurn > 0) || (player.Name != simulationPlayer))
+                    {
                         moveCode = player.RandomMove(this);
-                        }
+                    }
+                    wasAlready = 1;
+                    move = new Move(moveCode);
 
-                        move = new Move(moveCode);
-                        wasAlready = 1;
                     if (move.Shortcut == Move.TakeCoins.Shortcut)
                     {
                         string coinsCodes = move.MoveCode.Substring(1);
@@ -56,9 +54,15 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
                     {
                     }
                     RandomizeMissingMines();
-                    simulationTurn++;
+
                 }
+                simulationTurn++;
                 turn++;
+                if(turn > 60)
+                {
+                    return 0;
+                }
+
             }
             SetWinner();
 

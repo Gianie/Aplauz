@@ -11,6 +11,7 @@ namespace Aplauz.GameEngine.Players
 
         public RandomPlayer(string name) : base(name)
         {
+            type = "RandomPlayer";
         }
         public RandomPlayer(Player player) : base(player)
         {
@@ -20,8 +21,22 @@ namespace Aplauz.GameEngine.Players
 
         public override string  Entry(Board board)
         {
-            Console.WriteLine("time for " + Name + " move");
+        //    Console.WriteLine("time for " + Name + " move. RandomPlayer" );
             return RandomMove(board);
+        }
+
+        public void DeleteNone(List<Move> moves)
+        {
+            if (moves.Count > 1)
+            {
+                for (int i = 0; i < moves.Count; i++)
+                {
+                    if (moves[i].Shortcut == "n")
+                    {
+                        moves.Remove(moves[i]);
+                    }
+                }
+            }
         }
 
         public string RandomMove(Board board)
@@ -41,6 +56,8 @@ namespace Aplauz.GameEngine.Players
                     moves.Add(new Move(moveCode));
                 }
             }
+
+            DeleteNone(moves);
             string rand = moves[random.Next(moves.Count)].MoveCode;
             return rand;
         }
