@@ -8,8 +8,8 @@ namespace Aplauz.GameEngine.Algorithms.MonteCarlo
 {
     class MonteCarloUpgradeMove : Move
     {
-        public int wins;
-        public int trys;
+        public double rate;
+        public double trys;
         public double result;
 
         public MonteCarloUpgradeMove(string moveCode)
@@ -23,7 +23,7 @@ namespace Aplauz.GameEngine.Algorithms.MonteCarlo
             else if (Shortcut == MonteCarloUpgradeMove.None.Shortcut)
                 Name = "None";
 
-            wins = 0;
+            rate = 0;
             trys = 0;
             result = 0;
         }

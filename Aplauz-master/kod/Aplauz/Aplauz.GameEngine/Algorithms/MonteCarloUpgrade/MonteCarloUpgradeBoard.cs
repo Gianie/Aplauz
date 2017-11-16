@@ -8,6 +8,7 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
 {
     class MonteCarloUpgradeBoard : Board
     {
+        public List<DynamicGreedyPlayer> Players { get; } = new List<DynamicGreedyPlayer>();
         public MonteCarloUpgradeBoard(string[] names) : base(names)
         {
 
@@ -16,30 +17,38 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
 
         public MonteCarloUpgradeBoard(Board board) : base(board)
         {
+            Players = board.Players.ConvertAll(player => new DynamicGreedyPlayer(player));
         }
-        public int StartNewGame(string simulationPlayer, string moveCode)
+        public Player SetPlayer(string simulationPlayer, Player myPlayer)
         {
-            int turn = 0;
+            foreach (Player player in Players)
+            {
+                if (player.Name == simulationPlayer)
+                {
+                    myPlayer = player;
+                }
+            }
+            return myPlayer;
+        }
+
+        public void StartSimulationMoves(string moveCode, string simulationPlayer, int howDeep)
+        {
             Move move = new Move();
             int simulationTurn = 0;
             int wasAlready = 0; // zmienna mowiaca czy racz ld aktoreog robimy symulacje wykonal juz ruch
             while (Players.All(p => p.Prestige < 15))
             {
-                if (simulationTurn >= 1000)
-                    return 0;
-                simulationTurn++;
                 foreach (var player in Players)
-                {
-                    state.Update(CoinsOnBoard, Players, MinesPack, MinesOnBoard, (int)Enum.Parse(typeof(Move.PossibleMoves), move.MoveCode), currentPlayer);
-                    if (simulationTurn == 1 && wasAlready == 0)
+                {          
+                    if (simulationTurn ==0 && wasAlready == 0 && player.Name!=simulationPlayer)
                         continue;
-                    if (simulationTurn > 1)
+                    if ((simulationTurn > 0)||(player.Name != simulationPlayer))
                     {
-                        moveCode = player.RandomMove(this);
+                        moveCode = player.ChoseMove(this);
                     }
-
-                    move = new Move(moveCode);
                     wasAlready = 1;
+                    move = new Move(moveCode);
+
                     if (move.Shortcut == Move.TakeCoins.Shortcut)
                     {
                         string coinsCodes = move.MoveCode.Substring(1);
@@ -56,29 +65,55 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
                     {
                     }
                     RandomizeMissingMines();
-                    simulationTurn++;
                 }
+                simulationTurn++;
                 turn++;
+                if (simulationTurn ==howDeep)
+                    break;
             }
-            SetWinner();
-
-            foreach (Player player in Players)
-            {
-                if (player.Name == simulationPlayer)
-                {
-                    if (player.IsWinner)
-                    {
-                        return 1;
-                    }
-                }
-            }
-            return 0;
         }
 
-        protected new void SetWinner()
+        public double RateMove(string moveCode, Player newPlayer, Player oldPlayer)
         {
-            Players.First(p => p.Prestige == Players.Max(p1 => p1.Prestige)).IsWinner = true;
+            double rate = 30;
+            bool isWinnerNow = true;
+            foreach (Player player in Players)
+            {
+                if ((turn < 10 ) || ((newPlayer.Name != player.Name) && (newPlayer.Prestige <= player.Prestige)))
+                {
+                    rate = 10;
+                    isWinnerNow = false;
+                }
+            }
 
+            rate = rate * (double)((double)(newPlayer.Prestige + 1)/ (double)15)* (double)((double)(newPlayer.Prestige + 1));
+
+            
+
+            rate += newPlayer.CountAllMines();
+            if ((oldPlayer.CountAllMines() <= 2) && (moveCode[0] == 'm') && (moveCode[1] == '1'))
+            {
+                rate += 25;
+            }
+
+            if ((newPlayer.Prestige>=15)  && isWinnerNow)
+            {
+                rate = 100000000;
+            }
+
+            return rate;
+        }
+
+        public double StartNewGame(Player simulationPlayer, string moveCode, int howDeep)
+        {
+            Player oldPlayer = new Player(simulationPlayer);
+            Player newPlayer = new Player();
+            StartSimulationMoves(moveCode, simulationPlayer.Name, howDeep);
+            
+            newPlayer = SetPlayer(simulationPlayer.Name, newPlayer);
+            double result = RateMove(moveCode, newPlayer, oldPlayer);
+
+            return result;
         }
     }
 }

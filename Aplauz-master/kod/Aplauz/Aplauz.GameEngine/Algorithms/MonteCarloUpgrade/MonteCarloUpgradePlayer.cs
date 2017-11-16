@@ -14,20 +14,41 @@ namespace Aplauz.GameEngine.Players
     class MonteCarloUpgradePlayer : Player
     {
         string time;
+        int howDeep = 5;
+        int numberOfSimulations = 1200;
         public MonteCarloUpgradePlayer(string name) : base(name)
         {
-            type = "MonteCarlo";
+            type = "MonteCarloUpgrade";
             time = System.DateTime.Now.ToString("ddMMyyyyHHmmss");
+        }
+
+        public MonteCarloUpgradePlayer(Player player) : base(player)
+        {
+
         }
 
         public override string Entry(Board board)
         {
-            Console.WriteLine("time for " + Name + " move");
-            int numberOfSimulations = 10;
+            Console.WriteLine("time for " + Name + " move. UpgradeMonteCarloPlayer");
+            
             string result = StartSimulations(board, numberOfSimulations);
 
 
             return result;
+        }
+
+        public void DeleteNone(List<MonteCarloUpgradeMove> moves)
+        {
+            if (moves.Count > 1)
+            {
+                for (int i = 0; i < moves.Count; i++)
+                {
+                    if (moves[i].Shortcut == "n")
+                    {
+                        moves.Remove(moves[i]);
+                    }
+                }
+            }
         }
 
         public void AddMoves(List<MonteCarloUpgradeMove> moves, Board board)
@@ -42,6 +63,7 @@ namespace Aplauz.GameEngine.Players
                     moves.Add(new MonteCarloUpgradeMove(moveCode));
                 }
             }
+            DeleteNone(moves);
         }
 
         public void TestMoves(int numberOfSimulations, Board board, List<MonteCarloUpgradeMove> moves, int amountOfTestedMoves)
@@ -51,12 +73,12 @@ namespace Aplauz.GameEngine.Players
             {
                 MonteCarloUpgradeBoard boardForSimulation = new MonteCarloUpgradeBoard(board);
                 string rand = moves[random.Next(amountOfTestedMoves)].MoveCode;
-                int score = boardForSimulation.StartNewGame(this.Name, rand);
+                double score = boardForSimulation.StartNewGame(this, rand, howDeep);
                 foreach (MonteCarloUpgradeMove findMoveCode in moves)
                 {
                     if (findMoveCode.MoveCode == rand)
                     {
-                        findMoveCode.wins += score;
+                        findMoveCode.rate += score;
                         findMoveCode.trys++;
                     }
                 }
@@ -70,26 +92,18 @@ namespace Aplauz.GameEngine.Players
 
             for (int i = 0; i < bestOf; i++)
             {
-                File.AppendAllText(path + "\\3Best" + time + ".txt", "Ruch: " + moves[i].MoveCode + " Liczba prob: " + moves[i].trys + " liczba wygranych: " + moves[i].wins + " Szansa na wygrana " + moves[i].result + Environment.NewLine);
+                File.AppendAllText(path + "\\3Best" + time + ".txt", "Ruch: " + moves[i].MoveCode + " Liczba prob: " + moves[i].trys + " Ocena: " + moves[i].rate + " Ocena/ilosc: " + moves[i].result + Environment.NewLine);
 
             }
             File.AppendAllText(path + "\\3Best" + time + ".txt", Environment.NewLine);
-            File.AppendAllText(path + "\\ChosenMove" + time + ".txt", "Ruch: " + moves[0].MoveCode + " Liczba prob: " + moves[0].trys + " liczba wygranych: " + moves[0].wins + " Szansa na wygrana " + moves[0].result + Environment.NewLine);
-
-
-            Console.WriteLine("Ruch: " + moves[0].MoveCode + " Liczba prob: " + moves[0].trys + " liczba wygranych: " + moves[0].wins + " Szansa na wygrana " + moves[0].result);
-
+            File.AppendAllText(path + "\\ChosenMove" + time + ".txt", "Ruch: " + moves[0].MoveCode + " Liczba prob: " + moves[0].trys + " Ocena: " + moves[0].rate + " Ocena/ilosc: " + moves[0].result + Environment.NewLine);
         }
 
         public void setResult(List<MonteCarloUpgradeMove> moves)
         {
             for (int i = 0; i < moves.Count; i++)
             {
-                moves[i].result = (double)moves[i].wins / (double)moves[i].trys;
-            }
-            for (int i = 3; i < moves.Count; i++)
-            {
-                moves[i].result = 0;
+                moves[i].result = (double)moves[i].rate / (double)moves[i].trys;
             }
         }
 
@@ -103,6 +117,7 @@ namespace Aplauz.GameEngine.Players
             AddMoves(moves, board);
             int amountOfTestedMoves = moves.Count;
             TestMoves(numberOfSimulations, board, moves, amountOfTestedMoves);
+            setResult(moves);
             moves.Sort((s2, s1) => s1.result.CompareTo(s2.result));
 
             int bestOf = 3;
@@ -111,8 +126,14 @@ namespace Aplauz.GameEngine.Players
             TestMoves(numberOfSimulations, board, moves, bestOf);
             setResult(moves);
 
+            for (int i = bestOf; i < moves.Count; i++)
+            {
+                moves[i].result = 0;
+            }
+
             moves.Sort((s2, s1) => s1.result.CompareTo(s2.result));
-            writeToFile(bestOf, moves);
+            Console.WriteLine("Ruch: " + moves[0].MoveCode + " Liczba prob: " + moves[0].trys + " łączna liczba punktów: " + moves[0].rate + " Ocena " + moves[0].result);
+            //  writeToFile(bestOf, moves);
             return moves[0].MoveCode;
         }
     }

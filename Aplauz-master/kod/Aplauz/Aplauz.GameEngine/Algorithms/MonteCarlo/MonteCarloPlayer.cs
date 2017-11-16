@@ -20,14 +20,33 @@ namespace Aplauz.GameEngine.Players
             time = System.DateTime.Now.ToString("ddMMyyyyHHmmss");
         }
 
+        public MonteCarloPlayer(Player player) : base(player)
+        {
+
+        }
+
         public override string Entry(Board board)
         {
-            Console.WriteLine("time for " + Name + " move");
-            int numberOfSimulations = 10;
+           // Console.WriteLine("time for " + Name + " move. MonteCarloPlayer");
+            int numberOfSimulations = 200;
             string result = StartSimulations(board, numberOfSimulations);
 
 
             return result;
+        }
+
+        public void DeleteNone(List<MonteCarloMove> moves)
+        {
+            if (moves.Count > 1)
+            {
+                for (int i = 0; i < moves.Count; i++)
+                {
+                    if (moves[i].Shortcut == "n")
+                    {
+                        moves.Remove(moves[i]);
+                    }
+                }
+            }
         }
 
         public void AddMoves (List<MonteCarloMove> moves, Board board)
@@ -42,6 +61,7 @@ namespace Aplauz.GameEngine.Players
                     moves.Add(new MonteCarloMove(moveCode));
                 }
             }
+            DeleteNone(moves);
         }
 
         public void TestMoves(int numberOfSimulations, Board board, List<MonteCarloMove> moves, int amountOfTestedMoves)
@@ -74,10 +94,7 @@ namespace Aplauz.GameEngine.Players
 
             }
             File.AppendAllText(path + "\\3Best" + time + ".txt", Environment.NewLine);
-            File.AppendAllText(path + "\\ChosenMove" + time + ".txt", "Ruch: " + moves[0].MoveCode + " Liczba prob: " + moves[0].trys + " liczba wygranych: " + moves[0].wins + " Szansa na wygrana " + moves[0].result + Environment.NewLine);
-
-
-            Console.WriteLine("Ruch: " + moves[0].MoveCode + " Liczba prob: " + moves[0].trys + " liczba wygranych: " + moves[0].wins + " Szansa na wygrana " + moves[0].result);
+            File.AppendAllText(path + "\\ChosenMove" + time + ".txt", "Ruch: " + moves[0].MoveCode + " Liczba prob: " + moves[0].trys + " liczba wygranych: " + moves[0].wins + " Szansa na wygrana " + moves[0].result + Environment.NewLine);    
 
         }
 
@@ -86,10 +103,6 @@ namespace Aplauz.GameEngine.Players
             for (int i = 0; i < moves.Count; i++)
             {
                 moves[i].result = (double)moves[i].wins / (double)moves[i].trys;
-            }
-            for (int i = 3; i < moves.Count; i++)
-            {
-                moves[i].result = 0;
             }
         }
 
@@ -103,6 +116,7 @@ namespace Aplauz.GameEngine.Players
             AddMoves(moves, board);
             int amountOfTestedMoves = moves.Count;
             TestMoves(numberOfSimulations, board, moves, amountOfTestedMoves);
+            setResult(moves);
             moves.Sort((s2, s1) => s1.result.CompareTo(s2.result));
 
             int bestOf = 3;
@@ -110,9 +124,13 @@ namespace Aplauz.GameEngine.Players
                 bestOf = moves.Count;
             TestMoves(numberOfSimulations, board, moves, bestOf);
             setResult(moves);
-
+            for (int i = bestOf; i < moves.Count; i++)
+            {
+                moves[i].result = 0;
+            }
             moves.Sort((s2, s1) => s1.result.CompareTo(s2.result));
-            writeToFile(bestOf, moves);
+            Console.WriteLine("Ruch: " + moves[0].MoveCode + " Liczba prob: " + moves[0].trys + " liczba wygranych: " + moves[0].wins + " Szansa na wygrana " + moves[0].result);
+            //  writeToFile(bestOf, moves);
             return moves[0].MoveCode;
         }
     }

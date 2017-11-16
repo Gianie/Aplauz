@@ -15,7 +15,9 @@ namespace Aplauz.GameEngine
         {
             typeof(HumanPlayer),
             typeof(RandomPlayer),
-            typeof(MonteCarloPlayer)
+            typeof(MonteCarloPlayer),
+            typeof(MonteCarloUpgradePlayer),
+            typeof(DynamicGreedyPlayer)
         };
         public Player ClonePlayer(Player player)
         {
@@ -25,16 +27,30 @@ namespace Aplauz.GameEngine
                 HumanPlayer copy = new HumanPlayer(player);
                 return copy;
             }
+
             else if (player.GetType() == typeof(RandomPlayer))
             {
                 RandomPlayer copy = new RandomPlayer(player);
                 return copy;
             }
-            //else if (player.GetType() == typeof(MonteCarloPlayer))
-            //{
-            //    MonteCarloPlayer copy = new MonteCarloPlayer(player);
-            //    return copy;
-            //}
+
+            else if (player.GetType() == typeof(MonteCarloPlayer))
+            {
+                MonteCarloPlayer copy = new MonteCarloPlayer(player);
+                return copy;
+            }
+
+            else if (player.GetType() == typeof(MonteCarloUpgradePlayer))
+            {
+                MonteCarloUpgradePlayer copy = new MonteCarloUpgradePlayer(player);
+                return copy;
+            }
+
+            else if (player.GetType() == typeof(DynamicGreedyPlayer))
+            {
+                DynamicGreedyPlayer copy = new DynamicGreedyPlayer(player);
+                return copy;
+            }
             else
             {
                 return null;
