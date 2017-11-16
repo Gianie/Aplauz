@@ -157,6 +157,7 @@ namespace Aplauz.GameEngine
             finalResults[2] = Players[2].Prestige;
             finalResults[3] = Players[3].Prestige;
             _stateExporter.ExportEndedGame(state, finalResults);
+            ResultExport.GameResultToFiles(Players);
             Console.ReadKey();
         }
 
