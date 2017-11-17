@@ -60,6 +60,37 @@ namespace Aplauz.GameEngine.StateExporters
             }
         }
 
+        public void ExportCurrentState(State state)
+        {
+
+            using (TextWriter writer = new StreamWriter("..\\..\\Exports\\" +  "pies.csv"))
+            {
+
+                var csv = new CsvWriter(writer);
+
+
+                foreach (var coinNumber in MapCoins(state.CoinsOnBoard))
+                {
+                    csv.WriteRecord(coinNumber);
+                }
+                foreach (var mineList in state.MinesOnBoard)
+                {
+                    var records = MapMines(mineList, 4);
+                    foreach (var record in records)
+                    {
+                        csv.WriteRecord(record);
+                    }
+                }
+                foreach (var playerRecord in MapPlayers(state.Players))
+                {
+                    csv.WriteRecord(playerRecord);
+                }
+
+                csv.NextRecord();
+                writer.Flush();
+            }
+        }
+
         private int GetMaxResult(int[] finalResults)
         {
             int bestResult=0;
