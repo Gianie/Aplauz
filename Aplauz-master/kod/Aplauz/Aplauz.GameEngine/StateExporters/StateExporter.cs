@@ -18,7 +18,8 @@ namespace Aplauz.GameEngine.StateExporters
         {
             bestResult = GetMaxResult(finalResults);
             var time = System.DateTime.Now.ToString("ddMMyyyyHHmmss");
-            using (TextWriter writer = new StreamWriter("..\\..\\Exports\\"+ time + ".csv"))
+            Random rnd = new Random();
+            using (TextWriter writer = new StreamWriter("..\\..\\Exports\\"+ time +"_" + rnd.Next(1000,9999) + ".csv"))
             {
 
                 var csv = new CsvWriter(writer);
