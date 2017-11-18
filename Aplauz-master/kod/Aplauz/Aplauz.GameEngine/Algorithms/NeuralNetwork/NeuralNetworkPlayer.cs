@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aplauz.GameEngine.StateExporters;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -13,7 +14,7 @@ namespace Aplauz.GameEngine.Players
 
         public NeuralNetworkPlayer(string name) : base(name)
         {
-            type = "RandomPlayer";
+            type = "NeuralNetworkPlayer";
         }
         public NeuralNetworkPlayer(Player player) : base(player)
         {
@@ -56,23 +57,32 @@ namespace Aplauz.GameEngine.Players
                 move = new Move(moveCode);
                 if (Move.IsMovePossible(move, this, coinsOnBoard, minesOnBoard))
                 {
-                    Move newMove=new Move(moveCode);
+                    Move newMove = new Move(moveCode);
                     moves.Add(newMove);
                     possibleMovesStr += (int)Enum.Parse(typeof(Move.PossibleMoves), moveCode);
-                    possibleMovesStr += ", ";
+                    possibleMovesStr += ",";
                 }
             }
-
+            possibleMovesStr = possibleMovesStr.Substring(0, possibleMovesStr.Length - 1);
             DeleteNone(moves);
 
-
-            int[] stateOfGame = { 8, 8, 8, 8, 8, 1, 2, 0, 2, 1, 0, 0, 0, 1, 2, 0, 1, 3, 1, 0, 0, 1, 3, 0, 2, 1, 1, 0, 1, 1, 1, 0, 0, 1, 3, 1, 0, 2, 0, 2, 0, 0, 1, 4, 2, 2, 0, 2, 0, 0, 0, 5, 0, 2, 2, 2, 0, 5, 3, 0, 0, 2, 1, 2, 5, 3, 0, 0, 0, 3, 3, 4, 0, 3, 6, 3, 0, 3, 1, 4, 6, 3, 0, 0, 3, 3, 4, 5, 0, 0, 0, 7, 3, 3, 0, 3, 0, 3, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-            string stateOfGameStr=String.Join(", ", new List<int>(stateOfGame).ConvertAll(i => i.ToString()).ToArray());
+            State state = new State()
+            {
+                CoinsOnBoard = board.CoinsOnBoard,
+                MinesOnBoard = board.MinesOnBoard,
+                Players = board.Players
+            };
+            StateExporters.StateExporter exporter = new StateExporter();
+            exporter.ExportCurrentState(state);
+            string pathToState = "..\\..\\Exports\\" + "current.csv";
+            string[] stateOfGameStr = File.ReadAllLines(pathToState);
+            //            int[] stateOfGame = { 8, 8, 8, 8, 8, 1, 2, 0, 2, 1, 0, 0, 0, 1, 2, 0, 1, 3, 1, 0, 0, 1, 3, 0, 2, 1, 1, 0, 1, 1, 1, 0, 0, 1, 3, 1, 0, 2, 0, 2, 0, 0, 1, 4, 2, 2, 0, 2, 0, 0, 0, 5, 0, 2, 2, 2, 0, 5, 3, 0, 0, 2, 1, 2, 5, 3, 0, 0, 0, 3, 3, 4, 0, 3, 6, 3, 0, 3, 1, 4, 6, 3, 0, 0, 3, 3, 4, 5, 0, 0, 0, 7, 3, 3, 0, 3, 0, 3, 3, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            //            string stateOfGameStr=String.Join(", ", new List<int>(stateOfGame).ConvertAll(i => i.ToString()).ToArray());
 
 
             //TODO dodac lsite possiblemoves i stangry 
-            int moveInt = run_cmd("C:/Program Files/Python36/python.exe", "C:/Users/Ewa/PycharmProjects/SiecNeuronowaInzynierka/Network-in-runtime.py "+possibleMovesStr+" "+stateOfGameStr);
-           // string a = (Move.PossibleMoves) move;
+            int moveInt = run_cmd("C:/Program Files/Python36/python.exe", "C:/Users/Ewa/PycharmProjects/SiecNeuronowaInzynierka/Network-in-runtime.py " + possibleMovesStr + " " + stateOfGameStr[0]);
+            // string a = (Move.PossibleMoves) move;
             return Enum.GetName(typeof(Move.PossibleMoves), moveInt);
         }
 
@@ -94,7 +104,7 @@ namespace Aplauz.GameEngine.Players
                     a += Text.Length;
                     string wynik = result.Substring(a, result.Length - a - 4);
                     int ruch = Int32.Parse(wynik);
-                   // Console.WriteLine(wynik);
+                    // Console.WriteLine(wynik);
                     return ruch;
                 }
             }

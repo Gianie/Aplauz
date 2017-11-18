@@ -63,7 +63,7 @@ namespace Aplauz.GameEngine.StateExporters
         public void ExportCurrentState(State state)
         {
 
-            using (TextWriter writer = new StreamWriter("..\\..\\Exports\\" +  "pies.csv"))
+            using (TextWriter writer = new StreamWriter("..\\..\\Exports\\" +  "current.csv"))
             {
 
                 var csv = new CsvWriter(writer);
