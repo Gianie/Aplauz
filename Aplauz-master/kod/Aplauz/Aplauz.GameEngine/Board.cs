@@ -76,8 +76,9 @@ namespace Aplauz.GameEngine
             //  PopulateRandomPlayers(4, args);
             //  PopulateWithMonteCarloUpgrade(4, args);
             //  PopulateMonteCarloUpgrade(4, args);
-          //  PopulateWithDynamicGreedy(4, args);
-            PopulateForTeaching(4,args);
+            //  PopulateWithDynamicGreedy(4, args);
+            PopulateWithNeuralNetworkWithRandoms(4, args);
+            //PopulateForTeaching(4,args);
             PopulateCoins();
             PopulateMines();
             RandomizeMissingMines();
@@ -158,7 +159,7 @@ namespace Aplauz.GameEngine
             finalResults[3] = Players[3].Prestige;
             _stateExporter.ExportEndedGame(state, finalResults);
             ResultExport.GameResultToFiles(Players);
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
         protected void SetWinner()
@@ -292,6 +293,19 @@ namespace Aplauz.GameEngine
             }
         }
 
+        protected void PopulateWithNeuralNetworkWithRandoms(int quantity, string[] names)
+        {
+            NeuralNetworkPlayer neuralPlayer = new NeuralNetworkPlayer(names[0]);
+            neuralPlayer.id = 0;
+            Players.Add(neuralPlayer);
+
+            for (int i = 1; i < 4; i++)
+            {
+                RandomPlayer randomPlayer = new RandomPlayer(names[i]);
+                randomPlayer.id = i;
+                Players.Add(randomPlayer);
+            }
+        }
 
         //protected void PopulateWithMonteCarloUpgrade(int quantity, string[] names)
         //{

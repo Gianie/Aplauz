@@ -17,7 +17,8 @@ namespace Aplauz.GameEngine
             typeof(RandomPlayer),
             typeof(MonteCarloPlayer),
             typeof(MonteCarloUpgradePlayer),
-            typeof(DynamicGreedyPlayer)
+            typeof(DynamicGreedyPlayer),
+            typeof(NeuralNetworkPlayer)
         };
         public Player ClonePlayer(Player player)
         {
@@ -49,6 +50,12 @@ namespace Aplauz.GameEngine
             else if (player.GetType() == typeof(DynamicGreedyPlayer))
             {
                 DynamicGreedyPlayer copy = new DynamicGreedyPlayer(player);
+                return copy;
+            }
+
+            else if (player.GetType() == typeof(NeuralNetworkPlayer))
+            {
+                NeuralNetworkPlayer copy = new NeuralNetworkPlayer(player);
                 return copy;
             }
             else
