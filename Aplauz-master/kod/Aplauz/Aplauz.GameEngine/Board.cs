@@ -20,7 +20,7 @@ namespace Aplauz.GameEngine
 
 
 
-        protected int currentPlayer = 0;
+        public int currentPlayer = 0;
         protected int turn = 0;
         private IDrawer _drawer;
         private IStateExporter _stateExporter;
@@ -73,11 +73,11 @@ namespace Aplauz.GameEngine
 
             // PopulatePlayers(4, args);
             // PopulateThreePlusOne(4, args);
-            //  PopulateRandomPlayers(4, args);
+              PopulateRandomPlayers(4, args);
             //  PopulateWithMonteCarloUpgrade(4, args);
             //  PopulateMonteCarloUpgrade(4, args);
             //  PopulateWithDynamicGreedy(4, args);
-            PopulateWithNeuralNetworkWithRandoms(4, args);
+           // PopulateWithNeuralNetworkWithRandoms(4, args);
             //PopulateForTeaching(4,args);
             PopulateCoins();
             PopulateMines();
@@ -159,7 +159,7 @@ namespace Aplauz.GameEngine
             finalResults[3] = Players[3].Prestige;
             _stateExporter.ExportEndedGame(state, finalResults);
             ResultExport.GameResultToFiles(Players);
-            //Console.ReadKey();
+            Console.ReadKey();
         }
 
         protected void SetWinner()
@@ -255,14 +255,14 @@ namespace Aplauz.GameEngine
         //    Players.Add(humanPlayer);
         //}
 
-        //protected void PopulateRandomPlayers(int quantity, string[] names)
-        //{
-        //    for (int i = 0; i < quantity; i++)
-        //    {
-        //        RandomPlayer p = new RandomPlayer(names[i]);
-        //        Players.Add(p);
-        //    }
-        //}
+        protected void PopulateRandomPlayers(int quantity, string[] names)
+        {
+            for (int i = 0; i < quantity; i++)
+            {
+                RandomPlayer p = new RandomPlayer(names[i]);
+                Players.Add(p);
+            }
+        }
 
         //protected void PopulateWithMonteCarlo(int quantity, string[] names)
         //{

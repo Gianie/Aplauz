@@ -81,7 +81,9 @@ namespace Aplauz.GameEngine.StateExporters
                         csv.WriteRecord(record);
                     }
                 }
-                foreach (var playerRecord in MapPlayers(state.Players))
+                int playerIndexToMap = state.LastMovedPlayerIndex;
+
+                foreach (var playerRecord in MapSpecificPlayer(state.Players[playerIndexToMap]))
                 {
                     csv.WriteRecord(playerRecord);
                 }

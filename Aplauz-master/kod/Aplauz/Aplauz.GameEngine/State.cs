@@ -37,7 +37,9 @@ namespace Aplauz.GameEngine
             this.Players = players;       
             this.MinesPack = MinesPack;
             this.MinesOnBoard = MinesOnBoard;
-            
+            this.LastMove = lastMove;
+            this.LastMovedPlayerIndex = lastMovedPlayerIndex;
+
         }
 
         public State()
