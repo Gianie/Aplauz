@@ -37,7 +37,7 @@ namespace Aplauz.GameEngine.StateExporters
                             csv.WriteRecord(record);
                         }
                     }
-                    foreach (var playerRecord in MapPlayers(state.Players))
+                    foreach (var playerRecord in MapSpecificPlayer(state.Players[state.LastMovedPlayerIndex]))
                     {
                         csv.WriteRecord(playerRecord);
                     }
@@ -151,6 +151,11 @@ namespace Aplauz.GameEngine.StateExporters
             }
             return result.ToArray();
 
+        }
+
+        private int[] MapSpecificPlayer(Player player)
+        {
+            return player.ToIntArray();
         }
     }
 }
