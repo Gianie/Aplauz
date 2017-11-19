@@ -69,6 +69,11 @@ namespace Aplauz.GameEngine.Players
             return Mines.Count(m => m.Color == color);
         }
 
+        public int CountMinesByLevel(int level)
+        {
+            return Mines.Count(m => m.Level == level);
+        }
+
         public int CountAllMines()
         {
             return Mines.Count;

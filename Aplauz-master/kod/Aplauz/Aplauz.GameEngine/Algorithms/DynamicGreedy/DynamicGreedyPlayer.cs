@@ -127,6 +127,12 @@ namespace Aplauz.GameEngine.Players
 
             foreach (Move eachMove in moves)
             {
+                if ((eachMove.Shortcut != "n") && (eachMove.MoveCode[1].ToString() == "3"))
+                {
+                    move = eachMove;
+                    return move;
+                }
+
                 if ((eachMove.Shortcut != "n") && (eachMove.MoveCode[1].ToString() == "2" || eachMove.MoveCode[1].ToString() == "3"))
                 {
                     move = eachMove;
