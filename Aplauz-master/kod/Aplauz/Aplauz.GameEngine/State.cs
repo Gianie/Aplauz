@@ -17,11 +17,11 @@ namespace Aplauz.GameEngine
         public List<List<Mine>> MinesOnBoard { get; set; } = new List<List<Mine>>();
         public int LastMove { get; set; }
         public int LastMovedPlayerIndex { get; set; }
-        
+        public int turn { get; set; }
 
         public List<State> HistoryStates { get; set; } = new List<State>();
 
-        public void Update(List<Coin> coinsOnBoard, List<Player> players, List<Mine> MinesPack, List<List<Mine>> MinesOnBoard, int lastMove, int lastMovedPlayerIndex)
+        public void Update(List<Coin> coinsOnBoard, List<Player> players, List<Mine> MinesPack, List<List<Mine>> MinesOnBoard, int lastMove, int lastMovedPlayerIndex, int turn)
         {
             if(Players.Count!=0)
             { 
@@ -39,6 +39,7 @@ namespace Aplauz.GameEngine
             this.MinesOnBoard = MinesOnBoard;
             this.LastMove = lastMove;
             this.LastMovedPlayerIndex = lastMovedPlayerIndex;
+            this.turn = turn;
 
         }
 
@@ -65,7 +66,7 @@ namespace Aplauz.GameEngine
             }
             this.LastMove = state.LastMove;
             this.LastMovedPlayerIndex = state.LastMovedPlayerIndex;
-
+            this.turn = state.turn;
         }
     }
 

@@ -24,6 +24,7 @@ namespace Aplauz.GameEngine
         protected int turn = 0;
         private IDrawer _drawer;
         private IStateExporter _stateExporter;
+        private IStateExporter _stateTurnExporter;
 
         protected State state = new State();
 
@@ -43,6 +44,8 @@ namespace Aplauz.GameEngine
 
             _drawer = new Drawer();
             _stateExporter = new StateExporter();
+            _stateTurnExporter = new StateTurnExporter();
+       
             StartNewGame(names);
             
         }
@@ -70,19 +73,19 @@ namespace Aplauz.GameEngine
 
         private void StartNewGame(string[] args)
         {
-
-            // PopulatePlayers(4, args);
-            // PopulateThreePlusOne(4, args);
-              PopulateRandomPlayers(4, args);
-            //  PopulateWithMonteCarloUpgrade(4, args);
-            //  PopulateMonteCarloUpgrade(4, args);
-            //  PopulateWithDynamicGreedy(4, args);
-           // PopulateWithNeuralNetworkWithRandoms(4, args);
-           //PopulateForTeaching(4,args);
+            int quantity = args.Length;
+            // PopulatePlayers(quantity, args);
+            // PopulateThreePlusOne(quantity, args);
+            PopulateRandomPlayers(quantity, args);
+            //  PopulateWithMonteCarloUpgrade(quantity, args);
+            //  PopulateMonteCarloUpgrade(quantity, args);
+            //  PopulateWithDynamicGreedy(quantity, args);
+            // PopulateWithNeuralNetworkWithRandoms(quantity, args);
+            //PopulateForTeaching(quantity,args);
             PopulateCoins();
             PopulateMines();
             RandomizeMissingMines();
-            state.Update(CoinsOnBoard, Players, MinesPack, MinesOnBoard,420, currentPlayer);
+            state.Update(CoinsOnBoard, Players, MinesPack, MinesOnBoard,420, currentPlayer, turn);
             Console.BackgroundColor = ConsoleColor.Gray;
             foreach (var player in Players)
             {
@@ -117,7 +120,7 @@ namespace Aplauz.GameEngine
 
                         }
                         move = new Move(moveCode);
-                        state.Update(CoinsOnBoard, Players, MinesPack, MinesOnBoard, (int)Enum.Parse(typeof(Move.PossibleMoves), move.MoveCode),currentPlayer);
+                        state.Update(CoinsOnBoard, Players, MinesPack, MinesOnBoard, (int)Enum.Parse(typeof(Move.PossibleMoves), move.MoveCode),currentPlayer, turn);
 
  //                       Console.WriteLine((int)Enum.Parse(typeof(Move.PossibleMoves), move.MoveCode));
                         movePossible = Move.IsMovePossible(move, player, CoinsOnBoard, MinesOnBoard);
@@ -158,11 +161,22 @@ namespace Aplauz.GameEngine
 
             SetWinner();
             int[] finalResults = new int[4];
-            finalResults[0] = Players[0].Prestige;
-            finalResults[1] = Players[1].Prestige;
-            finalResults[2] = Players[2].Prestige;
-            finalResults[3] = Players[3].Prestige;
-            _stateExporter.ExportEndedGame(state, finalResults);
+
+            for (int i = 0; i < quantity; i++)
+            {
+                finalResults[i] = Players[i].Prestige;
+            }
+
+            if (Players.Count == 1)
+            {
+                _stateTurnExporter.ExportEndedGame(state, finalResults);
+            }
+            else if (Players.Count > 1)
+            {
+                _stateExporter.ExportEndedGame(state, finalResults);
+            }
+
+
             ResultExport.GameResultToFiles(Players);
             Console.ReadKey(); 
         }
