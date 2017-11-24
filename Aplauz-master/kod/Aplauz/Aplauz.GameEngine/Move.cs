@@ -85,7 +85,7 @@ namespace Aplauz.GameEngine
 
             if (coinsCodes.Length == 2) 
             {
-                if (player.CountCoins(true) >= 8) //rule: player can't have 10 coins or more
+                if (player.CountCoins(true) >= 9) //rule: player can't have more than 10 coins
                 {
                     return false;
                 }
@@ -94,9 +94,9 @@ namespace Aplauz.GameEngine
                     return false;
                 }
             }
-            if (coinsCodes.Length == 3 && player.CountCoins(true) >= 7)
+            if (coinsCodes.Length == 3)
             {
-                if (player.CountCoins(true) >= 7) //rule: player can't have 10 coins or more
+                if (player.CountCoins(true) >= 8) //rule: player can't have 10 coins or more
                 {
                     return false;
                 }
