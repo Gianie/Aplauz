@@ -82,16 +82,24 @@ namespace Aplauz.GameEngine
         private static bool canPlayerTakeCoins(string coinsCodes, Player player, List<Coin> coins)
         {
             bool result = true;
+
             if (coinsCodes.Length == 2) 
             {
-                string cos = coinsCodes.Substring(1);
-                if (coins.Count(c => c.Color == coinsCodes.Substring(1)) <2)
+                if (player.CountCoins(true) >= 8) //rule: player can't have 10 coins or more
                 {
-                    result = false;
+                    return false;
+                }
+                if (coins.Count(c => c.Color == coinsCodes.Substring(1)) <4) //rule: player cant take 2 coins of the same color
+                {                                                                 // if there is less than 4 coins of that color on the board
+                    return false;
                 }
             }
-            if (coinsCodes.Length == 3)
+            if (coinsCodes.Length == 3 && player.CountCoins(true) >= 7)
             {
+                if (player.CountCoins(true) >= 7) //rule: player can't have 10 coins or more
+                {
+                    return false;
+                }
                 string[] codes = coinsCodes.ToCharArray().Select(c => c.ToString()).ToArray();
                 foreach (var code in codes)
                 {
