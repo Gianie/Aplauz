@@ -81,7 +81,7 @@ namespace Aplauz.GameEngine
             //  PopulateMonteCarloUpgrade(quantity, args);
             //  PopulateWithDynamicGreedy(quantity, args);
             // PopulateWithNeuralNetworkWithRandoms(quantity, args);
-            //PopulateForTeaching(quantity,args);
+           // PopulateForTeaching(quantity,args);
             PopulateCoins();
             PopulateMines();
             RandomizeMissingMines();
@@ -178,13 +178,33 @@ namespace Aplauz.GameEngine
 
 
             ResultExport.GameResultToFiles(Players);
-            Console.ReadKey(); 
+           // Console.ReadKey(); 
         }
 
         protected void SetWinner()
         {
-            Players.First(p => p.Prestige == Players.Max(p1 => p1.Prestige)).IsWinner = true;
-
+            int samePrestigePlayersCount = 0;
+            int maxPrestige = Players.First(p => p.Prestige == Players.Max(p1 => p1.Prestige)).Prestige;
+            foreach (var player in Players)
+            {
+                if (player.Prestige == maxPrestige)
+                {
+                    player.IsWinner = true;
+                    samePrestigePlayersCount += 1;
+                }
+            }
+            if (samePrestigePlayersCount > 1)
+            {
+                int minCards = Players.Where(p=>p.IsWinner==true).First(c => c.CountAllMines() == Players.Where(p => p.IsWinner == true).Min(c1 => c1.CountAllMines()))
+                    .CountAllMines();
+                foreach (var player in Players)
+                {
+                    if (player.Prestige != maxPrestige || player.CountAllMines()!=minCards)
+                    {
+                        player.IsWinner = false;
+                    }
+                }
+            }
             foreach (Player player in Players)
             {
                 if (player.IsWinner == true)
