@@ -42,7 +42,8 @@ namespace Aplauz.GameEngine.StateExporters
                         csv.WriteRecord(playerRecord);
                     }
                     csv.WriteRecord(state.LastMove);
-                    string mark = finalState.HistoryStates.Count.ToString();
+                    //string mark = finalState.HistoryStates.Count.ToString();
+                    string mark = finalResults[state.LastMovedPlayerIndex].ToString();
                    // string mark = GetMark(bestResult, finalResults[state.LastMovedPlayerIndex]).ToString();
 
                     string dot = ".";

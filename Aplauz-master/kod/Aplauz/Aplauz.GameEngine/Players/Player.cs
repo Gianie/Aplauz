@@ -15,6 +15,7 @@ namespace Aplauz.GameEngine.Players
         public string Name { get; }
         public int id;
         public string type { get; set; }
+        public int turnsToFinish = 0;
 
         public int Prestige
         {         

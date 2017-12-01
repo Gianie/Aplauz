@@ -42,9 +42,9 @@ namespace Aplauz.GameEngine.StateExporters
                         csv.WriteRecord(playerRecord);
                     }
                     csv.WriteRecord(state.LastMove);
-
-                    string mark = GetMark(bestResult, finalResults[state.LastMovedPlayerIndex]).ToString();
-
+                    string mark = finalResults[state.LastMovedPlayerIndex].ToString();
+                 //   string mark = GetMark(bestResult, finalResults[state.LastMovedPlayerIndex]).ToString();
+                    
                     string dot = ".";
                     string comma = ",";
                     if (mark.Contains(comma))

@@ -76,12 +76,12 @@ namespace Aplauz.GameEngine
             int quantity = args.Length;
             // PopulatePlayers(quantity, args);
             // PopulateThreePlusOne(quantity, args);
-            PopulateRandomPlayers(quantity, args);
+         //   PopulateRandomPlayers(quantity, args);
             //  PopulateWithMonteCarloUpgrade(quantity, args);
             //  PopulateMonteCarloUpgrade(quantity, args);
             //  PopulateWithDynamicGreedy(quantity, args);
             // PopulateWithNeuralNetworkWithRandoms(quantity, args);
-           // PopulateForTeaching(quantity,args);
+            PopulateForTeaching(quantity,args);
             PopulateCoins();
             PopulateMines();
             RandomizeMissingMines();
@@ -93,63 +93,86 @@ namespace Aplauz.GameEngine
             }
             Move move = new Move();
            
-            while (Players.All(p=>p.Prestige<15))
+            while (true)
             {
+                int all = 1;
+                foreach (Player playerCheck in Players)
+                {
+                    if (playerCheck.Prestige < 15)
+                    {
+                        all = 0;
+                    }
+
+                }
+
+                if (all == 1)
+                {
+                    break;
+                }
                 currentPlayer = 0;
                 foreach (var player in Players)
                 {
-
-                  
-                    if (player.GetType() == typeof(HumanPlayer))
+                    if (player.Prestige < 15)
                     {
-                        _drawer.Draw(Players, CoinsOnBoard, MinesOnBoard);
-                    }
 
-                    bool movePossible = false;
-                    while (!movePossible)
-                    {
-                        string moveCode = player.Entry(this);
-
-        
-                        movePossible = isStringLegal(moveCode);
-
-                        if (!movePossible)
+                        if (player.GetType() == typeof(HumanPlayer))
                         {
-                            Console.WriteLine("string is not legal");
-                            continue;
+                            _drawer.Draw(Players, CoinsOnBoard, MinesOnBoard);
+                        }
+
+                        bool movePossible = false;
+                        while (!movePossible)
+                        {
+                            string moveCode = player.Entry(this);
+
+
+                            movePossible = isStringLegal(moveCode);
+
+                            if (!movePossible)
+                            {
+                                Console.WriteLine("string is not legal");
+                                continue;
+
+                            }
+                            move = new Move(moveCode);
+                            state.Update(CoinsOnBoard, Players, MinesPack, MinesOnBoard,
+                                (int) Enum.Parse(typeof(Move.PossibleMoves), move.MoveCode), currentPlayer, turn);
+
+                            //                       Console.WriteLine((int)Enum.Parse(typeof(Move.PossibleMoves), move.MoveCode));
+                            movePossible = Move.IsMovePossible(move, player, CoinsOnBoard, MinesOnBoard);
+                            if (!movePossible)
+                            {
+                                Console.WriteLine("Move is not possible. Sorry");
+                                continue;
+                            }
+                            movePossible = true;
+                        }
+                        if (move.Shortcut == Move.TakeCoins.Shortcut)
+                        {
+                            string coinsCodes = move.MoveCode.Substring(1);
+                            GiveCoins(coinsCodes.ToCharArray().Select(c => c.ToString()).ToArray(), player);
 
                         }
-                        move = new Move(moveCode);
-                        state.Update(CoinsOnBoard, Players, MinesPack, MinesOnBoard, (int)Enum.Parse(typeof(Move.PossibleMoves), move.MoveCode),currentPlayer, turn);
-
- //                       Console.WriteLine((int)Enum.Parse(typeof(Move.PossibleMoves), move.MoveCode));
-                        movePossible = Move.IsMovePossible(move, player, CoinsOnBoard, MinesOnBoard);
-                        if (!movePossible)
+                        else if (move.Shortcut == Move.TakeMine.Shortcut)
                         {
-                            Console.WriteLine("Move is not possible. Sorry");
-                            continue;
+                            string mineCode = move.MoveCode.Substring(1);
+                            GiveMine(mineCode, player);
                         }
-                        movePossible = true;
-                    }
-                    if (move.Shortcut == Move.TakeCoins.Shortcut)
-                    {
-                        string coinsCodes = move.MoveCode.Substring(1);
-                        GiveCoins(coinsCodes.ToCharArray().Select(c => c.ToString()).ToArray(), player);
 
-                    }
-                    else if (move.Shortcut == Move.TakeMine.Shortcut)
-                    {
-                        string mineCode = move.MoveCode.Substring(1);
-                        GiveMine(mineCode,player);
-                    }
+                        else if (move.Shortcut == Move.None.Shortcut)
+                        {
+                            Console.WriteLine("That player is not making a move. Sorry");
+                        }
+                        Console.WriteLine(move.MoveCode + "  " + player.Prestige);
+                        RandomizeMissingMines();
+                        currentPlayer++;
 
-                    else if (move.Shortcut == Move.None.Shortcut)
-                    {
-                        Console.WriteLine("That player is not making a move. Sorry");
+                        if ((player.Prestige >= 15) && (player.IsWinner == false))
+                        {
+                            player.IsWinner = true;
+                            player.turnsToFinish = turn;
+                        }
                     }
-                    Console.WriteLine(move.MoveCode + "  " + player.Prestige);
-                    RandomizeMissingMines();
-                    currentPlayer++;
                 }
                 turn++;
 
@@ -164,7 +187,7 @@ namespace Aplauz.GameEngine
 
             for (int i = 0; i < quantity; i++)
             {
-                finalResults[i] = Players[i].Prestige;
+                finalResults[i] = Players[i].turnsToFinish;
             }
 
             if (Players.Count == 1)
