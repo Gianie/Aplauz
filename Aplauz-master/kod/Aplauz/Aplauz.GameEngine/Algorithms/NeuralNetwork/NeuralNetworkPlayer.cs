@@ -66,11 +66,14 @@ namespace Aplauz.GameEngine.Players
             possibleMovesStr = possibleMovesStr.Substring(0, possibleMovesStr.Length - 1);
             DeleteNone(moves);
 
+            int thisPlayerIndex = board.Players.IndexOf(this);
+
             State state = new State()
             {
                 CoinsOnBoard = board.CoinsOnBoard,
                 MinesOnBoard = board.MinesOnBoard,
-                Players = board.Players
+                Players = board.Players,
+                LastMovedPlayerIndex = thisPlayerIndex
             };
             StateExporters.StateExporter exporter = new StateExporter();
             exporter.ExportCurrentState(state);
@@ -81,7 +84,7 @@ namespace Aplauz.GameEngine.Players
 
 
             //TODO dodac lsite possiblemoves i stangry 
-            int moveInt = run_cmd("C:/Program Files/Python36/python.exe", "C:/Users/Ewa/PycharmProjects/SiecNeuronowaInzynierka/Network-in-runtime.py " + possibleMovesStr + " " + stateOfGameStr[0]);
+            int moveInt = run_cmd("C:/Program Files/Python36/python.exe", "C:\\Users\\janba\\Documents\\Aplauz\\Aplauz-master\\kod\\Aplauz\\Neural_Network/Network-in-runtime.py " + possibleMovesStr + " " + stateOfGameStr[0]);
             // string a = (Move.PossibleMoves) move;
             return Enum.GetName(typeof(Move.PossibleMoves), moveInt);
         }

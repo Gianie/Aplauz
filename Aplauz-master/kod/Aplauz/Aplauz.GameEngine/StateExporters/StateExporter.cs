@@ -37,7 +37,8 @@ namespace Aplauz.GameEngine.StateExporters
                             csv.WriteRecord(record);
                         }
                     }
-                    foreach (var playerRecord in MapPlayers(state.Players))
+                    //foreach (var playerRecord in MapPlayers(state.Players))
+                    foreach (var playerRecord in MapPlayersWithChangedSequence(state.Players,state.LastMovedPlayerIndex))
                     {
                         csv.WriteRecord(playerRecord);
                     }
@@ -81,7 +82,8 @@ namespace Aplauz.GameEngine.StateExporters
                         csv.WriteRecord(record);
                     }
                 }
-                foreach (var playerRecord in MapPlayers(state.Players))
+                //foreach (var playerRecord in MapPlayers(state.Players))
+                foreach (var playerRecord in MapPlayersWithChangedSequence(state.Players, state.LastMovedPlayerIndex))
                 {
                     csv.WriteRecord(playerRecord);
                 }
@@ -151,6 +153,22 @@ namespace Aplauz.GameEngine.StateExporters
             }
             return result.ToArray();
 
+        }
+
+        private int[] MapPlayersWithChangedSequence(List<Player> _players, int lastMovedPlayerIndex)
+        {
+            List<int> result = new List<int>();
+
+            result.AddRange(_players[lastMovedPlayerIndex].ToIntArray());
+            //_players.RemoveAt(lastMovedPlayerIndex);
+
+            foreach (var player in _players)
+            {
+                if(player != _players[lastMovedPlayerIndex])
+                result.AddRange(player.ToIntArray());
+            }
+
+            return result.ToArray();
         }
     }
 }
