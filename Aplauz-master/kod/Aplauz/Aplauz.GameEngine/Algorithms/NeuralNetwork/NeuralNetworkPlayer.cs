@@ -66,11 +66,14 @@ namespace Aplauz.GameEngine.Players
             possibleMovesStr = possibleMovesStr.Substring(0, possibleMovesStr.Length - 1);
             DeleteNone(moves);
 
+            int thisPlayerIndex = board.Players.IndexOf(this);
+
             State state = new State()
             {
                 CoinsOnBoard = board.CoinsOnBoard,
                 MinesOnBoard = board.MinesOnBoard,
-                Players = board.Players
+                Players = board.Players,
+                LastMovedPlayerIndex = thisPlayerIndex
             };
             StateExporters.StateExporter exporter = new StateExporter();
             exporter.ExportCurrentState(state);
