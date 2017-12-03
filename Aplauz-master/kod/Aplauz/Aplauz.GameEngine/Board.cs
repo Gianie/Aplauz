@@ -76,11 +76,11 @@ namespace Aplauz.GameEngine
             int quantity = args.Length;
             // PopulatePlayers(quantity, args);
             // PopulateThreePlusOne(quantity, args);
-            PopulateRandomPlayers(quantity, args);
+            //PopulateRandomPlayers(quantity, args);
             //  PopulateWithMonteCarloUpgrade(quantity, args);
             //  PopulateMonteCarloUpgrade(quantity, args);
             //  PopulateWithDynamicGreedy(quantity, args);
-            // PopulateWithNeuralNetworkWithRandoms(quantity, args);
+             PopulateWithNeuralNetworkWithRandoms(quantity, args);
            // PopulateForTeaching(quantity,args);
             PopulateCoins();
             PopulateMines();

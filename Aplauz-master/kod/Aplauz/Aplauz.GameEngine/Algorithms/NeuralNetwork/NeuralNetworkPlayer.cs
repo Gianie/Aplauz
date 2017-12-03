@@ -81,7 +81,8 @@ namespace Aplauz.GameEngine.Players
 
 
             //TODO dodac lsite possiblemoves i stangry 
-            int moveInt = run_cmd("C:/Program Files/Python36/python.exe", "C:/Users/Ewa/PycharmProjects/SiecNeuronowaInzynierka/Network-in-runtime.py " + possibleMovesStr + " " + stateOfGameStr[0]);
+            int moveInt = run_cmd("C:/Program Files/Python36/python.exe", "..\\..\\..\\Neural_Network\\Network-in-runtime.py " + possibleMovesStr + " " + stateOfGameStr[0]);
+            
             // string a = (Move.PossibleMoves) move;
             return Enum.GetName(typeof(Move.PossibleMoves), moveInt);
         }
