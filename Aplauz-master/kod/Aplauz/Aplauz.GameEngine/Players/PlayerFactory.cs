@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Aplauz.GameEngine.Players;
-using Aplauz.GameEngine.Utils;
 
 namespace Aplauz.GameEngine
 {
@@ -58,6 +58,53 @@ namespace Aplauz.GameEngine
                 NeuralNetworkPlayer copy = new NeuralNetworkPlayer(player);
                 return copy;
             }
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<Player> PopulatePlayers(string[] names, string[] playerTypes)
+        {
+            var result = new List<Player>();
+            for (int i = 0; i < 4; i++)
+            {
+                Type type = CastNameToPlayerType(playerTypes[i]);
+                ConstructorInfo ctor = type.GetConstructor(new[] { typeof(string) });
+                object instance = ctor.Invoke(new object[] { names[i] });
+                result.Add((Player)instance);
+            }
+            return result;
+        }
+
+
+        private Type CastNameToPlayerType(string type)
+        {
+            if (type == "Human")
+            {
+                return typeof(HumanPlayer);
+            }
+            else if (type == "Random")
+            {
+                return typeof(RandomPlayer);
+            }
+            else if (type == "Neural")
+            {
+                return typeof(NeuralNetworkPlayer);
+            }
+            else if (type == "Monte")
+            {
+                return typeof(MonteCarloPlayer);
+            }
+            else if (type == "Greedy")
+            {
+                return typeof(DynamicGreedyPlayer);
+            }
+            else if (type == "Upgrade")
+            {
+                return typeof(MonteCarloUpgradePlayer);
+            }
+
             else
             {
                 return null;

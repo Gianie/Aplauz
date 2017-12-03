@@ -39,13 +39,14 @@ namespace Aplauz.GameEngine
         public List<Mine> MinesOnBoardLvl3 { get; } = new List<Mine>();
 
 
-        public Board(string[] names)
+        public Board(string[] names, string[] playerTypes)
         {
 
             _drawer = new Drawer();
             _stateExporter = new StateExporter();
             _stateTurnExporter = new StateTurnExporter();
-       
+            PlayerFactory pf = new PlayerFactory();
+            Players = pf.PopulatePlayers(names, playerTypes);
             StartNewGame(names);
             
         }
@@ -76,7 +77,7 @@ namespace Aplauz.GameEngine
             int quantity = args.Length;
             // PopulatePlayers(quantity, args);
             // PopulateThreePlusOne(quantity, args);
-            PopulateRandomPlayers(quantity, args);
+           // PopulateRandomPlayers(quantity, args);
             //  PopulateWithMonteCarloUpgrade(quantity, args);
             //  PopulateMonteCarloUpgrade(quantity, args);
             //  PopulateWithDynamicGreedy(quantity, args);
