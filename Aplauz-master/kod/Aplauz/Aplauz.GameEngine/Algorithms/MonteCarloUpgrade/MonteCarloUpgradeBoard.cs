@@ -9,7 +9,7 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
     class MonteCarloUpgradeBoard : Board
     {
         public List<DynamicGreedyPlayer> Players { get; } = new List<DynamicGreedyPlayer>();
-        public MonteCarloUpgradeBoard(string[] names) : base(names)
+        public MonteCarloUpgradeBoard(string[] names, string[] types) : base(names, types)
         {
 
         }

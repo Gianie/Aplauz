@@ -78,7 +78,6 @@
     <Compile Include="StateExporters\IStateExporter.cs" />
     <Compile Include="StateExporters\StateExporter.cs" />
     <Compile Include="StateExporters\StateTurnExporter.cs" />
-    <Compile Include="Utils\DeepCopy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

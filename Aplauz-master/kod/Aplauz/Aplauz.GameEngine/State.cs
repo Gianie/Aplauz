@@ -5,7 +5,6 @@ using System.Linq;
 using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
-using Aplauz.GameEngine.Utils;
 
 namespace Aplauz.GameEngine
 {

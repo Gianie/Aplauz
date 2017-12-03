@@ -9,7 +9,7 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
     class MonteCarloBoard : Board
     {
         public List<RandomPlayer> Players { get; } = new List<RandomPlayer>();
-        public MonteCarloBoard(string[] names) : base ( names)
+        public MonteCarloBoard(string[] names, string[] types) : base ( names, types)
         {
 
         }
