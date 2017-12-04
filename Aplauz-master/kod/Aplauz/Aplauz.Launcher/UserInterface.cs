@@ -11,6 +11,8 @@ namespace Aplauz.Launcher
     {
         private static void Main(string[] args)
         {
+            Console.BackgroundColor=ConsoleColor.Gray;
+            Console.Clear();
             Console.WriteLine("Witaj w Aplauzie");
             SuggestHelp();
 
@@ -96,10 +98,16 @@ namespace Aplauz.Launcher
 
         private static void ShowHelp()
         {
-
             Console.WriteLine("Aby rozpocząć gre użyj cyfry dla jednego z gotowych szablonów konfiguracji z domyślnymi imionami:");
-            Console.WriteLine("1 - 4humans, 2 - 4randoms, 3 - 1human3randoms, 4 - 1human3upgrade, 5 - 1human3neural, 6 -  1human1neural1upgrade1greedy, 7 - 1human1neural1upgrade1monte");
-            Console.WriteLine("lub wpisz polecenie 'my' w celu wykonania własnej konfiguracji:");
+            Console.WriteLine("1 - 4Humans, 2 - 4Randoms, 3 - 1Human3Randoms, 4 - 1Human3Upgrade, 5 - 1Human3Neural, 6 -  1Human1Neural1Upgrade1Greedy, 7 - 1Human1Neural1Upgrade1Monte");
+            Console.WriteLine("lub wpisz polecenie 'my' w celu wykonania własnej konfiguracji");
+            Console.WriteLine("Dostępne typy graczy: Human, Random, Neural, Monte, Greedy, Upgrade");
+            Console.WriteLine("");
+            Console.WriteLine("Wytlumaczenie stanu gry wyświetlanego graczowi typu Human:");
+            Console.WriteLine("Kolorowe liczby na szarym tle oznaczają liczbę żetonów");
+            Console.WriteLine("Szare liczby na kolorowym tle oznaczają zasoby wynikające z posiadanych kart");
+            Console.WriteLine("Karty na stole są reprezentowane w następującym formacie: ");
+            Console.WriteLine("Poziom|NumerKartyOdLewejNa Stole|: |Poziom|Kolor|Prestiż|CenaBiała|Niebieska|Zielona|Czerwona|Czarna");
         }
 
         private static bool IsTypeCorrect(string type)
