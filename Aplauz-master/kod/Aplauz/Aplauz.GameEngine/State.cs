@@ -17,6 +17,7 @@ namespace Aplauz.GameEngine
         public int LastMove { get; set; }
         public int LastMovedPlayerIndex { get; set; }
         public int turn { get; set; }
+	public int test {get;set;}
 
         public List<State> HistoryStates { get; set; } = new List<State>();
 
