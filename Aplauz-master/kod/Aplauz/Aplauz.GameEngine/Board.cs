@@ -114,8 +114,6 @@ namespace Aplauz.GameEngine
                         }
                         move = new Move(moveCode);
                         state.Update(CoinsOnBoard, Players, MinesPack, MinesOnBoard, (int)Enum.Parse(typeof(Move.PossibleMoves), move.MoveCode),currentPlayer, turn);
-
- //                       Console.WriteLine((int)Enum.Parse(typeof(Move.PossibleMoves), move.MoveCode));
                         movePossible = Move.IsMovePossible(move, player, CoinsOnBoard, MinesOnBoard);
                         if (!movePossible)
                         {
@@ -169,9 +167,7 @@ namespace Aplauz.GameEngine
                 _stateExporter.ExportEndedGame(state, finalResults);
             }
 
-
             ResultExport.GameResultToFiles(Players);
-           // Console.ReadKey(); 
         }
 
         protected void SetWinner()
@@ -252,7 +248,7 @@ namespace Aplauz.GameEngine
         }
         protected void PopulateCoins()
         {
-            for (int i = 0; i < 8; i++) //Poki zlote nie dzialaja zmienilem z 7 na 8  (bo tak to za czesto dochodzi do sytuacji, ze nikt nic nei moze zrobic xd)
+            for (int i = 0; i < 8; i++) 
             {
 
                 CoinsOnBoard.Add(new Coin("b"));
@@ -267,95 +263,14 @@ namespace Aplauz.GameEngine
             }
         }
 
-        //protected void PopulatePlayers(int quantity, string[] names)
-        //{
-        //    for (int i = 0; i < quantity; i++)
-        //    {
-        //        HumanPlayer p = new HumanPlayer(names[i]);
-        //        Players.Add(p);
-        //    }
-        //}
-
-        //protected void PopulateThreePlusOne(int quantity, string[] names)
-        //{
-        //    for (int i = 0; i < 3; i++)
-        //    {
-        //        RandomPlayer randomPlayer = new RandomPlayer(names[i]);
-        //        Players.Add(randomPlayer);
-        //    }
-        //    HumanPlayer humanPlayer = new HumanPlayer(names[3]);
-        //    Players.Add(humanPlayer);
-        //}
-
-        protected void PopulateRandomPlayers(int quantity, string[] names)
+        protected void PopulatePlayers(int quantity, string[] names)
         {
             for (int i = 0; i < quantity; i++)
             {
-                RandomPlayer p = new RandomPlayer(names[i]);
+                HumanPlayer p = new HumanPlayer(names[i]);
                 Players.Add(p);
             }
         }
-
-        //protected void PopulateWithMonteCarlo(int quantity, string[] names)
-        //{
-        //    MonteCarloPlayer monteCarloPlayer = new MonteCarloPlayer(names[0]);
-        //    monteCarloPlayer.id = 0;
-        //    Players.Add(monteCarloPlayer);
-
-        //    for (int i = 1; i < 4; i++)
-        //    {
-        //        RandomPlayer randomPlayer = new RandomPlayer(names[i]);
-        //        randomPlayer.id = i;
-        //        Players.Add(randomPlayer);
-        //    }
-        //}
-
-
-        protected void PopulateWithDynamicGreedy(int quantity, string[] names)
-        {
-            DynamicGreedyPlayer dynamicGreedyPlayer = new DynamicGreedyPlayer(names[0]);
-            dynamicGreedyPlayer.id = 0;
-            Players.Add(dynamicGreedyPlayer);
-
-            for (int i = 1; i < 4; i++)
-            {
-                RandomPlayer randomPlayer = new RandomPlayer(names[i]);
-                randomPlayer.id = i;
-                Players.Add(randomPlayer);
-            }
-        }
-
-        protected void PopulateWithNeuralNetworkWithRandoms(int quantity, string[] names)
-        {
-            NeuralNetworkPlayer neuralPlayer = new NeuralNetworkPlayer(names[0]);
-            neuralPlayer.id = 0;
-            Players.Add(neuralPlayer);
-
-            for (int i = 1; i < 4; i++)
-            {
-                RandomPlayer randomPlayer = new RandomPlayer(names[i]);
-                randomPlayer.id = i;
-                Players.Add(randomPlayer);
-            }
-        }
-
-        //protected void PopulateWithMonteCarloUpgrade(int quantity, string[] names)
-        //{
-        //    MonteCarloUpgradePlayer monteCarloUpgradePlayer = new MonteCarloUpgradePlayer(names[0]);
-        //    monteCarloUpgradePlayer.id = 0;
-        //    Players.Add(monteCarloUpgradePlayer);
-
-        //    DynamicGreedyPlayer dynamicGreedyPlayer = new DynamicGreedyPlayer(names[1]);
-        //    dynamicGreedyPlayer.id = 1;
-        //    Players.Add(dynamicGreedyPlayer);
-
-        //    for (int i = 2; i < 4; i++)
-        //    {
-        //        RandomPlayer randomPlayer = new RandomPlayer(names[i]);
-        //        randomPlayer.id = i;
-        //        Players.Add(randomPlayer);
-        //    }
-        //}
 
         protected void PopulateForTeaching(int quantity, string[] names)
         {
@@ -421,8 +336,7 @@ namespace Aplauz.GameEngine
                     player.AddMine(chosenMine);
                 }
             }
-            
-            
+                        
         }
 
         public bool isStringLegal(string codes)

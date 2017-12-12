@@ -117,7 +117,6 @@ namespace Aplauz.GameEngine
         {
 
 
-            //                Regex regex = new Regex(@"^\d$");
             if (mineCode.Length != 2)
                 return false;
             int level = Int32.Parse(mineCode[0].ToString());

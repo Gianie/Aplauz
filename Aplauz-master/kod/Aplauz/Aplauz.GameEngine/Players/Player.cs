@@ -42,7 +42,6 @@ namespace Aplauz.GameEngine.Players
             this.IsWinner = player.IsWinner;
             this.id = player.id;
             this.type = player.type;
-            //this.Prestige = player.Prestige;
         }
 
         public virtual string Entry(Board board)
