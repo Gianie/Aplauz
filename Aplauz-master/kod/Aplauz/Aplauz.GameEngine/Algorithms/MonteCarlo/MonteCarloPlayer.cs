@@ -28,7 +28,7 @@ namespace Aplauz.GameEngine.Players
         public override string Entry(Board board)
         {
            // Console.WriteLine("time for " + Name + " move. MonteCarloPlayer");
-            int numberOfSimulations = 200;
+            int numberOfSimulations = 1000;
             string result = StartSimulations(board, numberOfSimulations);
 
 

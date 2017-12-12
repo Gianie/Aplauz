@@ -24,7 +24,7 @@ namespace Aplauz.GameEngine.Players.MonteCarlo
             int turn = 0;
             Move move = new Move();
             int simulationTurn = 0;
-            int wasAlready = 0; // zmienna mowiaca czy racz ld aktoreog robimy symulacje wykonal juz ruch
+            int wasAlready = 0; // zmienna mowiaca czy gracz dla ktorego robimy symulacje wykonal już ruch
             while (Players.All(p => p.Prestige < 15))
             {
                 foreach (var player in Players)
