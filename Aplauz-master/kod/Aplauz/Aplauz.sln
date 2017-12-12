@@ -1,10 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApplication1", "WpfApplication1\WpfApplication1.csproj", "{5E76DED0-CE0B-4BE1-8C44-26726ED1A76B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aplauz.GameEngine", "Aplauz.GameEngine\Aplauz.GameEngine.csproj", "{2BE6C4A3-599B-40DB-BA85-028839A4E1CB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aplauz.Launcher", "Aplauz.Launcher\Aplauz.Launcher.csproj", "{C4F7C27B-8090-43C0-AEC3-E636EF8C772C}"
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5E76DED0-CE0B-4BE1-8C44-26726ED1A76B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E76DED0-CE0B-4BE1-8C44-26726ED1A76B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E76DED0-CE0B-4BE1-8C44-26726ED1A76B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E76DED0-CE0B-4BE1-8C44-26726ED1A76B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2BE6C4A3-599B-40DB-BA85-028839A4E1CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2BE6C4A3-599B-40DB-BA85-028839A4E1CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BE6C4A3-599B-40DB-BA85-028839A4E1CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -30,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CCA4F27B-9D04-4856-94C5-CB9F9A984A09}
 	EndGlobalSection
 EndGlobal
